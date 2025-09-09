@@ -7,7 +7,7 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 
-import MambaCD.changedetection.datasets.imutils as imutils
+import changedetection.datasets.imutils as imutils
 
 
 def img_loader(path):
@@ -169,31 +169,37 @@ class DamageAssessmentDatset(Dataset):
         return pre_img, post_img, loc_label, clf_label
 
     def __getitem__(self, index):
-        if 'train' in self.data_pro_type: 
+        if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type: 
             parts = self.data_list[index].rsplit('_', 2)
 
-            pre_img_name = f"{parts[0]}_pre_disaster_{parts[1]}_{parts[2]}.png"
-            post_img_name = f"{parts[0]}_post_disaster_{parts[1]}_{parts[2]}.png"
+
+            pre_img_name = f"{parts[0]}_pre_disaster.png"#_{parts[1]}_{parts[2]}.png"
+            post_img_name = f"{parts[0]}_post_disaster.png"#_{parts[1]}_{parts[2]}.png"
+            pre_trg_name = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
+            post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
 
             pre_path = os.path.join(self.dataset_path, 'images', pre_img_name)
             post_path = os.path.join(self.dataset_path, 'images', post_img_name)
             
-            loc_label_path = os.path.join(self.dataset_path, 'masks', pre_img_name)
-            clf_label_path = os.path.join(self.dataset_path, 'masks', post_img_name)
+            loc_label_path = os.path.join(self.dataset_path, 'targets', pre_trg_name)
+            clf_label_path = os.path.join(self.dataset_path, 'targets', post_trg_name)
         else:
-            pre_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '_pre_disaster.png')
-            post_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '_post_disaster.png')
-            loc_label_path = os.path.join(self.dataset_path, 'masks', self.data_list[index]+ '_pre_disaster.png')
-            clf_label_path = os.path.join(self.dataset_path, 'masks', self.data_list[index]+ '_post_disaster.png')
+            pre_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '.png')
+            post_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '.png')
+            loc_label_path = os.path.join(self.dataset_path, 'targets', self.data_list[index]+ '_target.png')
+            clf_label_path = os.path.join(self.dataset_path, 'targets', self.data_list[index]+ '_target.png')
 
         pre_img = self.loader(pre_path)
         post_img = self.loader(post_path)
-        loc_label = self.loader(loc_label_path)[:,:,0]
-        clf_label = self.loader(clf_label_path)[:,:,0]
+        loc_label = self.loader(loc_label_path)#[:,:,0]
+        clf_label = self.loader(clf_label_path)#[:,:,0]
 
-        if 'train' in self.data_pro_type:
+        if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type:
             pre_img, post_img, loc_label, clf_label = self.__transforms(True, pre_img, post_img, loc_label, clf_label)
             clf_label[clf_label == 0] = 255
+            # clf_label = clf_label/5
+            # TODO uncomment 2025.08.08| clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
+            clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
         else:
             pre_img, post_img, loc_label, clf_label = self.__transforms(False, pre_img, post_img, loc_label, clf_label)
             loc_label = np.asarray(loc_label)

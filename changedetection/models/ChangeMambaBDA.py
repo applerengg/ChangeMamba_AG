@@ -3,8 +3,8 @@ import torch.nn.functional as F
 
 import torch
 import torch.nn as nn
-from MambaCD.changedetection.models.Mamba_backbone import Backbone_VSSM
-from MambaCD.classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
+from changedetection.models.Mamba_backbone import Backbone_VSSM
+from classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
 import os
 import time
 import math
@@ -20,8 +20,8 @@ import torch.utils.checkpoint as checkpoint
 from einops import rearrange, repeat
 from timm.models.layers import DropPath, trunc_normal_
 from fvcore.nn import FlopCountAnalysis, flop_count_str, flop_count, parameter_count
-from MambaCD.changedetection.models.ChangeDecoder import ChangeDecoder
-from MambaCD.changedetection.models.SemanticDecoder import SemanticDecoder
+from changedetection.models.ChangeDecoder import ChangeDecoder
+from changedetection.models.SemanticDecoder import SemanticDecoder
 
 
 class ChangeMambaBDA(nn.Module):

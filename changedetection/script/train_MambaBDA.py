@@ -1,5 +1,8 @@
 import sys
-sys.path.append('/home/songjian/project/MambaCD')
+# sys.path.append('/home/songjian/project/MambaCD')
+sys.path.append("/storage/alperengenc/change_detection/ChangeMamba_AG/")
+
+from datetime import datetime
 
 import argparse
 import os
@@ -7,18 +10,82 @@ import time
 
 import numpy as np
 
-from MambaCD.changedetection.configs.config import get_config
+from changedetection.configs.config import get_config
 
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-from MambaCD.changedetection.datasets.make_data_loader import ChangeDetectionDatset, make_data_loader, DamageAssessmentDatset
-from MambaCD.changedetection.utils_func.metrics import Evaluator
-from MambaCD.changedetection.models.ChangeMambaBDA import ChangeMambaBDA
+from changedetection.datasets.make_data_loader import ChangeDetectionDatset, make_data_loader, DamageAssessmentDatset
+from changedetection.utils_func.metrics import Evaluator
+from changedetection.models.ChangeMambaBDA import ChangeMambaBDA
 
-import MambaCD.changedetection.utils_func.lovasz_loss as L
+import changedetection.utils_func.lovasz_loss as L
+
+
+
+def sanitize_labels(labels, valid_values, ignore_value=255):
+    """
+    Ensure labels contain only valid values or ignore_value.
+
+    Args:
+        labels (Tensor): Input label tensor.
+        valid_values (list): List of valid label values.
+        ignore_value (int): Value used for ignored regions.
+
+    Returns:
+        Tensor: Sanitized labels tensor.
+    """
+    labels = labels.clone()  # Avoid modifying original tensor
+    # Replace invalid values with ignore_value
+    invalid_mask = ~torch.isin(labels, torch.tensor(valid_values, device=labels.device))
+    labels[invalid_mask] = ignore_value
+    return labels
+
+def preprocess_labels(labels, num_classes, ignore_value=255):
+    """
+    Preprocess labels for Lovasz loss:
+    - Normalize labels between [0, num_classes - 1].
+    - Set ignore_value for void labels.
+
+    Args:
+        labels (Tensor): Ground truth labels (on GPU or CPU).
+        num_classes (int): Number of classes.
+        ignore_value (int): Value to ignore in labels.
+    
+    Returns:
+        Tensor: Preprocessed labels (same device as input).
+    """
+    # Ensure labels are on the CPU for preprocessing
+    device = labels.device
+    labels = labels.cpu()
+    
+    # Create a mask for valid labels
+    valid_mask = (labels != ignore_value)
+    
+    # Check for unexpected values
+    if labels.max() > ignore_value:
+        raise ValueError("Unexpected values in the labels tensor. Check the label range.")
+    
+    # Normalize valid labels to range [0, num_classes - 1]
+    scaled_labels: torch.Tensor = labels.float() / (labels.max() + 1e-5) * (num_classes - 1)
+    scaled_labels = scaled_labels.long()
+    
+    # Set ignored labels back to ignore_value
+    scaled_labels[~valid_mask] = ignore_value
+    
+    # Move back to the original device
+    return scaled_labels.to(device)
+
+def debug_labels(labels):
+    print("Labels Tensor Info:")
+    print(f"Shape: {labels.shape}")
+    print(f"Device: {labels.device}")
+    print(f"Unique Values: {torch.unique(labels)}")
+    print(f"Min Value: {labels.min()}")
+    print(f"Max Value: {labels.max()}")
+
 
 class Trainer(object):
     def __init__(self, args):
@@ -102,6 +169,10 @@ class Trainer(object):
             labels_loc = labels_loc.cuda().long()
             labels_clf = labels_clf.cuda().long()
 
+            # # mod 2025.08.08
+            # valid_values = [1, 2, 3, 4, 255]  # Valid classes + ignore value
+            # labels_clf = sanitize_labels(labels_clf, valid_values, ignore_value=255)
+
             valid_labels_clf = (labels_clf != 255).any()
             if not valid_labels_clf:
                continue
@@ -116,6 +187,10 @@ class Trainer(object):
             
             ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
             lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), labels_clf, ignore=255)
+            # # mod 2025.08.08
+            # preprocessed_labels = preprocess_labels(labels_clf, num_classes=4, ignore_value=255)
+            # lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), preprocessed_labels, ignore=255)
+
             final_loss = ce_loss_loc + ce_loss_clf + (0.5 * lovasz_loss_loc + 0.75 * lovasz_loss_clf)
             # final_loss = main_loss
 
@@ -123,14 +198,16 @@ class Trainer(object):
 
             self.optim.step()
 
-            if (itera + 1) % 10 == 0:
-                print(f'iter is {itera + 1}, localization loss is {ce_loss_loc + lovasz_loss_loc}, classification loss is {ce_loss_clf + lovasz_loss_clf}')
-                if (itera + 1) % 750 == 0:
+            if (itera + 1) % 50 == 0:
+                now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                print(f'iter is {itera + 1}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})')
+                if (itera + 1) % 5000 == 0:
                     self.deep_model.eval()
                     loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
                     if oaf1 > best_kc:
+                        now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                         torch.save(self.deep_model.state_dict(),
-                                   os.path.join(self.model_save_path, f'{itera + 1}_model.pth'))
+                                   os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
                         best_kc = oaf1
                         best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
                     self.deep_model.train()
@@ -148,6 +225,9 @@ class Trainer(object):
         # vbar = tqdm(val_data_loader, ncols=50)
         with torch.no_grad():
             for itera, data in enumerate(val_data_loader):
+                if itera % 100 == 0:
+                    print(f'validation: {itera:>4}/{len(val_data_loader):>4} ({datetime.now():%Y-%m-%d_%H-%M-%S})')
+
                 pre_change_imgs, post_change_imgs, labels_loc, labels_clf, _ = data
 
                 pre_change_imgs = pre_change_imgs.cuda()

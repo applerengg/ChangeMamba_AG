@@ -1,11 +1,11 @@
 import torch
-from MambaCD.changedetection.models.Mamba_backbone import Backbone_VSSM
-from MambaCD.classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
+from changedetection.models.Mamba_backbone import Backbone_VSSM
+from classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
 
 import torch.nn as nn
 import torch.nn.functional as F
-from MambaCD.changedetection.models.ChangeDecoder_BRIGHT import ChangeDecoder
-from MambaCD.changedetection.models.SemanticDecoder import SemanticDecoder
+from changedetection.models.ChangeDecoder_BRIGHT import ChangeDecoder
+from changedetection.models.SemanticDecoder import SemanticDecoder
 
 
 class ChangeMambaMMBDA(nn.Module):
