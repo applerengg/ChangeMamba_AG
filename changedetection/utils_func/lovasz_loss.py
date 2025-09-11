@@ -213,7 +213,7 @@ def flatten_probas(probas, labels, ignore=None):
     if ignore is None:
         return probas, labels
     valid = (labels != ignore)
-    vprobas = probas[valid.nonzero().squeeze()]
+    vprobas = probas[valid.nonzero().squeeze(1)] #!-- using squeeze() instead of squeeze(1) sometimes causes the resulting tensor to be 1d.
     vlabels = labels[valid]
     return vprobas, vlabels
 

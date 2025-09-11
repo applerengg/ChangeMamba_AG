@@ -170,6 +170,7 @@ class DamageAssessmentDatset(Dataset):
 
     def __getitem__(self, index):
         if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type: 
+            #--- content: self.data_list[index] = 'pinery-bushfire_00000215_pre_disaster'
             parts = self.data_list[index].rsplit('_', 2)
 
 
@@ -194,12 +195,17 @@ class DamageAssessmentDatset(Dataset):
         loc_label = self.loader(loc_label_path)#[:,:,0]
         clf_label = self.loader(clf_label_path)#[:,:,0]
 
+        # --- enforce single channel labels
+        if loc_label.ndim == 3: loc_label = loc_label[..., 0]
+        if clf_label.ndim == 3: clf_label = clf_label[..., 0]
+
+
         if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type:
             pre_img, post_img, loc_label, clf_label = self.__transforms(True, pre_img, post_img, loc_label, clf_label)
             clf_label[clf_label == 0] = 255
             # clf_label = clf_label/5
             # TODO uncomment 2025.08.08| clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
-            clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
+            # clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
         else:
             pre_img, post_img, loc_label, clf_label = self.__transforms(False, pre_img, post_img, loc_label, clf_label)
             loc_label = np.asarray(loc_label)

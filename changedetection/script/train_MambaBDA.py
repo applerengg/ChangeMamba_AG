@@ -23,6 +23,9 @@ from changedetection.models.ChangeMambaBDA import ChangeMambaBDA
 
 import changedetection.utils_func.lovasz_loss as L
 
+import logging
+import json
+import copy
 
 
 def sanitize_labels(labels, valid_values, ignore_value=255):
@@ -155,6 +158,9 @@ class Trainer(object):
                                  weight_decay=args.weight_decay)
 
     def training(self):
+        print('---------starting training-----------')
+        logging.log(logging.INFO, '---------starting training-----------')
+
         best_kc = 0.0
         best_round = []
         torch.cuda.empty_cache()
@@ -162,7 +168,7 @@ class Trainer(object):
         train_enumerator = enumerate(self.train_data_loader)
         for _ in tqdm(range(elem_num)):
             itera, data = train_enumerator.__next__()
-            pre_change_imgs, post_change_imgs, labels_loc, labels_clf, _ = data
+            pre_change_imgs, post_change_imgs, labels_loc, labels_clf, data_name = data
 
             pre_change_imgs = pre_change_imgs.cuda()
             post_change_imgs = post_change_imgs.cuda()
@@ -200,22 +206,47 @@ class Trainer(object):
 
             if (itera + 1) % 50 == 0:
                 now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                print(f'iter is {itera + 1}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})')
-                if (itera + 1) % 5000 == 0:
-                    self.deep_model.eval()
-                    loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
-                    if oaf1 > best_kc:
-                        now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                        torch.save(self.deep_model.state_dict(),
-                                   os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
-                        best_kc = oaf1
-                        best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
-                    self.deep_model.train()
+                log = f'iter is {itera + 1}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
+                print(log)
+                logging.log(logging.INFO, log)
+            if (itera + 1) % 5_000 == 0:
+                self.deep_model.eval()
+                loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
+                if oaf1 > best_kc:
+                    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                    torch.save(self.deep_model.state_dict(),
+                                os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
+                    best_kc = oaf1
+                    best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+                self.deep_model.train()
+
+
+        #*-- Validation after training
+        log = "-----------Training is completed-----------"
+        print(log)
+        logging.log(logging.INFO, log)
+
+        self.deep_model.eval()
+        loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
+        log = f"{loc_f1_score=}, {harmonic_mean_f1=}, {oaf1=}, {damage_f1_score=}"
+        print(log)
+        logging.log(logging.INFO, log)
+
+        if oaf1 > best_kc:
+            now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            torch.save(self.deep_model.state_dict(),
+                        os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
+            best_kc = oaf1
+            best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+        self.deep_model.train()
 
         print('The accuracy of the best round is ', best_round)
+        logging.log(logging.INFO, f'The accuracy of the best round is: {best_round}')
+
 
     def validation(self):
         print('---------starting evaluation-----------')
+        logging.log(logging.INFO, '---------starting evaluation-----------')
         self.evaluator_loc.reset()
         self.evaluator_clf.reset()
         dataset = DamageAssessmentDatset(self.args.test_dataset_path, self.args.test_data_name_list, 256, None, 'test')
@@ -226,7 +257,9 @@ class Trainer(object):
         with torch.no_grad():
             for itera, data in enumerate(val_data_loader):
                 if itera % 100 == 0:
-                    print(f'validation: {itera:>4}/{len(val_data_loader):>4} ({datetime.now():%Y-%m-%d_%H-%M-%S})')
+                    log = f'validation: {itera:>4}/{len(val_data_loader):>4} ({datetime.now():%Y-%m-%d_%H-%M-%S})'
+                    print(log)
+                    logging.log(logging.INFO, log)
 
                 pre_change_imgs, post_change_imgs, labels_loc, labels_clf, _ = data
 
@@ -259,6 +292,7 @@ class Trainer(object):
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
         print(f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, '
               f'sub class F1 score is {damage_f1_score}')
+        logging.log(logging.INFO, f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, sub class F1 score is {damage_f1_score}')
         return loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
 
 
@@ -305,6 +339,25 @@ def main():
         # data_name_list = f.read()
         test_data_name_list = [data_name.strip() for data_name in f]
     args.test_data_name_list = test_data_name_list
+
+    #*-- LOGGING INIT
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    model_name: str = args.model_type
+    logfile_path = f"/storage/alperengenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_{now}_{model_name}.log" # TODO get from args
+    logging.basicConfig(
+        level=logging.INFO,  # INFO / DEBUG
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        handlers=[
+            logging.FileHandler(logfile_path, mode="a"), # log to file
+            logging.StreamHandler() # log to stdout
+        ]
+    )
+    args_copy = copy.deepcopy(vars(args))
+    args_copy.pop("train_data_name_list")
+    args_copy.pop("test_data_name_list")
+    args_pretty = json.dumps(args_copy, indent=4)
+    logging.log(logging.INFO, f"Command Line Args:\n{args_pretty}")
+
 
     trainer = Trainer(args)
     trainer.training()
