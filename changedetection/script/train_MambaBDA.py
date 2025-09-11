@@ -166,6 +166,11 @@ class Trainer(object):
         torch.cuda.empty_cache()
         elem_num = len(self.train_data_loader)
         train_enumerator = enumerate(self.train_data_loader)
+
+        VAL_STEP = elem_num // 4
+        print(f"{VAL_STEP=}")
+        logging.log(logging.INFO, f"{VAL_STEP=}")
+
         for _ in tqdm(range(elem_num)):
             itera, data = train_enumerator.__next__()
             pre_change_imgs, post_change_imgs, labels_loc, labels_clf, data_name = data
@@ -206,10 +211,10 @@ class Trainer(object):
 
             if (itera + 1) % 50 == 0:
                 now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                log = f'iter is {itera + 1}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
+                log = f'iter is {itera + 1} / {elem_num}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
                 print(log)
                 logging.log(logging.INFO, log)
-            if (itera + 1) % 5_000 == 0:
+            if (itera + 1) % VAL_STEP == 0:
                 self.deep_model.eval()
                 loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
                 if oaf1 > best_kc:
