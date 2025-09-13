@@ -169,26 +169,21 @@ class DamageAssessmentDatset(Dataset):
         return pre_img, post_img, loc_label, clf_label
 
     def __getitem__(self, index):
-        if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type: 
-            #--- content: self.data_list[index] = 'pinery-bushfire_00000215_pre_disaster'
-            parts = self.data_list[index].rsplit('_', 2)
+        #--- content: 
+        #--- self.data_list[index] = 'portugal-wildfire_00000976_post_disaster'
+        #--- parts = 0: 'portugal-wildfire_00000976_post_disaster', 1: 'post', 2: 'disaster'
+        #--- same for train and test (only self.dataset_path changes), so removed if-else (2025.09.13)
+        parts = self.data_list[index].rsplit('_', 2)
 
+        pre_img_name  = f"{parts[0]}_pre_disaster.png"#_{parts[1]}_{parts[2]}.png"
+        post_img_name = f"{parts[0]}_post_disaster.png"#_{parts[1]}_{parts[2]}.png"
+        pre_trg_name  = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
+        post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
 
-            pre_img_name = f"{parts[0]}_pre_disaster.png"#_{parts[1]}_{parts[2]}.png"
-            post_img_name = f"{parts[0]}_post_disaster.png"#_{parts[1]}_{parts[2]}.png"
-            pre_trg_name = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
-            post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
-
-            pre_path = os.path.join(self.dataset_path, 'images', pre_img_name)
-            post_path = os.path.join(self.dataset_path, 'images', post_img_name)
-            
-            loc_label_path = os.path.join(self.dataset_path, 'targets', pre_trg_name)
-            clf_label_path = os.path.join(self.dataset_path, 'targets', post_trg_name)
-        else:
-            pre_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '.png')
-            post_path = os.path.join(self.dataset_path, 'images', self.data_list[index] + '.png')
-            loc_label_path = os.path.join(self.dataset_path, 'targets', self.data_list[index]+ '_target.png')
-            clf_label_path = os.path.join(self.dataset_path, 'targets', self.data_list[index]+ '_target.png')
+        pre_path       = os.path.join(self.dataset_path, 'images', pre_img_name)
+        post_path      = os.path.join(self.dataset_path, 'images', post_img_name)
+        loc_label_path = os.path.join(self.dataset_path, 'targets', pre_trg_name)
+        clf_label_path = os.path.join(self.dataset_path, 'targets', post_trg_name)
 
         pre_img = self.loader(pre_path)
         post_img = self.loader(post_path)
@@ -203,9 +198,6 @@ class DamageAssessmentDatset(Dataset):
         if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type:
             pre_img, post_img, loc_label, clf_label = self.__transforms(True, pre_img, post_img, loc_label, clf_label)
             clf_label[clf_label == 0] = 255
-            # clf_label = clf_label/5
-            # TODO uncomment 2025.08.08| clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
-            # clf_label = (clf_label - clf_label.min()) / (clf_label.max() - clf_label.min() + 1e-8)
         else:
             pre_img, post_img, loc_label, clf_label = self.__transforms(False, pre_img, post_img, loc_label, clf_label)
             loc_label = np.asarray(loc_label)
