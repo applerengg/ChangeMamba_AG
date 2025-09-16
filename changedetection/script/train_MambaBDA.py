@@ -28,68 +28,6 @@ import json
 import copy
 
 
-def sanitize_labels(labels, valid_values, ignore_value=255):
-    """
-    Ensure labels contain only valid values or ignore_value.
-
-    Args:
-        labels (Tensor): Input label tensor.
-        valid_values (list): List of valid label values.
-        ignore_value (int): Value used for ignored regions.
-
-    Returns:
-        Tensor: Sanitized labels tensor.
-    """
-    labels = labels.clone()  # Avoid modifying original tensor
-    # Replace invalid values with ignore_value
-    invalid_mask = ~torch.isin(labels, torch.tensor(valid_values, device=labels.device))
-    labels[invalid_mask] = ignore_value
-    return labels
-
-def preprocess_labels(labels, num_classes, ignore_value=255):
-    """
-    Preprocess labels for Lovasz loss:
-    - Normalize labels between [0, num_classes - 1].
-    - Set ignore_value for void labels.
-
-    Args:
-        labels (Tensor): Ground truth labels (on GPU or CPU).
-        num_classes (int): Number of classes.
-        ignore_value (int): Value to ignore in labels.
-    
-    Returns:
-        Tensor: Preprocessed labels (same device as input).
-    """
-    # Ensure labels are on the CPU for preprocessing
-    device = labels.device
-    labels = labels.cpu()
-    
-    # Create a mask for valid labels
-    valid_mask = (labels != ignore_value)
-    
-    # Check for unexpected values
-    if labels.max() > ignore_value:
-        raise ValueError("Unexpected values in the labels tensor. Check the label range.")
-    
-    # Normalize valid labels to range [0, num_classes - 1]
-    scaled_labels: torch.Tensor = labels.float() / (labels.max() + 1e-5) * (num_classes - 1)
-    scaled_labels = scaled_labels.long()
-    
-    # Set ignored labels back to ignore_value
-    scaled_labels[~valid_mask] = ignore_value
-    
-    # Move back to the original device
-    return scaled_labels.to(device)
-
-def debug_labels(labels):
-    print("Labels Tensor Info:")
-    print(f"Shape: {labels.shape}")
-    print(f"Device: {labels.device}")
-    print(f"Unique Values: {torch.unique(labels)}")
-    print(f"Min Value: {labels.min()}")
-    print(f"Max Value: {labels.max()}")
-
-
 class Trainer(object):
     def __init__(self, args):
         self.args = args
@@ -180,10 +118,6 @@ class Trainer(object):
             labels_loc = labels_loc.cuda().long()
             labels_clf = labels_clf.cuda().long()
 
-            # # mod 2025.08.08
-            # valid_values = [1, 2, 3, 4, 255]  # Valid classes + ignore value
-            # labels_clf = sanitize_labels(labels_clf, valid_values, ignore_value=255)
-
             valid_labels_clf = (labels_clf != 255).any()
             if not valid_labels_clf:
                continue
@@ -198,9 +132,6 @@ class Trainer(object):
             
             ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
             lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), labels_clf, ignore=255)
-            # # mod 2025.08.08
-            # preprocessed_labels = preprocess_labels(labels_clf, num_classes=4, ignore_value=255)
-            # lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), preprocessed_labels, ignore=255)
 
             final_loss = ce_loss_loc + ce_loss_clf + (0.5 * lovasz_loss_loc + 0.75 * lovasz_loss_clf)
             # final_loss = main_loss
@@ -357,16 +288,23 @@ def main():
             logging.StreamHandler() # log to stdout
         ]
     )
+    logging.log(logging.INFO, f"MAIN - START")
+
     args_copy = copy.deepcopy(vars(args))
     args_copy.pop("train_data_name_list")
     args_copy.pop("test_data_name_list")
     args_pretty = json.dumps(args_copy, indent=4)
     logging.log(logging.INFO, f"Command Line Args:\n{args_pretty}")
 
-
     trainer = Trainer(args)
     trainer.training()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+        logging.log(logging.INFO, f"MAIN - DONE.")
+    except Exception as exc:
+        logging.log(logging.ERROR, f"MAIN - ERROR: {exc}", exc_info=True, stack_info=True)
+    finally:
+        logging.log(logging.INFO, f"MAIN - EXIT.")

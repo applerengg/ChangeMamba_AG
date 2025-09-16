@@ -14,6 +14,13 @@ def img_loader(path):
     img = np.array(imageio.imread(path), np.float32)
     return img
 
+def label_img_loader(path: str):
+    """ will be used for label images (masks/targets). slightly different from img loader."""
+    img = imageio.imread(path)
+    if img.ndim == 3: # if loaded as RGB
+        img = img[..., 0] # ensure single channel labels
+    return np.array(img, np.uint8) # dtype is uint8 for labels (masks)
+
 
 def one_hot_encoding(image, num_classes=8):
     # Create a one hot encoded tensor
@@ -141,10 +148,11 @@ class SemanticChangeDetectionDatset(Dataset):
 
 
 class DamageAssessmentDatset(Dataset):
-    def __init__(self, dataset_path, data_list, crop_size, max_iters=None, type='train', data_loader=img_loader):
+    def __init__(self, dataset_path, data_list, crop_size, max_iters=None, type='train', data_loader=img_loader, label_mask_data_loader=label_img_loader):
         self.dataset_path = dataset_path
         self.data_list = data_list
         self.loader = data_loader
+        self.label_loader = label_mask_data_loader
         self.type = type
         self.data_pro_type = self.type
 
@@ -187,21 +195,22 @@ class DamageAssessmentDatset(Dataset):
 
         pre_img = self.loader(pre_path)
         post_img = self.loader(post_path)
-        loc_label = self.loader(loc_label_path)#[:,:,0]
-        clf_label = self.loader(clf_label_path)#[:,:,0]
+        loc_label = self.label_loader(loc_label_path)#[:,:,0]
+        clf_label = self.label_loader(clf_label_path)#[:,:,0]
 
         # --- enforce single channel labels
         if loc_label.ndim == 3: loc_label = loc_label[..., 0]
         if clf_label.ndim == 3: clf_label = clf_label[..., 0]
 
+        clf_label[clf_label == 0] = 255
 
         if 'train' in self.data_pro_type or 'tier3' in self.data_pro_type:
             pre_img, post_img, loc_label, clf_label = self.__transforms(True, pre_img, post_img, loc_label, clf_label)
-            clf_label[clf_label == 0] = 255
+            # clf_label[clf_label == 0] = 255 # 2025.09.14: applied for both train & test.
         else:
             pre_img, post_img, loc_label, clf_label = self.__transforms(False, pre_img, post_img, loc_label, clf_label)
-            loc_label = np.asarray(loc_label)
-            clf_label = np.asarray(clf_label)
+            loc_label = np.asarray(loc_label, dtype=np.uint8)
+            clf_label = np.asarray(clf_label, dtype=np.uint8)
 
         data_idx = self.data_list[index]
         return pre_img, post_img, loc_label, clf_label, data_idx
