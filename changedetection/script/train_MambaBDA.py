@@ -105,7 +105,7 @@ class Trainer(object):
         elem_num = len(self.train_data_loader)
         train_enumerator = enumerate(self.train_data_loader)
 
-        VAL_STEP = elem_num // 4
+        VAL_STEP = max(1, elem_num // 8)
         print(f"{VAL_STEP=}")
         logging.log(logging.INFO, f"{VAL_STEP=}")
 
