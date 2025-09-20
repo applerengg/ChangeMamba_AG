@@ -163,7 +163,18 @@ class DamageAssessmentDatset(Dataset):
 
     def __transforms(self, aug, pre_img, post_img, loc_label, clf_label):
         if aug:
-            pre_img, post_img, loc_label, clf_label = imutils.random_crop_bda(pre_img, post_img, loc_label, clf_label, self.crop_size)
+            crop_retries = 5
+            crop_min_building_ratio = 0.001 # 0.001 = 0.1% == 65.5 pixels in 256x256 crop
+            for i in range(crop_retries):
+                _pre_img, _post_img, _loc_label, _clf_label = imutils.random_crop_bda(pre_img, post_img, loc_label, clf_label, self.crop_size)
+                if np.count_nonzero((_clf_label != 255)) > (_clf_label.size * crop_min_building_ratio): # self.ignore
+                    # if i > 0: # DEBUG, will be removed.
+                    #     print(f"+++ Successful crop retry! (retry {i})")
+                    break
+            # else: # DEBUG, will be removed.
+            #     print(f"--- tried {crop_retries} times, couldnt achieve {crop_min_building_ratio}%. Current: {np.count_nonzero((_clf_label != 255))}")
+
+            pre_img, post_img, loc_label, clf_label = _pre_img, _post_img, _loc_label, _clf_label
             pre_img, post_img, loc_label, clf_label = imutils.random_fliplr_bda(pre_img, post_img, loc_label, clf_label)
             pre_img, post_img, loc_label, clf_label = imutils.random_flipud_bda(pre_img, post_img, loc_label, clf_label)
             pre_img, post_img, loc_label, clf_label = imutils.random_rot_bda(pre_img, post_img, loc_label, clf_label)

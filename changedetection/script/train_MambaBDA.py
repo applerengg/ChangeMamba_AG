@@ -109,6 +109,9 @@ class Trainer(object):
         print(f"{VAL_STEP=}")
         logging.log(logging.INFO, f"{VAL_STEP=}")
 
+        skipped_count = 0
+        valid_results: dict[int, tuple] = {} # key is iteration (step), value is whole validation result scores.
+
         for _ in tqdm(range(elem_num)):
             itera, data = train_enumerator.__next__()
             pre_change_imgs, post_change_imgs, labels_loc, labels_clf, data_name = data
@@ -120,8 +123,9 @@ class Trainer(object):
 
             valid_labels_clf = (labels_clf != 255).any()
             if not valid_labels_clf:
+               skipped_count += 1
+            #    logging.info(f"skipped step {itera} (total: {skipped_count})")
                continue
-            # labels_clf[labels_clf == 0] = 255
             
             output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
 
@@ -142,12 +146,13 @@ class Trainer(object):
 
             if (itera + 1) % 50 == 0:
                 now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                log = f'iter is {itera + 1} / {elem_num}, loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
+                log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
                 print(log)
                 logging.log(logging.INFO, log)
             if (itera + 1) % VAL_STEP == 0:
                 self.deep_model.eval()
                 loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
+                valid_results[itera+1] = loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
                 if oaf1 > best_kc:
                     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                     torch.save(self.deep_model.state_dict(),
@@ -162,8 +167,11 @@ class Trainer(object):
         print(log)
         logging.log(logging.INFO, log)
 
+        logging.info(f"!! Total Skipped: {skipped_count} ({skipped_count/elem_num * 100:.2f}%)")
+
         self.deep_model.eval()
         loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
+        valid_results[-1] = loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score # -1 means after training is completed.
         log = f"{loc_f1_score=}, {harmonic_mean_f1=}, {oaf1=}, {damage_f1_score=}"
         print(log)
         logging.log(logging.INFO, log)
@@ -175,6 +183,10 @@ class Trainer(object):
             best_kc = oaf1
             best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
         self.deep_model.train()
+
+        logging.info("Validation Results:")
+        for step, scores in valid_results.items():
+            logging.info(f"Step {step:>5}: {scores}")
 
         print('The accuracy of the best round is ', best_round)
         logging.log(logging.INFO, f'The accuracy of the best round is: {best_round}')
@@ -265,6 +277,8 @@ def main():
     parser.add_argument('--momentum', type=float, default=0.9)
     parser.add_argument('--weight_decay', type=float, default=5e-3)
 
+    parser.add_argument('--logfile', type=str, help="full path to log file")
+
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:
         # data_name_list = f.read()
@@ -279,7 +293,11 @@ def main():
     #*-- LOGGING INIT
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     model_name: str = args.model_type
-    logfile_path = f"/storage/alperengenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_{now}_{model_name}.log" # TODO get from args
+    if args.logfile is None:
+        print(" !! WARNING !! Log file parameter is empty, using default name for log file.")
+        logfile_path = f"/storage/alperengenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_{now}_{model_name}.log" # TODO get from args
+    else:
+        logfile_path = args.logfile
     logging.basicConfig(
         level=logging.INFO,  # INFO / DEBUG
         format="%(asctime)s | %(levelname)s | %(message)s",
