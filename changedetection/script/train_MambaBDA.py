@@ -71,8 +71,9 @@ class Trainer(object):
             use_checkpoint=config.TRAIN.USE_CHECKPOINT,
             ) 
         self.deep_model = self.deep_model.cuda()
-        self.model_save_path = os.path.join(args.model_param_path, args.dataset,
-                                            args.model_type + '_' + str(time.time()))
+        # self.model_save_path = os.path.join(args.model_param_path, args.dataset,
+        #                                     args.model_type + '_' + str(time.time()))
+        self.model_save_path = args.model_param_path
         self.lr = args.learning_rate
         self.epoch = args.max_iters // args.batch_size
 
@@ -131,6 +132,8 @@ class Trainer(object):
 
             self.optim.zero_grad()
 
+            # logging.info(torch.unique(output_loc)) # TODO: remove DEBUG
+            # logging.info(torch.unique(labels_loc)) # TODO: remove DEBUG
             ce_loss_loc = F.cross_entropy(output_loc, labels_loc, ignore_index=255)
             lovasz_loss_loc = L.lovasz_softmax(F.softmax(output_loc, dim=1), labels_loc, ignore=255)
             
@@ -197,7 +200,11 @@ class Trainer(object):
         logging.log(logging.INFO, '---------starting evaluation-----------')
         self.evaluator_loc.reset()
         self.evaluator_clf.reset()
-        dataset = DamageAssessmentDatset(self.args.test_dataset_path, self.args.test_data_name_list, 256, None, 'test')
+        if self.args.extension is None:
+            ext = "tif" if 'mwBTFreddy' in self.args.dataset else "png"
+        else: 
+            ext = self.args.extension
+        dataset = DamageAssessmentDatset(self.args.test_dataset_path, self.args.test_data_name_list, 256, None, 'test', extension=ext)
         val_data_loader = DataLoader(dataset, batch_size=1, num_workers=4, drop_last=False)
         torch.cuda.empty_cache()
 
@@ -245,7 +252,7 @@ class Trainer(object):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Training on xBD dataset")
+    parser = argparse.ArgumentParser(description="Training on Building Damage Assessment (xBD, mwBTFreddy, ...)")
     parser.add_argument('--cfg', type=str, default='/home/songjian/project/MambaCD/VMamba/classification/configs/vssm1/vssm_base_224.yaml')
     parser.add_argument(
         "--opts",
@@ -278,6 +285,7 @@ def main():
     parser.add_argument('--weight_decay', type=float, default=5e-3)
 
     parser.add_argument('--logfile', type=str, help="full path to log file")
+    parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
 
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:

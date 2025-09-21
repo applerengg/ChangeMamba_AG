@@ -1,5 +1,8 @@
 import sys
-sys.path.append('/home/songjian/project/MambaCD')
+# sys.path.append('/home/songjian/project/MambaCD')
+sys.path.append("/storage/alperengenc/change_detection/ChangeMamba_AG/")
+
+from datetime import datetime
 
 import argparse
 import os
@@ -20,6 +23,10 @@ from changedetection.models.ChangeMambaBDA import ChangeMambaBDA
 import imageio
 import numpy as np
 import seaborn as sns
+
+import logging
+import json
+import copy
 
 
 ori_label_value_dict = {
@@ -128,7 +135,11 @@ class Trainer(object):
 
     def infer(self):
         torch.cuda.empty_cache()
-        dataset = DamageAssessmentDatset(self.args.test_dataset_path, self.args.test_data_name_list, 256, None, 'test')
+        if self.args.extension is None:
+            ext = "tif" if 'mwBTFreddy' in self.args.dataset else "png"
+        else: 
+            ext = self.args.extension
+        dataset = DamageAssessmentDatset(self.args.test_dataset_path, self.args.test_data_name_list, 256, None, 'test', extension=ext)
         val_data_loader = DataLoader(dataset, batch_size=1, num_workers=4, drop_last=False)
         torch.cuda.empty_cache()
         self.total_evaluator_loc.reset()
@@ -136,6 +147,16 @@ class Trainer(object):
         # vbar = tqdm(val_data_loader, ncols=50)
         with torch.no_grad():
             for itera, data in enumerate(tqdm(val_data_loader)):
+                if itera % 10 == 0:
+
+                    loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
+                    damage_f1_score = self.total_evaluator_clf.Damage_F1_socore()
+                    harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
+                    oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
+
+                    log = f'inference: {itera:>4}/{len(val_data_loader):>4} | Current F1_overall: {oaf1 * 100:.3f}% (Clsf: {harmonic_mean_f1 * 100:.3f}%, Loc: {loc_f1_score * 100:.3f}%) [cumulative]'
+                    logging.info(log)
+
                 pre_change_imgs, post_change_imgs, labels_loc, labels_clf, names = data
 
                 pre_change_imgs = pre_change_imgs.cuda()
@@ -160,28 +181,27 @@ class Trainer(object):
                 labels_clf_eval = labels_clf[labels_loc > 0]
                 self.total_evaluator_clf.add_batch(labels_clf_eval, output_clf_eval)
 
+                if self.args.save_output_images:
+                    image_name = names[0] + '.png'
 
-                image_name = names[0] + '.png'
+                    output_loc = np.squeeze(output_loc)
+                    output_loc[output_loc > 0] = 255
 
-                output_loc = np.squeeze(output_loc)
-                output_loc[output_loc > 0] = 255
+                    output_clf = map_labels_to_colors(np.squeeze(output_clf), ori_label_value_dict=ori_label_value_dict, target_label_value_dict=target_label_value_dict)
+                    output_clf[output_loc == 0] = 0
 
-                output_clf = map_labels_to_colors(np.squeeze(output_clf), ori_label_value_dict=ori_label_value_dict, target_label_value_dict=target_label_value_dict)
-                output_clf[output_loc == 0] = 0
-
-                imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
-                imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
+                    imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
+                    imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
 
         loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
         damage_f1_score = self.total_evaluator_clf.Damage_F1_socore()
         harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
-        print(f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, '
-              f'sub class F1 score is {damage_f1_score}')
+        logging.info(f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, sub class F1 score is {damage_f1_score}')
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Inference on xBD dataset")
+    parser = argparse.ArgumentParser(description="Inference on Building Damage Assessment (xBD, mwBTFreddy, ...)")
     parser.add_argument('--cfg', type=str, default='/home/songjian/project/MambaCD/VMamba/classification/configs/vssm1/vssm_base_224.yaml')
     parser.add_argument(
         "--opts",
@@ -210,7 +230,33 @@ def main():
     parser.add_argument('--momentum', type=float, default=0.9)
     parser.add_argument('--weight_decay', type=float, default=5e-4)
 
+    parser.add_argument('--logfile', type=str, help="full path to log file")
+    parser.add_argument('--save_output_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_output_images" to set to False
+    parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
+
     args = parser.parse_args()
+
+    #*-- LOGGING INIT
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    model_name: str = args.model_type
+    if args.logfile is None:
+        print(" !! WARNING !! Log file parameter is empty, using default name for log file.")
+        logfile_path = f"/storage/alperengenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_{now}_{model_name}.log"
+    else:
+        logfile_path = args.logfile
+    logging.basicConfig(
+        level=logging.INFO,  # INFO / DEBUG
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        handlers=[
+            logging.FileHandler(logfile_path, mode="a"), # log to file
+            logging.StreamHandler() # log to stdout
+        ]
+    )
+    logging.info(f"MAIN - START")
+
+    args_copy = copy.deepcopy(vars(args))
+    args_pretty = json.dumps(args_copy, indent=4)
+    logging.info(f"Command Line Args:\n{args_pretty}")
 
     with open(args.test_data_list_path, "r") as f:
         # data_name_list = f.read()
@@ -222,4 +268,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+        logging.info(f"MAIN - DONE.")
+    except Exception as exc:
+        logging.info(f"MAIN - ERROR: {exc}", exc_info=True, stack_info=True)
+    finally:
+        logging.info(f"MAIN - EXIT.")

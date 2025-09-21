@@ -1,0 +1,48 @@
+2025-09-20 19:51:18,079 | INFO | MAIN - START
+2025-09-20 19:51:18,079 | INFO | Command Line Args:
+{
+    "cfg": "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": "/storage/alperengenc/change_detection/ChangeMamba_AG/pretrained_weight/vssm_base_0229_ckpt_epoch_237.pth",
+    "dataset": "mwBTFreddy",
+    "type": "train",
+    "train_dataset_path": "/storage/alperengenc/change_detection/mwBTFreddy_dataset/mwBTFreddy_v1.0",
+    "train_data_list_path": "/storage/alperengenc/change_detection/mwBTFreddy_dataset/mwBTFreddy_v1.0/train_list.txt",
+    "test_dataset_path": "/storage/alperengenc/change_detection/mwBTFreddy_dataset/mwBTFreddy_v1.0",
+    "test_data_list_path": "/storage/alperengenc/change_detection/mwBTFreddy_dataset/mwBTFreddy_v1.0/test_list.txt",
+    "shuffle": true,
+    "batch_size": 4,
+    "crop_size": 256,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 40000,
+    "model_type": "MambaBDA_Base",
+    "model_param_path": "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-09-20_19-51-16_MambaBDA_Base_mwBTFreddy",
+    "resume": null,
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.005,
+    "logfile": "/storage/alperengenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_2025-09-20_19-51-16_mwBTFreddy_MambaBDA_Base.log"
+}
+2025-09-20 19:51:19,438 | INFO | ---------starting training-----------
+2025-09-20 19:51:19,506 | INFO | VAL_STEP=1250
+2025-09-20 19:51:42,165 | INFO | iter is 50 / 10000 [skipped    0] | loc. loss = 0.5395588874816895  , classif. loss = 0.10064602643251419  (2025-09-20_19-51-42)
+2025-09-20 19:52:03,707 | INFO | iter is 100 / 10000 [skipped    0] | loc. loss = 0.5620957016944885  , classif. loss = 0.009435820393264294 (2025-09-20_19-52-03)
+2025-09-20 19:52:25,224 | INFO | iter is 150 / 10000 [skipped    0] | loc. loss = 0.22285106778144836 , classif. loss = 0.7691704630851746   (2025-09-20_19-52-25)
+2025-09-20 19:52:30,988 | ERROR | MAIN - ERROR: CUDA error: device-side assert triggered
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/script/train_MambaBDA.py", line 333, in <module>
+    main()
+  File "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/script/train_MambaBDA.py", line 328, in main
+    trainer.training()
+  File "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/script/train_MambaBDA.py", line 135, in training
+    ce_loss_loc = F.cross_entropy(output_loc, labels_loc, ignore_index=255)
+  File "/home/alperengenc/.local/lib/python3.10/site-packages/torch/nn/functional.py", line 3479, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(
+RuntimeError: CUDA error: device-side assert triggered
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Stack (most recent call last):
+  File "/storage/alperengenc/change_detection/ChangeMamba_AG/changedetection/script/train_MambaBDA.py", line 336, in <module>
+    logging.log(logging.ERROR, f"MAIN - ERROR: {exc}", exc_info=True, stack_info=True)
+2025-09-20 19:52:31,014 | INFO | MAIN - EXIT.

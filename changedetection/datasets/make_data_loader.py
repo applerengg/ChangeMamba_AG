@@ -148,13 +148,14 @@ class SemanticChangeDetectionDatset(Dataset):
 
 
 class DamageAssessmentDatset(Dataset):
-    def __init__(self, dataset_path, data_list, crop_size, max_iters=None, type='train', data_loader=img_loader, label_mask_data_loader=label_img_loader):
+    def __init__(self, dataset_path, data_list, crop_size, max_iters=None, type='train', data_loader=img_loader, label_mask_data_loader=label_img_loader, extension="png"):
         self.dataset_path = dataset_path
         self.data_list = data_list
         self.loader = data_loader
         self.label_loader = label_mask_data_loader
         self.type = type
         self.data_pro_type = self.type
+        self.extension = extension
 
         if max_iters is not None:
             self.data_list = self.data_list * int(np.ceil(float(max_iters) / len(self.data_list)))
@@ -194,8 +195,8 @@ class DamageAssessmentDatset(Dataset):
         #--- same for train and test (only self.dataset_path changes), so removed if-else (2025.09.13)
         parts = self.data_list[index].rsplit('_', 2)
 
-        pre_img_name  = f"{parts[0]}_pre_disaster.png"#_{parts[1]}_{parts[2]}.png"
-        post_img_name = f"{parts[0]}_post_disaster.png"#_{parts[1]}_{parts[2]}.png"
+        pre_img_name  = f"{parts[0]}_pre_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
+        post_img_name = f"{parts[0]}_post_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
         pre_trg_name  = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
         post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
 
@@ -305,8 +306,12 @@ def make_data_loader(args, **kwargs):  # **kwargs could be omitted
         data_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=args.shuffle, **kwargs, num_workers=16,
                                  drop_last=False)
         return data_loader
-    elif 'xBD' in args.dataset:
-        dataset = DamageAssessmentDatset(args.train_dataset_path, args.train_data_name_list, args.crop_size, args.max_iters, args.type)
+    elif 'xBD' in args.dataset or 'mwBTFreddy' in args.dataset:
+        if args.extension is None:
+            ext = "tif" if 'mwBTFreddy' in args.dataset else "png"
+        else: 
+            ext = args.extension
+        dataset = DamageAssessmentDatset(args.train_dataset_path, args.train_data_name_list, args.crop_size, args.max_iters, args.type, extension=ext)
         data_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=args.shuffle, **kwargs, num_workers=6,
                                  drop_last=False)
         return data_loader
