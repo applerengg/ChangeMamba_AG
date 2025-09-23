@@ -26,6 +26,63 @@ import changedetection.utils_func.lovasz_loss as L
 import logging
 import json
 import copy
+from typing import Sequence
+
+
+class FocalLossCE(torch.nn.Module):
+    def __init__(self, gamma: float = 2.0, alpha: Sequence[float] | torch.Tensor | None = None, ignore_index: int = 255):
+        super().__init__()
+        self.gamma = float(gamma)
+        self.ignore_index = int(ignore_index)
+        if alpha is not None:
+            # len(alpha) == C' (here 4 classes: [1,2,3,4])
+            alpha_tensor = torch.as_tensor(alpha, dtype=torch.float32)
+            #* register_buffer keeps tensor on correct device but not a trainable parameter
+            #* this creates self.alpha: torch.Tensor. For type hinting, type is written in the else block.
+            self.register_buffer("alpha", alpha_tensor)
+        else:
+            self.alpha: torch.Tensor | None = None
+
+    def forward(self, logits: torch.Tensor, targets: torch.Tensor):
+        """
+        Expects `logits: [B,C,H,W]`, `targets: [B,H,W]`.
+        Works with `B=1` as usual. If a single image is passed without batch, first `unsqueeze(0)` should be called.
+        """
+        valid = (targets != self.ignore_index)
+        if not valid.any():
+            return torch.zeros((), device=logits.device)
+        
+        # logits: [B,C,H,W], targets: [B,H,W] with {1..C', 255}
+        # 1) CE per pixel (ignored pixels produce 0 loss and 0 grad)
+        ce = F.cross_entropy(logits, targets, reduction="none", ignore_index=self.ignore_index) # [B,H,W]
+
+        # 2) pt = exp(-CE) => probabilities
+        with torch.no_grad():
+            pt = torch.exp(-ce)  # [B,H,W] in (0,1]
+
+        focal = (1.0 - pt) ** self.gamma * ce  # [B,H,W]
+
+        # 3) class weighting α (per true class)
+        if self.alpha is not None:
+            device = logits.device
+            a = self.alpha.to(device=device)
+
+            # Build safe class indices for gather
+            t_safe = targets.clone().to(device)
+            t_safe[~valid] = 1  # any valid class id in [1..C']; here choose 1
+            # Map class ids {1..C'} -> alpha index {0..C'-1}
+
+            # class ids are {1,2,3,4}; convert to 0-based indices {0,1,2,3}
+            idx = (t_safe - 1).view(-1) # [B*H*W]
+
+            alpha_per_pix = a.index_select(0, idx) # [B*H*W]
+            alpha_per_pix = alpha_per_pix.view_as(t_safe).to(focal.dtype) # [B,H,W]
+
+            focal = focal * alpha_per_pix # [B,H,W]
+
+        # 4) mean over valid pixels only
+        focal = focal[valid]
+        return focal.mean()
 
 
 class Trainer(object):
@@ -95,6 +152,12 @@ class Trainer(object):
         self.optim = optim.AdamW(self.deep_model.parameters(),
                                  lr=args.learning_rate,
                                  weight_decay=args.weight_decay)
+        if self.args.focal_loss:
+            alpha = [1.0, 2.3, 1.3, 1.1]
+            gamma = 2.0
+            logging.info(f"FOCAL LOSS params: {alpha = }, {gamma = }")
+            self.focal_loss_func = FocalLossCE(gamma=gamma, alpha=alpha, ignore_index=255)
+
 
     def training(self):
         print('---------starting training-----------')
@@ -132,37 +195,40 @@ class Trainer(object):
 
             self.optim.zero_grad()
 
-            # logging.info(torch.unique(output_loc)) # TODO: remove DEBUG
-            # logging.info(torch.unique(labels_loc)) # TODO: remove DEBUG
             ce_loss_loc = F.cross_entropy(output_loc, labels_loc, ignore_index=255)
             lovasz_loss_loc = L.lovasz_softmax(F.softmax(output_loc, dim=1), labels_loc, ignore=255)
-            
-            ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
+
+            if self.args.focal_loss:
+                ce_loss_clf = self.focal_loss_func(output_clf, labels_clf)
+            else:
+                ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
             lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), labels_clf, ignore=255)
 
             final_loss = ce_loss_loc + ce_loss_clf + (0.5 * lovasz_loss_loc + 0.75 * lovasz_loss_clf)
-            # final_loss = main_loss
 
             final_loss.backward()
 
             self.optim.step()
 
             if (itera + 1) % 50 == 0:
-                now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<20}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<20} ({now})'
+                log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<.10f}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<.10f}'
                 print(log)
                 logging.log(logging.INFO, log)
             if (itera + 1) % VAL_STEP == 0:
-                self.deep_model.eval()
-                loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
-                valid_results[itera+1] = loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
-                if oaf1 > best_kc:
-                    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                    torch.save(self.deep_model.state_dict(),
-                                os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
-                    best_kc = oaf1
-                    best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
-                self.deep_model.train()
+                try:
+                    self.deep_model.eval()
+                    loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
+                    valid_results[itera+1] = loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
+                    if oaf1 > best_kc:
+                        model_save_path = os.path.join(self.model_save_path, f'model_step{itera + 1}.pth')
+                        torch.save(self.deep_model.state_dict(), model_save_path)
+                        logging.info(f"Model saved in: {model_save_path}")
+                        best_kc = oaf1
+                        best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+                except Exception as exc:
+                    logging.error(f"VALIDATION - ERRROR: {exc}", exc_info=True, stack_info=True)
+                finally:
+                    self.deep_model.train()
 
 
         #*-- Validation after training
@@ -180,9 +246,9 @@ class Trainer(object):
         logging.log(logging.INFO, log)
 
         if oaf1 > best_kc:
-            now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            torch.save(self.deep_model.state_dict(),
-                        os.path.join(self.model_save_path, f'{itera + 1}_model_{now}.pth'))
+            model_save_path = os.path.join(self.model_save_path, f'model_step{itera + 1}.pth')
+            torch.save(self.deep_model.state_dict(), model_save_path)
+            logging.info(f"Model saved in: {model_save_path}")
             best_kc = oaf1
             best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
         self.deep_model.train()
@@ -242,12 +308,27 @@ class Trainer(object):
                 self.evaluator_clf.add_batch(labels_clf, output_clf)
 
         loc_f1_score = self.evaluator_loc.Pixel_F1_score()
-        damage_f1_score = self.evaluator_clf.Damage_F1_socore()
+        damage_f1_score: np.ndarray = self.evaluator_clf.Damage_F1_socore()
         harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
-        print(f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, '
-              f'sub class F1 score is {damage_f1_score}')
-        logging.log(logging.INFO, f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, sub class F1 score is {damage_f1_score}')
+
+        # Make the scores more readable
+        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
+        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
+        oaf1             = np.round(oaf1             * 100, 4)
+        for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
+
+        # print the confusion matrices
+        conf_loc_count = np.array(self.evaluator_loc.confusion_matrix, dtype=np.int64)
+        conf_clf_count = np.array(self.evaluator_clf.confusion_matrix, dtype=np.int64)
+        conf_loc_norm = conf_loc_count / conf_loc_count.astype(np.float64).sum(axis=1, keepdims=True)
+        conf_clf_norm = conf_clf_count / conf_clf_count.astype(np.float64).sum(axis=1, keepdims=True)
+        logging.info(f"Confusion Matrix of Localization:\n{conf_loc_count}")
+        logging.info(f"Confusion Matrix of Localization - Normalized:\n{conf_loc_norm}")
+        logging.info(f"Confusion Matrix of Classification:\n{conf_clf_count}")
+        logging.info(f"Confusion Matrix of Classification - Normalized:\n{conf_clf_norm}")
+
+        logging.info(f'lofF1 is {loc_f1_score:.4f}, clfF1 is {harmonic_mean_f1:.4f}, oaF1 is {oaf1:.4f}, sub class F1 score is {damage_f1_score}')
         return loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
 
 
@@ -286,6 +367,7 @@ def main():
 
     parser.add_argument('--logfile', type=str, help="full path to log file")
     parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
+    parser.add_argument('--focal_loss', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:
@@ -315,6 +397,7 @@ def main():
         ]
     )
     logging.log(logging.INFO, f"MAIN - START")
+    logging.info(f" > FOCAL LOSS set to {args.focal_loss}")
 
     args_copy = copy.deepcopy(vars(args))
     args_copy.pop("train_data_name_list")

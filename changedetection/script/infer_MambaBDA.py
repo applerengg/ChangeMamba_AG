@@ -194,10 +194,27 @@ class Trainer(object):
                     imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
 
         loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
-        damage_f1_score = self.total_evaluator_clf.Damage_F1_socore()
+        damage_f1_score: np.ndarray = self.total_evaluator_clf.Damage_F1_socore()
         harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
-        logging.info(f'lofF1 is {loc_f1_score}, clfF1 is {harmonic_mean_f1}, oaF1 is {oaf1}, sub class F1 score is {damage_f1_score}')
+
+        # Make the scores more readable
+        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
+        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
+        oaf1             = np.round(oaf1             * 100, 4)
+        for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
+
+        # print the confusion matrices
+        conf_loc_count = np.array(self.total_evaluator_loc.confusion_matrix, dtype=np.int64)
+        conf_clf_count = np.array(self.total_evaluator_clf.confusion_matrix, dtype=np.int64)
+        conf_loc_norm = conf_loc_count / conf_loc_count.astype(np.float64).sum(axis=1, keepdims=True)
+        conf_clf_norm = conf_clf_count / conf_clf_count.astype(np.float64).sum(axis=1, keepdims=True)
+        logging.info(f"Confusion Matrix of Localization:\n{conf_loc_count}")
+        logging.info(f"Confusion Matrix of Localization - Normalized:\n{conf_loc_norm}")
+        logging.info(f"Confusion Matrix of Classification:\n{conf_clf_count}")
+        logging.info(f"Confusion Matrix of Classification - Normalized:\n{conf_clf_norm}")
+
+        logging.info(f'lofF1 is {loc_f1_score:.4f}, clfF1 is {harmonic_mean_f1:.4f}, oaF1 is {oaf1:.4f}, sub class F1 score is {damage_f1_score}')
 
 
 def main():
