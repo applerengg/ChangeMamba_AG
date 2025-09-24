@@ -153,8 +153,9 @@ class Trainer(object):
                                  lr=args.learning_rate,
                                  weight_decay=args.weight_decay)
         if self.args.focal_loss:
-            alpha = [1.0, 2.3, 1.3, 1.1]
-            gamma = 2.0
+            # alpha = [1.0, 2.3, 1.3, 1.1] # high priority to minor damage
+            alpha = [0.6, 1.6, 1.1, 1.1] # closer to inverse frequencies
+            gamma = 1.5
             logging.info(f"FOCAL LOSS params: {alpha = }, {gamma = }")
             self.focal_loss_func = FocalLossCE(gamma=gamma, alpha=alpha, ignore_index=255)
 
@@ -199,7 +200,10 @@ class Trainer(object):
             lovasz_loss_loc = L.lovasz_softmax(F.softmax(output_loc, dim=1), labels_loc, ignore=255)
 
             if self.args.focal_loss:
-                ce_loss_clf = self.focal_loss_func(output_clf, labels_clf)
+                # hybrid CE and FOCAL combination
+                ce_plain = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
+                ce_focal = self.focal_loss_func(output_clf, labels_clf)
+                ce_loss_clf = 0.5 * ce_plain + 0.5 * ce_focal
             else:
                 ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
             lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), labels_clf, ignore=255)
