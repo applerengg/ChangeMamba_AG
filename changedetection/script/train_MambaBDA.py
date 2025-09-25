@@ -1,6 +1,7 @@
 import sys
 # sys.path.append('/home/songjian/project/MambaCD')
-sys.path.append("/storage/alperengenc/change_detection/ChangeMamba_AG/")
+# sys.path.append("/storage/alperengenc/change_detection/ChangeMamba_AG/")
+sys.path.append("/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/")
 
 from datetime import datetime
 
