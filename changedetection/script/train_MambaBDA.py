@@ -219,7 +219,8 @@ class Trainer(object):
                 log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<.10f}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<.10f}'
                 print(log)
                 logging.log(logging.INFO, log)
-            if (itera + 1) % VAL_STEP == 0:
+            is_last_step = (itera + 1 >= elem_num)
+            if (itera + 1) % VAL_STEP == 0 and not is_last_step: # do not start validation in the last step, final validation will be started after training ends.
                 try:
                     self.deep_model.eval()
                     loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()

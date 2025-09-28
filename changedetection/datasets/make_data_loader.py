@@ -189,16 +189,25 @@ class DamageAssessmentDatset(Dataset):
         return pre_img, post_img, loc_label, clf_label
 
     def __getitem__(self, index):
-        #--- content: 
-        #--- self.data_list[index] = 'portugal-wildfire_00000976_post_disaster'
-        #--- parts = 0: 'portugal-wildfire_00000976_post_disaster', 1: 'post', 2: 'disaster'
-        #--- same for train and test (only self.dataset_path changes), so removed if-else (2025.09.13)
-        parts = self.data_list[index].rsplit('_', 2)
+        if len(self.data_list[index].split("_")) == 2:
+            #--- content: 
+            #--- self.data_list[index] = 'portugal-wildfire_00000976'
+            pre_img_name  = f"{self.data_list[index]}_pre_disaster.{self.extension}"
+            post_img_name = f"{self.data_list[index]}_post_disaster.{self.extension}"
+            pre_trg_name  = f"{self.data_list[index]}_pre_disaster_target.png"
+            post_trg_name = f"{self.data_list[index]}_post_disaster_target.png"
+        
+        else:
+            #--- content: 
+            #--- self.data_list[index] = 'portugal-wildfire_00000976_post_disaster'
+            #--- parts = 0: 'portugal-wildfire_00000976', 1: 'post', 2: 'disaster'
+            #--- same for train and test (only self.dataset_path changes), so removed if-else (2025.09.13)
+            parts = self.data_list[index].rsplit('_', 2)
 
-        pre_img_name  = f"{parts[0]}_pre_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
-        post_img_name = f"{parts[0]}_post_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
-        pre_trg_name  = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
-        post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
+            pre_img_name  = f"{parts[0]}_pre_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
+            post_img_name = f"{parts[0]}_post_disaster.{self.extension}"#_{parts[1]}_{parts[2]}.{self.extension}"
+            pre_trg_name  = f"{parts[0]}_pre_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
+            post_trg_name = f"{parts[0]}_post_disaster_target.png"#_{parts[1]}_{parts[2]}.png"
 
         pre_path       = os.path.join(self.dataset_path, 'images', pre_img_name)
         post_path      = os.path.join(self.dataset_path, 'images', post_img_name)
@@ -306,7 +315,7 @@ def make_data_loader(args, **kwargs):  # **kwargs could be omitted
         data_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=args.shuffle, **kwargs, num_workers=16,
                                  drop_last=False)
         return data_loader
-    elif ('xBD' in args.dataset) or ('mwBTFreddy' in args.dataset) or ('EarthquakeTurkey' in args.dataset):
+    elif ('xBD' in args.dataset) or ('mwBTFreddy' in args.dataset) or ('EarthquakeTurkey' in args.dataset) or ('HurricaneIda' in args.dataset):
         if args.extension is None:
             ext = "tif" if 'mwBTFreddy' in args.dataset else "png"
         else: 
