@@ -29,6 +29,8 @@ import json
 import copy
 from typing import Sequence
 
+from changedetection.models.alignment_module import AlignmentArgs
+
 
 class FocalLossCE(torch.nn.Module):
     def __init__(self, gamma: float = 2.0, alpha: Sequence[float] | torch.Tensor | None = None, ignore_index: int = 255):
@@ -96,9 +98,16 @@ class Trainer(object):
         self.evaluator_loc = Evaluator(num_class=2)
         self.evaluator_clf = Evaluator(num_class=5)
 
+        if args.enable_alignment:
+            alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+        else:
+            alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+        logging.info(f" > ALIGNMENT params: {alignment_args = }")
+
         self.deep_model = ChangeMambaBDA(
             output_building=2, output_damage=5, 
             pretrained=args.pretrained_weight_path,
+            alignment_args=alignment_args,
             patch_size=config.MODEL.VSSM.PATCH_SIZE, 
             in_chans=config.MODEL.VSSM.IN_CHANS, 
             num_classes=config.MODEL.NUM_CLASSES, 
@@ -157,7 +166,7 @@ class Trainer(object):
             # alpha = [1.0, 2.3, 1.3, 1.1] # high priority to minor damage
             alpha = [0.6, 1.6, 1.1, 1.1] # closer to inverse frequencies
             gamma = 1.5
-            logging.info(f"FOCAL LOSS params: {alpha = }, {gamma = }")
+            logging.info(f" > FOCAL LOSS params: {alpha = }, {gamma = }")
             self.focal_loss_func = FocalLossCE(gamma=gamma, alpha=alpha, ignore_index=255)
 
 
@@ -237,13 +246,18 @@ class Trainer(object):
                     self.deep_model.train()
 
 
-        #*-- Validation after training
         log = "-----------Training is completed-----------"
         print(log)
         logging.log(logging.INFO, log)
 
+        #* After training is complete, save the model regardless of the best score (the final version after training should be stored, while validating it may not have been saved due to errors etc.)
+        model_save_path = os.path.join(self.model_save_path, f'model_step{itera + 1}_last.pth')
+        torch.save(self.deep_model.state_dict(), model_save_path)
+        logging.info(f"Model saved in: {model_save_path}")
+
         logging.info(f"!! Total Skipped: {skipped_count} ({skipped_count/elem_num * 100:.2f}%)")
 
+        #*-- Validation after training
         self.deep_model.eval()
         loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score = self.validation()
         valid_results[-1] = loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score # -1 means after training is completed.
@@ -252,9 +266,10 @@ class Trainer(object):
         logging.log(logging.INFO, log)
 
         if oaf1 > best_kc:
-            model_save_path = os.path.join(self.model_save_path, f'model_step{itera + 1}.pth')
-            torch.save(self.deep_model.state_dict(), model_save_path)
-            logging.info(f"Model saved in: {model_save_path}")
+            #* model already saved above, after training is completed, so do not save here.
+            # model_save_path = os.path.join(self.model_save_path, f'model_step{itera + 1}.pth')
+            # torch.save(self.deep_model.state_dict(), model_save_path)
+            # logging.info(f"Model saved in: {model_save_path}")
             best_kc = oaf1
             best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
         self.deep_model.train()
@@ -374,6 +389,7 @@ def main():
     parser.add_argument('--logfile', type=str, help="full path to log file")
     parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
     parser.add_argument('--focal_loss', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_alignment', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:
@@ -404,6 +420,7 @@ def main():
     )
     logging.log(logging.INFO, f"MAIN - START")
     logging.info(f" > FOCAL LOSS set to {args.focal_loss}")
+    logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
 
     args_copy = copy.deepcopy(vars(args))
     args_copy.pop("train_data_name_list")

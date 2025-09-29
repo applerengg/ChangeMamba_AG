@@ -29,6 +29,8 @@ import logging
 import json
 import copy
 
+from changedetection.models.alignment_module import AlignmentArgs
+
 
 ori_label_value_dict = {
     'background': (0, 0, 0),
@@ -74,9 +76,16 @@ class Trainer(object):
         self.total_evaluator_loc = Evaluator(num_class=2)
         self.total_evaluator_clf = Evaluator(num_class=5)
 
+        if args.enable_alignment:
+            alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+        else:
+            alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+        logging.info(f" > ALIGNMENT params: {alignment_args = }")
+
         self.deep_model = ChangeMambaBDA(
             output_building=2, output_damage=5,
             pretrained=args.pretrained_weight_path,
+            alignment_args=alignment_args,
             patch_size=config.MODEL.VSSM.PATCH_SIZE, 
             in_chans=config.MODEL.VSSM.IN_CHANS, 
             num_classes=config.MODEL.NUM_CLASSES, 
@@ -251,6 +260,7 @@ def main():
     parser.add_argument('--logfile', type=str, help="full path to log file")
     parser.add_argument('--save_output_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_output_images" to set to False
     parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
+    parser.add_argument('--enable_alignment', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
 
@@ -271,6 +281,7 @@ def main():
         ]
     )
     logging.info(f"MAIN - START")
+    logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
 
     args_copy = copy.deepcopy(vars(args))
     args_pretty = json.dumps(args_copy, indent=4)

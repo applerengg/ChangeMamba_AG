@@ -1,0 +1,145 @@
+2025-09-28 22:02:45,713 | INFO | MAIN - START
+2025-09-28 22:02:45,713 | INFO |  > ALINGNMENT set to True
+2025-09-28 22:02:45,713 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "xBD2",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test/test_list2.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-09-28_22-02-43",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-09-27_14-47-52_MambaBDA_Base_xBD2_FOCAL/model_step50000.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_tr2025-09-27_14-47-52_MambaBDA_Base_xBD2_FOCAL_on_xBD2.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": true
+}
+2025-09-28 22:02:45,716 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+2025-09-28 22:02:45,716 | INFO | ChangeMambaBDA class
+2025-09-28 22:02:47,463 | INFO | inference:    0/ 933 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-09-28 22:02:47,820 | INFO | _maybe_to_nchw if block
+2025-09-28 22:02:47,820 | INFO | _maybe_to_nchw if block
+2025-09-28 22:02:47,988 | INFO | MAIN - ERROR: Given groups=1, weight of size [128, 1024, 1, 1], expected input[1, 32, 1024, 32] to have 1024 channels, but got 32 channels instead
+Traceback (most recent call last):
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/script/infer_MambaBDA.py", line 301, in <module>
+    main()
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/script/infer_MambaBDA.py", line 296, in main
+    trainer.infer()
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/script/infer_MambaBDA.py", line 178, in infer
+    output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/models/ChangeMambaBDA.py", line 143, in forward
+    output_building = self.decoder_building(pre_features)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/models/SemanticDecoder.py", line 74, in forward
+    p4 = self.st_block_4_semantic(feat_4)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/alpgenc/miniconda3/envs/changemamba2/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+RuntimeError: Given groups=1, weight of size [128, 1024, 1, 1], expected input[1, 32, 1024, 32] to have 1024 channels, but got 32 channels instead
+Stack (most recent call last):
+  File "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/script/infer_MambaBDA.py", line 304, in <module>
+    logging.info(f"MAIN - ERROR: {exc}", exc_info=True, stack_info=True)
+2025-09-28 22:02:47,991 | INFO | MAIN - EXIT.
+2025-09-28 22:03:31,221 | INFO | MAIN - START
+2025-09-28 22:03:31,221 | INFO |  > ALINGNMENT set to True
+2025-09-28 22:03:31,221 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "xBD2",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test/test_list2.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-09-28_22-03-29",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-09-27_14-47-52_MambaBDA_Base_xBD2_FOCAL/model_step50000.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_tr2025-09-27_14-47-52_MambaBDA_Base_xBD2_FOCAL_on_xBD2.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": true
+}
+2025-09-28 22:03:31,223 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+2025-09-28 22:03:31,223 | INFO | ChangeMambaBDA class
+2025-09-28 22:03:33,087 | INFO | inference:    0/ 933 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-09-28 22:03:38,511 | INFO | inference:   10/ 933 | Current F1_overall: 56.909% (Clsf: 45.773%, Loc: 82.893%) [cumulative]
+2025-09-28 22:03:43,653 | INFO | inference:   20/ 933 | Current F1_overall: 60.381% (Clsf: 50.474%, Loc: 83.498%) [cumulative]
+2025-09-28 22:03:48,816 | INFO | inference:   30/ 933 | Current F1_overall: 72.146% (Clsf: 66.472%, Loc: 85.383%) [cumulative]
+2025-09-28 22:03:53,960 | INFO | inference:   40/ 933 | Current F1_overall: 70.734% (Clsf: 64.594%, Loc: 85.062%) [cumulative]
+2025-09-28 22:03:59,176 | INFO | inference:   50/ 933 | Current F1_overall: 76.598% (Clsf: 72.614%, Loc: 85.893%) [cumulative]
+2025-09-28 22:04:04,296 | INFO | inference:   60/ 933 | Current F1_overall: 76.918% (Clsf: 73.143%, Loc: 85.728%) [cumulative]
+2025-09-28 22:04:09,474 | INFO | inference:   70/ 933 | Current F1_overall: 77.673% (Clsf: 74.448%, Loc: 85.200%) [cumulative]
+2025-09-28 22:04:14,641 | INFO | inference:   80/ 933 | Current F1_overall: 79.046% (Clsf: 75.893%, Loc: 86.404%) [cumulative]
+2025-09-28 22:04:19,764 | INFO | inference:   90/ 933 | Current F1_overall: 78.079% (Clsf: 74.484%, Loc: 86.467%) [cumulative]
+2025-09-28 22:04:24,884 | INFO | inference:  100/ 933 | Current F1_overall: 78.977% (Clsf: 75.700%, Loc: 86.625%) [cumulative]
+2025-09-28 22:04:29,516 | INFO | inference:  110/ 933 | Current F1_overall: 77.299% (Clsf: 73.421%, Loc: 86.347%) [cumulative]
+2025-09-28 22:04:34,076 | INFO | inference:  120/ 933 | Current F1_overall: 78.330% (Clsf: 74.944%, Loc: 86.231%) [cumulative]
+2025-09-28 22:04:38,499 | INFO | inference:  130/ 933 | Current F1_overall: 77.947% (Clsf: 74.336%, Loc: 86.372%) [cumulative]
+2025-09-28 22:04:42,926 | INFO | inference:  140/ 933 | Current F1_overall: 80.072% (Clsf: 77.448%, Loc: 86.194%) [cumulative]
+2025-09-28 22:04:47,371 | INFO | inference:  150/ 933 | Current F1_overall: 80.735% (Clsf: 78.361%, Loc: 86.276%) [cumulative]
+2025-09-28 22:04:52,695 | INFO | inference:  160/ 933 | Current F1_overall: 80.801% (Clsf: 78.372%, Loc: 86.467%) [cumulative]
+2025-09-28 22:04:58,016 | INFO | inference:  170/ 933 | Current F1_overall: 80.615% (Clsf: 78.069%, Loc: 86.554%) [cumulative]
+2025-09-28 22:05:03,065 | INFO | inference:  180/ 933 | Current F1_overall: 80.895% (Clsf: 78.410%, Loc: 86.693%) [cumulative]
+2025-09-28 22:05:08,202 | INFO | inference:  190/ 933 | Current F1_overall: 81.682% (Clsf: 79.572%, Loc: 86.606%) [cumulative]
+2025-09-28 22:05:13,325 | INFO | inference:  200/ 933 | Current F1_overall: 81.376% (Clsf: 79.177%, Loc: 86.506%) [cumulative]
+2025-09-28 22:05:18,507 | INFO | inference:  210/ 933 | Current F1_overall: 81.334% (Clsf: 79.059%, Loc: 86.642%) [cumulative]
+2025-09-28 22:05:23,636 | INFO | inference:  220/ 933 | Current F1_overall: 81.092% (Clsf: 78.771%, Loc: 86.509%) [cumulative]
+2025-09-28 22:05:28,805 | INFO | inference:  230/ 933 | Current F1_overall: 81.184% (Clsf: 78.928%, Loc: 86.447%) [cumulative]
+2025-09-28 22:05:33,943 | INFO | inference:  240/ 933 | Current F1_overall: 81.184% (Clsf: 78.973%, Loc: 86.342%) [cumulative]
+2025-09-28 22:05:39,068 | INFO | inference:  250/ 933 | Current F1_overall: 81.201% (Clsf: 79.006%, Loc: 86.325%) [cumulative]
+2025-09-28 22:05:44,212 | INFO | inference:  260/ 933 | Current F1_overall: 80.720% (Clsf: 78.280%, Loc: 86.412%) [cumulative]
+2025-09-28 22:05:49,347 | INFO | inference:  270/ 933 | Current F1_overall: 80.707% (Clsf: 78.304%, Loc: 86.316%) [cumulative]
+2025-09-28 22:05:54,474 | INFO | inference:  280/ 933 | Current F1_overall: 80.593% (Clsf: 78.099%, Loc: 86.412%) [cumulative]
+2025-09-28 22:05:59,582 | INFO | inference:  290/ 933 | Current F1_overall: 80.356% (Clsf: 77.859%, Loc: 86.182%) [cumulative]
+2025-09-28 22:06:04,747 | INFO | inference:  300/ 933 | Current F1_overall: 80.241% (Clsf: 77.732%, Loc: 86.093%) [cumulative]
+2025-09-28 22:06:09,876 | INFO | inference:  310/ 933 | Current F1_overall: 79.589% (Clsf: 76.871%, Loc: 85.930%) [cumulative]
+2025-09-28 22:06:15,035 | INFO | inference:  320/ 933 | Current F1_overall: 79.555% (Clsf: 76.800%, Loc: 85.984%) [cumulative]
+2025-09-28 22:06:20,187 | INFO | inference:  330/ 933 | Current F1_overall: 79.641% (Clsf: 76.950%, Loc: 85.919%) [cumulative]
+2025-09-28 22:06:25,347 | INFO | inference:  340/ 933 | Current F1_overall: 79.802% (Clsf: 77.161%, Loc: 85.964%) [cumulative]
+2025-09-28 22:06:30,458 | INFO | inference:  350/ 933 | Current F1_overall: 79.573% (Clsf: 76.811%, Loc: 86.019%) [cumulative]
+2025-09-28 22:06:35,591 | INFO | inference:  360/ 933 | Current F1_overall: 79.410% (Clsf: 76.597%, Loc: 85.974%) [cumulative]
+2025-09-28 22:06:40,719 | INFO | inference:  370/ 933 | Current F1_overall: 78.937% (Clsf: 75.945%, Loc: 85.916%) [cumulative]
+2025-09-28 22:06:45,878 | INFO | inference:  380/ 933 | Current F1_overall: 79.924% (Clsf: 77.444%, Loc: 85.709%) [cumulative]
