@@ -30,6 +30,7 @@ import json
 import copy
 
 from changedetection.models.alignment_module import AlignmentArgs
+from changedetection.models.attn_gate import AttentionGateArgs
 
 
 ori_label_value_dict = {
@@ -82,10 +83,14 @@ class Trainer(object):
             alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
         logging.info(f" > ALIGNMENT params: {alignment_args = }")
 
+        attn_gate_args = AttentionGateArgs(enable_building_ag = args.enable_attn_gate_building, enable_damage_ag=args.enable_attn_gate_damage)
+        logging.info(f" > ATTENTION GATE params: {attn_gate_args = }")
+
         self.deep_model = ChangeMambaBDA(
             output_building=2, output_damage=5,
             pretrained=args.pretrained_weight_path,
             alignment_args=alignment_args,
+            attn_gate_args=attn_gate_args,
             patch_size=config.MODEL.VSSM.PATCH_SIZE, 
             in_chans=config.MODEL.VSSM.IN_CHANS, 
             num_classes=config.MODEL.NUM_CLASSES, 
@@ -261,6 +266,8 @@ def main():
     parser.add_argument('--save_output_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_output_images" to set to False
     parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
     parser.add_argument('--enable_alignment', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_attn_gate_building', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
 
@@ -282,6 +289,7 @@ def main():
     )
     logging.info(f"MAIN - START")
     logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
+    logging.info(f" > ATTENTION GATE set to -> Building: {args.enable_attn_gate_building}, Damage: {args.enable_attn_gate_damage}")
 
     args_copy = copy.deepcopy(vars(args))
     args_pretty = json.dumps(args_copy, indent=4)

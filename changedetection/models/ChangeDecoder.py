@@ -3,9 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
 
+from changedetection.models.attn_gate import AttentionGate2d
 
 class ChangeDecoder(nn.Module):
-    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, **kwargs):
+    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, enable_attention_gate = False, **kwargs):
         super(ChangeDecoder, self).__init__()
 
         # Define the VSS Block for Spatio-temporal relationship modelling
@@ -148,6 +149,14 @@ class ChangeDecoder(nn.Module):
         self.smooth_layer_3 = ResBlock(in_channels=128, out_channels=128, stride=1) 
         self.smooth_layer_2 = ResBlock(in_channels=128, out_channels=128, stride=1) 
         self.smooth_layer_1 = ResBlock(in_channels=128, out_channels=128, stride=1) 
+
+        self.enable_attention_gate = enable_attention_gate
+        if self.enable_attention_gate:
+            # Fused tensors p4,p3,p2,p1 are 128-ch. Use the same width for gates.
+            self.ag3 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate p3 with p4
+            self.ag2 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate p2 with p3
+            self.ag1 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate p1 with p2
+
     
     def _upsample_add(self, x, y):
         _, _, H, W = y.size()
@@ -197,6 +206,8 @@ class ChangeDecoder(nn.Module):
         p33 = self.st_block_33(ct_tensor_33)
 
         p3 = self.fuse_layer_3(torch.cat([p31, p32[:, :, :, ::2], p32[:, :, :, 1::2], p33[:, :, :, 0:W], p33[:, :, :, W:]], dim=1))
+        if self.enable_attention_gate:
+            p3 = self.ag3(p3, p4) # Gate the Stage-II skip (p3) using current decoder feature p4
         p3 = self._upsample_add(p4, p3)
         p3 = self.smooth_layer_3(p3)
        
@@ -218,6 +229,8 @@ class ChangeDecoder(nn.Module):
         p23 = self.st_block_23(ct_tensor_23)
 
         p2 = self.fuse_layer_2(torch.cat([p21, p22[:, :, :, ::2], p22[:, :, :, 1::2], p23[:, :, :, 0:W], p23[:, :, :, W:]], dim=1))
+        if self.enable_attention_gate:
+            p2 = self.ag2(p2, p3) # Gate the Stage-III skip (p2) using current decoder feature p3
         p2 = self._upsample_add(p3, p2)
         p2 = self.smooth_layer_2(p2)
        
@@ -239,7 +252,8 @@ class ChangeDecoder(nn.Module):
         p13 = self.st_block_13(ct_tensor_13)
 
         p1 = self.fuse_layer_1(torch.cat([p11, p12[:, :, :, ::2], p12[:, :, :, 1::2], p13[:, :, :, 0:W], p13[:, :, :, W:]], dim=1))
-
+        if self.enable_attention_gate:
+            p1 = self.ag1(p1, p2) # Gate the Stage-IV skip (p1) using current decoder feature p2
         p1 = self._upsample_add(p2, p1)
         p1 = self.smooth_layer_1(p1)
 

@@ -3,9 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
 
+from changedetection.models.attn_gate import AttentionGate2d
 
 class SemanticDecoder(nn.Module):
-    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, **kwargs):
+    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, enable_attention_gate = False, **kwargs):
         super(SemanticDecoder, self).__init__()
 
         # Define the VSS Block for Spatio-temporal relationship modelling
@@ -60,6 +61,14 @@ class SemanticDecoder(nn.Module):
         self.smooth_layer_2_semantic = ResBlock(in_channels=128, out_channels=128, stride=1) 
         self.smooth_layer_1_semantic = ResBlock(in_channels=128, out_channels=128, stride=1) 
         self.smooth_layer_0_semantic = ResBlock(in_channels=128, out_channels=128, stride=1) 
+
+        self.enable_attention_gate = enable_attention_gate
+        if self.enable_attention_gate:
+            # All fusion tensors at these points are 128-ch above.
+            self.ag3 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate feat_3 skip using p4 (Stage II skip)
+            self.ag2 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate feat_2 skip using p3 (Stage III skip)
+            self.ag1 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate feat_1 skip using p2 (Stage IV skip)
+
     
     def _upsample_add(self, x, y):
         _, _, H, W = y.size()
@@ -77,6 +86,8 @@ class SemanticDecoder(nn.Module):
             Stage II
         '''
         p3 = self.trans_layer_3(feat_3)
+        if self.enable_attention_gate: 
+            p3 = self.ag3(p3, p4) # gate skip by p4
         p3 = self._upsample_add(p4, p3)
         p3 = self.smooth_layer_3_semantic(p3)
         p3 = self.st_block_3_semantic(p3)
@@ -85,6 +96,8 @@ class SemanticDecoder(nn.Module):
             Stage III
         '''
         p2 = self.trans_layer_2(feat_2)
+        if self.enable_attention_gate:
+            p2 = self.ag2(p2, p3)
         p2 = self._upsample_add(p3, p2)
         p2 = self.smooth_layer_2_semantic(p2)
         p2 = self.st_block_2_semantic(p2)
@@ -93,6 +106,8 @@ class SemanticDecoder(nn.Module):
             Stage IV
         '''
         p1 = self.trans_layer_1(feat_1)
+        if self.enable_attention_gate:
+            p1 = self.ag1(p1, p2)
         p1 = self._upsample_add(p2, p1)
         p1 = self.smooth_layer_1_semantic(p1)
         p1 = self.st_block_1_semantic(p1)

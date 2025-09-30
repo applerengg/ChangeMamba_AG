@@ -25,12 +25,13 @@ from changedetection.models.ChangeDecoder import ChangeDecoder
 from changedetection.models.SemanticDecoder import SemanticDecoder
 
 from changedetection.models.alignment_module import AlignmentHead, AlignmentArgs
+from changedetection.models.attn_gate import AttentionGateArgs
 
 logger = logging.getLogger(__name__)
 logger.info("ChangeMambaBDA.py")
 
 class ChangeMambaBDA(nn.Module):
-    def __init__(self, output_building, output_damage, pretrained, alignment_args: AlignmentArgs, **kwargs):
+    def __init__(self, output_building, output_damage, pretrained, alignment_args: AlignmentArgs, attn_gate_args: AttentionGateArgs, **kwargs):
         logger.info("ChangeMambaBDA class")
         
         super(ChangeMambaBDA, self).__init__()
@@ -67,6 +68,7 @@ class ChangeMambaBDA(nn.Module):
             norm_layer=norm_layer,
             ssm_act_layer=ssm_act_layer,
             mlp_act_layer=mlp_act_layer,
+            enable_attention_gate=attn_gate_args.enable_damage_ag,
             **clean_kwargs
         )
 
@@ -76,6 +78,7 @@ class ChangeMambaBDA(nn.Module):
             norm_layer=norm_layer,
             ssm_act_layer=ssm_act_layer,
             mlp_act_layer=mlp_act_layer,
+            enable_attention_gate=attn_gate_args.enable_building_ag,
             **clean_kwargs
         )
       

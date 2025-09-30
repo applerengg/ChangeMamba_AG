@@ -28,8 +28,33 @@ import logging
 import json
 import copy
 from typing import Sequence
+import random
 
 from changedetection.models.alignment_module import AlignmentArgs
+from changedetection.models.attn_gate import AttentionGateArgs
+
+
+def set_deterministic_seed(seed: int):
+    random.seed(seed)
+
+    np.random.seed(seed)
+
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+    # For reproducibility in cudnn
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+    # Ensures CUDA uses deterministic algorithms where possible
+    torch.use_deterministic_algorithms(True)
+
+    # Optional: Make hash-based ops deterministic (Python 3.3+)
+    os.environ["PYTHONHASHSEED"] = str(seed)
+
+    # to solve cublas error, recommended solution: https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 
 class FocalLossCE(torch.nn.Module):
@@ -99,15 +124,19 @@ class Trainer(object):
         self.evaluator_clf = Evaluator(num_class=5)
 
         if args.enable_alignment:
-            alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+            alignment_args = AlignmentArgs(enabled=True, stages=(1,2,), mid_ch=64)
         else:
             alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
         logging.info(f" > ALIGNMENT params: {alignment_args = }")
+
+        attn_gate_args = AttentionGateArgs(enable_building_ag = args.enable_attn_gate_building, enable_damage_ag=args.enable_attn_gate_damage)
+        logging.info(f" > ATTENTION GATE params: {attn_gate_args = }")
 
         self.deep_model = ChangeMambaBDA(
             output_building=2, output_damage=5, 
             pretrained=args.pretrained_weight_path,
             alignment_args=alignment_args,
+            attn_gate_args=attn_gate_args,
             patch_size=config.MODEL.VSSM.PATCH_SIZE, 
             in_chans=config.MODEL.VSSM.IN_CHANS, 
             num_classes=config.MODEL.NUM_CLASSES, 
@@ -180,9 +209,9 @@ class Trainer(object):
         elem_num = len(self.train_data_loader)
         train_enumerator = enumerate(self.train_data_loader)
 
-        VAL_STEP = max(1, elem_num // 8)
-        print(f"{VAL_STEP=}")
-        logging.log(logging.INFO, f"{VAL_STEP=}")
+        number_of_validations = self.args.validations
+        VAL_STEP = max(1, elem_num // number_of_validations)
+        logging.log(logging.INFO, f"{VAL_STEP=}, ({number_of_validations = })")
 
         skipped_count = 0
         valid_results: dict[int, tuple] = {} # key is iteration (step), value is whole validation result scores.
@@ -390,6 +419,10 @@ def main():
     parser.add_argument('--extension', type=str, help='dataset image file extension without dot ("png", "tif", etc.)')
     parser.add_argument('--focal_loss', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--enable_alignment', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_attn_gate_building', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--deterministic', type=bool, action=argparse.BooleanOptionalAction, default=False, help="(can't be used for now (2025.09.29, torch==2.5.0) because of non-deterministic functions (e.g. F.cross_entropy))")
+    parser.add_argument('--validations', type=int, default=8)
 
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:
@@ -421,12 +454,21 @@ def main():
     logging.log(logging.INFO, f"MAIN - START")
     logging.info(f" > FOCAL LOSS set to {args.focal_loss}")
     logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
+    logging.info(f" > ATTENTION GATE set to -> Building: {args.enable_attn_gate_building}, Damage: {args.enable_attn_gate_damage}")
 
     args_copy = copy.deepcopy(vars(args))
     args_copy.pop("train_data_name_list")
     args_copy.pop("test_data_name_list")
     args_pretty = json.dumps(args_copy, indent=4)
     logging.log(logging.INFO, f"Command Line Args:\n{args_pretty}")
+
+    if args.deterministic:
+        seed = 2025
+        logging.info(f"Starting in DETERMINISTIC mode ({seed = }).")
+        set_deterministic_seed(seed)
+    else:
+        logging.info(f"Starting in RANDOM mode / not deterministic.")
+
 
     trainer = Trainer(args)
     trainer.training()
