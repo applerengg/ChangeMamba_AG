@@ -29,6 +29,7 @@ import json
 import copy
 from typing import Sequence
 import random
+from collections import deque
 
 from changedetection.models.alignment_module import AlignmentArgs
 from changedetection.models.attn_gate import AttentionGateArgs
@@ -119,6 +120,17 @@ class Trainer(object):
         config = get_config(args)
 
         self.train_data_loader = make_data_loader(args)
+
+        if self.args.measure_train_scores:
+            TRAIN_BUF_MAXLEN = 1024 # number of batches (not batch size)
+            self.train_buf: deque[tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]] = deque(maxlen=TRAIN_BUF_MAXLEN) 
+            """each element in the train_buf will be a `tuple[preds_loc, preds_clf, labels_loc, labels_clf]` (all tensors of shape [B,H,W])"""
+            self.train_evaluator_loc = Evaluator(num_class=2)
+            self.train_evaluator_clf = Evaluator(num_class=5)
+            logging.info(f" > TRAIN EVALUATION params: {TRAIN_BUF_MAXLEN = }")
+        else:
+            logging.info(f" > TRAIN EVALUATION disabled.")
+
 
         self.evaluator_loc = Evaluator(num_class=2)
         self.evaluator_clf = Evaluator(num_class=5)
@@ -215,6 +227,7 @@ class Trainer(object):
 
         skipped_count = 0
         valid_results: dict[int, tuple] = {} # key is iteration (step), value is whole validation result scores.
+        train_results: dict[int, tuple] = {} # key is iteration (step), value is whole validation result scores.
 
         for _ in tqdm(range(elem_num)):
             itera, data = train_enumerator.__next__()
@@ -232,6 +245,18 @@ class Trainer(object):
                continue
             
             output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
+
+            if self.args.measure_train_scores:
+                with torch.no_grad():
+                    pred_loc: torch.Tensor = output_loc.argmax(1) # [B,H,W]
+                    pred_clf: torch.Tensor = output_clf.argmax(1)
+                    self.train_buf.append((
+                        pred_loc.detach().cpu(), 
+                        pred_clf.detach().cpu(),
+                        labels_loc.detach().cpu(),
+                        labels_clf.detach().cpu(),
+                    ))
+
 
             self.optim.zero_grad()
 
@@ -269,6 +294,11 @@ class Trainer(object):
                         logging.info(f"Model saved in: {model_save_path}")
                         best_kc = oaf1
                         best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+                    
+                    if self.args.measure_train_scores:
+                        tr_locf1, tr_clff1, tr_oaf1, tr_dmgs = self.train_buffer_metrics()
+                        train_results[itera+1] = tr_locf1, tr_clff1, tr_oaf1, tr_dmgs
+
                 except Exception as exc:
                     logging.error(f"VALIDATION - ERRROR: {exc}", exc_info=True, stack_info=True)
                 finally:
@@ -301,14 +331,55 @@ class Trainer(object):
             # logging.info(f"Model saved in: {model_save_path}")
             best_kc = oaf1
             best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+
+        if self.args.measure_train_scores:
+            tr_locf1, tr_clff1, tr_oaf1, tr_dmgs = self.train_buffer_metrics()
+            train_results[-1] = tr_locf1, tr_clff1, tr_oaf1, tr_dmgs
+        
         self.deep_model.train()
 
         logging.info("Validation Results:")
         for step, scores in valid_results.items():
-            logging.info(f"Step {step:>5}: {scores}")
+            logging.info(f"[TEST ] Step {step:>5}: {scores}")
+            if self.args.measure_train_scores:
+                logging.info(f"[TRAIN] Step {step:>5}: {train_results[step]}\n")
 
         print('The accuracy of the best round is ', best_round)
         logging.log(logging.INFO, f'The accuracy of the best round is: {best_round}')
+
+
+    def train_buffer_metrics(self):
+        logging.info('---------starting train set evaluation-----------')
+        if len(self.train_buf) == 0:
+            logging.info("Train buffer empty, returning 0.")
+            return 0.0, 0.0, 0.0, np.zeros((4,), dtype=np.float32)  # safe default
+        
+        self.train_evaluator_loc.reset()
+        self.train_evaluator_clf.reset()
+        with torch.no_grad():
+            for (preds_loc, preds_clf, labels_loc, labels_clf) in list(self.train_buf):
+                preds_loc  = preds_loc.numpy()
+                labels_loc = labels_loc.numpy()
+
+                preds_clf  = preds_clf.numpy()[labels_loc > 0]
+                labels_clf = labels_clf.numpy()[labels_loc > 0]
+
+                self.train_evaluator_loc.add_batch(labels_loc, preds_loc)
+                self.train_evaluator_clf.add_batch(labels_clf, preds_clf)
+
+        loc_f1_score = self.train_evaluator_loc.Pixel_F1_score()
+        damage_f1_score: np.ndarray = self.train_evaluator_clf.Damage_F1_socore()
+        harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
+        oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
+
+        # Make the scores more readable
+        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
+        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
+        oaf1             = np.round(oaf1             * 100, 4)
+        for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
+
+        logging.info(f'[TrainBuf] locF1 is {loc_f1_score:.4f}, clfF1 is {harmonic_mean_f1:.4f}, oaF1 is {oaf1:.4f}, sub class F1 score is {damage_f1_score}')
+        return loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
 
 
     def validation(self):
@@ -423,6 +494,7 @@ def main():
     parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--deterministic', type=bool, action=argparse.BooleanOptionalAction, default=False, help="(can't be used for now (2025.09.29, torch==2.5.0) because of non-deterministic functions (e.g. F.cross_entropy))")
     parser.add_argument('--validations', type=int, default=8)
+    parser.add_argument('--measure_train_scores', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
     with open(args.train_data_list_path, "r") as f:

@@ -315,7 +315,7 @@ def make_data_loader(args, **kwargs):  # **kwargs could be omitted
         data_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=args.shuffle, **kwargs, num_workers=16,
                                  drop_last=False)
         return data_loader
-    elif ('xBD' in args.dataset) or ('mwBTFreddy' in args.dataset) or ('EarthquakeTurkey' in args.dataset) or ('HurricaneIda' in args.dataset):
+    elif ('xBD' in args.dataset) or ('mwBTFreddy' in args.dataset) or ('EarthquakeTurkey' in args.dataset) or ('HurricaneIda' in args.dataset) or ('PakistanFlooding' in args.dataset) or ('HurricaneIan' in args.dataset) or ('merged' in args.dataset):
         if args.extension is None:
             ext = "tif" if 'mwBTFreddy' in args.dataset else "png"
         else: 
