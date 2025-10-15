@@ -30,6 +30,7 @@ import copy
 from typing import Sequence
 import random
 from collections import deque
+import glob
 
 from changedetection.models.alignment_module import AlignmentArgs
 from changedetection.models.attn_gate import AttentionGateArgs
@@ -122,7 +123,7 @@ class Trainer(object):
         self.train_data_loader = make_data_loader(args)
 
         if self.args.measure_train_scores:
-            TRAIN_BUF_MAXLEN = 1024 # number of batches (not batch size)
+            TRAIN_BUF_MAXLEN = 8000 # number of batches (not batch size)
             self.train_buf: deque[tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]] = deque(maxlen=TRAIN_BUF_MAXLEN) 
             """each element in the train_buf will be a `tuple[preds_loc, preds_clf, labels_loc, labels_clf]` (all tensors of shape [B,H,W])"""
             self.train_evaluator_loc = Evaluator(num_class=2)
@@ -217,6 +218,8 @@ class Trainer(object):
 
         best_kc = 0.0
         best_round = []
+        best_model_path = ""
+
         torch.cuda.empty_cache()
         elem_num = len(self.train_data_loader)
         train_enumerator = enumerate(self.train_data_loader)
@@ -294,6 +297,7 @@ class Trainer(object):
                         logging.info(f"Model saved in: {model_save_path}")
                         best_kc = oaf1
                         best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+                        best_model_path = model_save_path
                     
                     if self.args.measure_train_scores:
                         tr_locf1, tr_clff1, tr_oaf1, tr_dmgs = self.train_buffer_metrics()
@@ -331,6 +335,19 @@ class Trainer(object):
             # logging.info(f"Model saved in: {model_save_path}")
             best_kc = oaf1
             best_round = [loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score]
+            best_model_path = model_save_path
+
+        all_saved_model_paths = glob.glob(os.path.join(self.model_save_path, "model*.pth"))
+        for model_path in all_saved_model_paths:
+            if model_path != best_model_path and not model_path.endswith("last.pth"): # remove non-best and non-last models
+                try:
+                    os.remove(model_path)
+                    logging.info(f"Removed non-best model: {model_path}")
+                except Exception as exc:
+                    logging.warning(f"Error removing file {model_path}: {exc}", exc_info=True, stack_info=True)
+        new_best_model_path = best_model_path.replace(".pth", "_best.pth")
+        os.rename(best_model_path, new_best_model_path)
+        logging.info(f"Best model kept: {new_best_model_path}")
 
         if self.args.measure_train_scores:
             tr_locf1, tr_clff1, tr_oaf1, tr_dmgs = self.train_buffer_metrics()
@@ -354,6 +371,8 @@ class Trainer(object):
             logging.info("Train buffer empty, returning 0.")
             return 0.0, 0.0, 0.0, np.zeros((4,), dtype=np.float32)  # safe default
         
+        logging.info(f"Train buffer size: {len(self.train_buf)}.")
+        
         self.train_evaluator_loc.reset()
         self.train_evaluator_clf.reset()
         with torch.no_grad():
@@ -373,12 +392,15 @@ class Trainer(object):
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
 
         # Make the scores more readable
-        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
-        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
-        oaf1             = np.round(oaf1             * 100, 4)
+        loc_f1_score     = float(np.round(loc_f1_score     * 100, 4))
+        harmonic_mean_f1 = float(np.round(harmonic_mean_f1 * 100, 4))
+        oaf1             = float(np.round(oaf1             * 100, 4))
         for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
 
         logging.info(f'[TrainBuf] locF1 is {loc_f1_score:.4f}, clfF1 is {harmonic_mean_f1:.4f}, oaF1 is {oaf1:.4f}, sub class F1 score is {damage_f1_score}')
+
+        self.train_buf.clear()
+
         return loc_f1_score, harmonic_mean_f1, oaf1, damage_f1_score
 
 
@@ -434,9 +456,9 @@ class Trainer(object):
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
 
         # Make the scores more readable
-        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
-        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
-        oaf1             = np.round(oaf1             * 100, 4)
+        loc_f1_score     = float(np.round(loc_f1_score     * 100, 4))
+        harmonic_mean_f1 = float(np.round(harmonic_mean_f1 * 100, 4))
+        oaf1             = float(np.round(oaf1             * 100, 4))
         for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
 
         # print the confusion matrices
@@ -497,15 +519,6 @@ def main():
     parser.add_argument('--measure_train_scores', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
-    with open(args.train_data_list_path, "r") as f:
-        # data_name_list = f.read()
-        data_name_list = [data_name.strip() for data_name in f]
-    args.train_data_name_list = data_name_list
-
-    with open(args.test_data_list_path, "r") as f:
-        # data_name_list = f.read()
-        test_data_name_list = [data_name.strip() for data_name in f]
-    args.test_data_name_list = test_data_name_list
 
     #*-- LOGGING INIT
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -527,6 +540,16 @@ def main():
     logging.info(f" > FOCAL LOSS set to {args.focal_loss}")
     logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
     logging.info(f" > ATTENTION GATE set to -> Building: {args.enable_attn_gate_building}, Damage: {args.enable_attn_gate_damage}")
+
+    with open(args.train_data_list_path, "r") as f:
+        # data_name_list = f.read()
+        data_name_list = [data_name.strip() for data_name in f]
+    args.train_data_name_list = data_name_list
+
+    with open(args.test_data_list_path, "r") as f:
+        # data_name_list = f.read()
+        test_data_name_list = [data_name.strip() for data_name in f]
+    args.test_data_name_list = test_data_name_list
 
     args_copy = copy.deepcopy(vars(args))
     args_copy.pop("train_data_name_list")

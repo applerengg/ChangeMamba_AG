@@ -28,9 +28,10 @@ import seaborn as sns
 import logging
 import json
 import copy
+import matplotlib.pyplot as plt
 
 from changedetection.models.alignment_module import AlignmentArgs
-from changedetection.models.attn_gate import AttentionGateArgs
+from changedetection.models.attn_gate import AttentionGateArgs, AttentionGate2d
 
 
 ori_label_value_dict = {
@@ -65,6 +66,93 @@ def map_labels_to_colors(labels, ori_label_value_dict, target_label_value_dict):
         color_mapped_labels[mask] = ori_label_value_dict[ori_label]
     
     return color_mapped_labels
+
+
+def register_attn_hooks(model):
+    attn_maps = {}
+
+    def make_hook(name):
+        def hook_fn(module, input, output):
+            if hasattr(module, "last_alpha"):
+                attn_maps[name] = module.last_alpha.cpu()
+        return hook_fn
+
+    handles: list[torch.utils.hooks.RemovableHandle] = []
+    for name, m in model.named_modules():
+        if isinstance(m, AttentionGate2d):
+            h = m.register_forward_hook(make_hook(name))
+            handles.append(h)
+            logging.info(f"[Hook registered on] {name} ({id(m)=})")
+    return attn_maps, handles
+
+
+def denormalize_img(t: torch.Tensor, mean: list[float], std: list[float]) -> np.ndarray:
+    """
+    t: [3,H,W] torch tensor in normalized range
+    mean, std: per-channel lists
+    returns: [H,W,3] uint8 image 0–255
+    """
+    t = t.clone().cpu()
+    for c in range(3):
+        t[c] = t[c] * std[c] + mean[c]
+    arr = t.permute(1,2,0).numpy()
+    arr = np.clip(arr * 255, 0, 255).astype(np.uint8)
+    return arr
+
+
+def save_all_attn_maps(img, mask, attn_maps: dict[str, torch.Tensor], out_path: str):
+    """
+    img: [H,W,3] uint8
+    mask: [H,W] numpy int
+    attn_maps: dict { "building.ag1": tensor[B,1,h,w], ... }
+    out_path: str
+    """
+    names = list(attn_maps.keys())
+    n = len(names)
+    H, W = img.shape[:2]
+
+    fig, axs = plt.subplots(2, 3, figsize=(12, 8))
+    for i, name in enumerate(names):
+        row, col = divmod(i, 3)
+        heat = F.interpolate(attn_maps[name], size=(H, W), mode="bilinear", align_corners=False)[0,0].numpy()
+        heat = (heat - heat.min()) / (heat.max() - heat.min() + 1e-8)
+
+        axs[row, col].imshow(img)
+        axs[row, col].imshow(heat, cmap="jet", alpha=0.5)
+        axs[row, col].set_title(f"{name}")
+        axs[row, col].axis("off")
+
+    # hide unused axes if <6 maps
+    for j in range(len(names), 6):
+        row, col = divmod(j, 3)
+        axs[row, col].axis("off")
+
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=150)
+    plt.close(fig)
+
+    # ---- optional overlays on mask ----
+    if mask is not None:
+        fig2, axs2 = plt.subplots(2, 3, figsize=(12, 8))
+        for i, name in enumerate(names):
+            row, col = divmod(i, 3)
+            heat = F.interpolate(attn_maps[name], size=(H, W), mode="bilinear", align_corners=False)[0,0].numpy()
+            heat = (heat - heat.min()) / (heat.max() - heat.min() + 1e-8)
+
+            axs2[row, col].imshow(mask, cmap="gray")
+            axs2[row, col].imshow(heat, cmap="jet", alpha=0.5)
+            axs2[row, col].set_title(f"{name} on GT")
+            axs2[row, col].axis("off")
+
+        for j in range(len(names), 6):
+            row, col = divmod(j, 3)
+            axs2[row, col].axis("off")
+
+        plt.tight_layout()
+        base, ext = out_path.rsplit(".", 1)
+        plt.savefig(f"{base}_onmask.{ext}", dpi=150)
+        plt.close(fig2)
+
 
 
 class Trainer(object):
@@ -126,11 +214,14 @@ class Trainer(object):
 
         self.building_map_T1_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'building_localization_map')
         self.change_map_T2_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'damage_classification_map')
+        self.attention_map_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'attention_map')
 
         if not os.path.exists(self.building_map_T1_saved_path):
             os.makedirs(self.building_map_T1_saved_path)
         if not os.path.exists(self.change_map_T2_saved_path):
             os.makedirs(self.change_map_T2_saved_path)
+        if not os.path.exists(self.attention_map_saved_path):
+            os.makedirs(self.attention_map_saved_path)
 
 
         if args.resume is not None:
@@ -160,6 +251,10 @@ class Trainer(object):
         self.total_evaluator_loc.reset()
         self.total_evaluator_clf.reset()          
         # vbar = tqdm(val_data_loader, ncols=50)
+
+        if self.args.save_attention_images:
+            attn_maps, handles = register_attn_hooks(self.deep_model)
+
         with torch.no_grad():
             for itera, data in enumerate(tqdm(val_data_loader)):
                 if itera % 10 == 0:
@@ -179,8 +274,25 @@ class Trainer(object):
                 labels_loc = labels_loc.cuda().long()
                 labels_clf = labels_clf.cuda().long()
 
-
                 output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
+
+                # --- visualize first AG map for this sample ---
+                if self.args.save_attention_images and len(attn_maps) > 0:
+                    # for module_name, attn_map in attn_maps.items():
+                    #     heat = F.interpolate(attn_map, size=pre_change_imgs.shape[2:], mode="bilinear")[0,0]
+                    #     heat = (heat - heat.min()) / (heat.max() - heat.min() + 1e-8)
+                    #     img = pre_change_imgs[0].cpu().permute(1,2,0).numpy()
+                    #     plt.imshow(img)
+                    #     plt.imshow(heat, cmap="jet", alpha=0.5)
+                    #     plt.axis("off")
+                    #     plt.savefig(f"{self.attention_map_saved_path}/{names[0]}_{module_name}.png")
+                    #     # logging.info(f"Saved attention map: {self.attention_map_saved_path}/{names[0]}_ag{idx}_{module_id}.png")
+                    #     plt.close()
+                    img = denormalize_img(pre_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                    mask = labels_loc[0].detach().cpu().numpy()
+                    save_all_attn_maps(img, mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_all.png"))
+                    if itera > 10:
+                        break  # DEBUG (quick results, only visualize first n samples)
 
                 output_loc = output_loc.data.cpu().numpy()
                 output_loc = np.argmax(output_loc, axis=1)
@@ -208,15 +320,18 @@ class Trainer(object):
                     imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
                     imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
 
+        for h in handles:
+            h.remove()
+
         loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
         damage_f1_score: np.ndarray = self.total_evaluator_clf.Damage_F1_socore()
         harmonic_mean_f1 = len(damage_f1_score) / np.sum(1.0 / damage_f1_score)
         oaf1 = 0.3 * loc_f1_score + 0.7 * harmonic_mean_f1
 
         # Make the scores more readable
-        loc_f1_score     = np.round(loc_f1_score     * 100, 4)
-        harmonic_mean_f1 = np.round(harmonic_mean_f1 * 100, 4)
-        oaf1             = np.round(oaf1             * 100, 4)
+        loc_f1_score     = float(np.round(loc_f1_score     * 100, 4))
+        harmonic_mean_f1 = float(np.round(harmonic_mean_f1 * 100, 4))
+        oaf1             = float(np.round(oaf1             * 100, 4))
         for i in range(len(damage_f1_score)): damage_f1_score[i] = np.round(damage_f1_score[i] * 100, 4)
 
         # print the confusion matrices
@@ -268,6 +383,7 @@ def main():
     parser.add_argument('--enable_alignment', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--enable_attn_gate_building', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--save_attention_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_attention_images" to set to False
 
     args = parser.parse_args()
 

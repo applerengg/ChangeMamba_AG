@@ -27,6 +27,8 @@ class AttentionGate2d(nn.Module):
         self.act     = nn.ReLU(inplace=True)
         self.sig     = nn.Sigmoid()
 
+        self.last_alpha: torch.Tensor | None = None  # for visualization
+
     def forward(self, x: torch.Tensor, g: torch.Tensor) -> torch.Tensor:
         B, Cx, H, W = x.shape
         if g.shape[-2:] != (H, W):
@@ -35,4 +37,5 @@ class AttentionGate2d(nn.Module):
         kg = self.bn_g(self.phi_g(g))          # [B, inter, H, W]
         a  = self.act(qx + kg)
         alpha = self.sig(self.psi(a))          # [B, 1, H, W]
+        self.last_alpha = alpha
         return x * alpha
