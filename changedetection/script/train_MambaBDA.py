@@ -33,7 +33,7 @@ from collections import deque
 import glob
 
 from changedetection.models.alignment_module import AlignmentArgs
-from changedetection.models.attn_gate import AttentionGateArgs
+from changedetection.models.attn_gate import AttentionGate2d, AttentionGateArgs
 
 
 def set_deterministic_seed(seed: int):
@@ -201,9 +201,29 @@ class Trainer(object):
             state_dict.update(model_dict)
             self.deep_model.load_state_dict(state_dict)
 
-        self.optim = optim.AdamW(self.deep_model.parameters(),
-                                 lr=args.learning_rate,
-                                 weight_decay=args.weight_decay)
+        if attn_gate_args.enable_building_ag or attn_gate_args.enable_damage_ag:
+            gate_params = []
+            base_params = []
+            for module_name, module in self.deep_model.named_modules():
+                if isinstance(module, AttentionGate2d):
+                    gate_params.extend(module.parameters())
+            gate_param_ids = {id(p) for p in gate_params}
+            for param in self.deep_model.parameters():
+                if id(param) not in gate_param_ids:
+                    base_params.append(param)
+            
+            # Gates learn faster initially
+            self.optim = optim.AdamW([
+                {'params': base_params, 'lr': args.learning_rate},
+                {'params': gate_params, 'lr': args.learning_rate * 2.0, 'weight_decay': args.weight_decay * 0.5}
+            ], lr=args.learning_rate, weight_decay=args.weight_decay)
+            
+            logging.info(f"Attention Gate params: {len(gate_params)}, Base params: {len(base_params)}")
+        else:
+            self.optim = optim.AdamW(self.deep_model.parameters(),
+                                    lr=args.learning_rate,
+                                    weight_decay=args.weight_decay)
+            
         if self.args.focal_loss:
             # alpha = [1.0, 2.3, 1.3, 1.1] # high priority to minor damage
             alpha = [0.6, 1.6, 1.1, 1.1] # closer to inverse frequencies
@@ -285,6 +305,7 @@ class Trainer(object):
                 log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<.10f}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<.10f}'
                 print(log)
                 logging.log(logging.INFO, log)
+
             is_last_step = (itera + 1 >= elem_num)
             if (itera + 1) % VAL_STEP == 0 and not is_last_step: # do not start validation in the last step, final validation will be started after training ends.
                 try:
@@ -307,6 +328,32 @@ class Trainer(object):
                     logging.error(f"VALIDATION - ERRROR: {exc}", exc_info=True, stack_info=True)
                 finally:
                     self.deep_model.train()
+
+                ### === ATTENTION GATE ANALYSIS START === ###
+                if self.args.enable_attn_gate_damage:
+                    try:
+                        gate_stats_damage = {}
+                        gate_stats_damage['ag3'] = self.deep_model.decoder_damage.ag3.get_gate_stats()
+                        gate_stats_damage['ag2'] = self.deep_model.decoder_damage.ag2.get_gate_stats()
+                        gate_stats_damage['ag1'] = self.deep_model.decoder_damage.ag1.get_gate_stats()
+                        logging.info(f"Damage Head - Attention Gate Statistics @ step {itera+1}:")
+                        for gate_name, stats in gate_stats_damage.items():
+                            logging.info(f"  {gate_name}: {stats}")
+                    except Exception as exc:
+                        logging.error(f"DAMAGE ATTENTION GATE ANALYSIS - ERRROR: {exc}", exc_info=True, stack_info=True) 
+                if self.args.enable_attn_gate_building:
+                    try:
+                        gate_stats_building = {}
+                        gate_stats_building['ag3'] = self.deep_model.decoder_building.ag3.get_gate_stats()
+                        gate_stats_building['ag2'] = self.deep_model.decoder_building.ag2.get_gate_stats()
+                        gate_stats_building['ag1'] = self.deep_model.decoder_building.ag1.get_gate_stats()
+                        logging.info(f"Building Head - Attention Gate Statistics @ step {itera+1}:")
+                        for gate_name, stats in gate_stats_building.items():
+                            logging.info(f"  {gate_name}: {stats}")
+                    except Exception as exc:
+                        logging.error(f"BUILDING ATTENTION GATE ANALYSIS - ERRROR: {exc}", exc_info=True, stack_info=True)
+                ### === ATTENTION GATE ANALYSIS END === ###
+
 
 
         log = "-----------Training is completed-----------"

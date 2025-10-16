@@ -1,0 +1,1143 @@
+2025-10-15 11:40:17,439 | INFO | MAIN - START
+2025-10-15 11:40:17,439 | INFO |  > FOCAL LOSS set to False
+2025-10-15 11:40:17,439 | INFO |  > ALINGNMENT set to False
+2025-10-15 11:40:17,439 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: True
+2025-10-15 11:40:17,440 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/pretrained_weight/vssm_base_0229_ckpt_epoch_237.pth",
+    "dataset": "PakistanFloodingWithValid",
+    "type": "train",
+    "train_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding",
+    "train_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding/train_list_v2.txt",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding/validation_list_v2.txt",
+    "shuffle": true,
+    "batch_size": 8,
+    "crop_size": 256,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 200000,
+    "model_type": "MambaBDA_Base",
+    "model_param_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD",
+    "resume": null,
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD.log",
+    "extension": "png",
+    "focal_loss": false,
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": true,
+    "deterministic": false,
+    "validations": 16,
+    "measure_train_scores": true
+}
+2025-10-15 11:40:17,440 | INFO | Starting in RANDOM mode / not deterministic.
+2025-10-15 11:40:17,444 | INFO |  > TRAIN EVALUATION params: TRAIN_BUF_MAXLEN = 8000
+2025-10-15 11:40:17,444 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-15 11:40:17,444 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=True)
+2025-10-15 11:40:17,444 | INFO | ChangeMambaBDA class
+2025-10-15 11:40:20,877 | INFO | ---------starting training-----------
+2025-10-15 11:40:20,947 | INFO | VAL_STEP=1562, (number_of_validations = 16)
+2025-10-15 11:40:52,551 | INFO | iter is 50 / 25000 [skipped    2] | loc. loss = 0.4913462698, classif. loss = 0.2166193575
+2025-10-15 11:41:23,263 | INFO | iter is 100 / 25000 [skipped    3] | loc. loss = 0.3313078582, classif. loss = 1.6079061031
+2025-10-15 11:41:54,092 | INFO | iter is 150 / 25000 [skipped    4] | loc. loss = 0.3169245720, classif. loss = 1.0887886286
+2025-10-15 11:42:24,296 | INFO | iter is 200 / 25000 [skipped    6] | loc. loss = 0.3244650960, classif. loss = 1.0394541025
+2025-10-15 11:42:55,124 | INFO | iter is 250 / 25000 [skipped    7] | loc. loss = 0.3420746326, classif. loss = 0.0892100334
+2025-10-15 11:43:26,558 | INFO | iter is 300 / 25000 [skipped    7] | loc. loss = 0.3452279568, classif. loss = 0.2039300203
+2025-10-15 11:43:57,419 | INFO | iter is 350 / 25000 [skipped    8] | loc. loss = 0.4245843291, classif. loss = 1.5255596638
+2025-10-15 11:44:28,842 | INFO | iter is 400 / 25000 [skipped    8] | loc. loss = 0.1564938426, classif. loss = 0.8585216999
+2025-10-15 11:44:58,401 | INFO | iter is 450 / 25000 [skipped   11] | loc. loss = 0.2077248991, classif. loss = 0.6908141971
+2025-10-15 11:45:27,358 | INFO | iter is 500 / 25000 [skipped   15] | loc. loss = 0.3393854499, classif. loss = 2.0264372826
+2025-10-15 11:45:57,588 | INFO | iter is 550 / 25000 [skipped   17] | loc. loss = 0.2479931712, classif. loss = 0.5755945444
+2025-10-15 11:46:28,471 | INFO | iter is 600 / 25000 [skipped   18] | loc. loss = 0.2932811975, classif. loss = 0.5839630365
+2025-10-15 11:47:00,048 | INFO | iter is 650 / 25000 [skipped   18] | loc. loss = 0.2067146152, classif. loss = 0.3896470368
+2025-10-15 11:47:31,578 | INFO | iter is 700 / 25000 [skipped   18] | loc. loss = 0.3215562701, classif. loss = 0.2823511362
+2025-10-15 11:48:01,849 | INFO | iter is 750 / 25000 [skipped   20] | loc. loss = 0.2432158142, classif. loss = 0.6162627935
+2025-10-15 11:48:31,538 | INFO | iter is 800 / 25000 [skipped   23] | loc. loss = 0.1867296696, classif. loss = 0.1986500025
+2025-10-15 11:49:03,116 | INFO | iter is 850 / 25000 [skipped   23] | loc. loss = 0.3346280456, classif. loss = 0.0831806213
+2025-10-15 11:49:34,661 | INFO | iter is 900 / 25000 [skipped   23] | loc. loss = 0.1853211373, classif. loss = 0.7391928434
+2025-10-15 11:50:05,647 | INFO | iter is 950 / 25000 [skipped   24] | loc. loss = 0.2522705793, classif. loss = 0.4843537509
+2025-10-15 11:50:35,968 | INFO | iter is 1000 / 25000 [skipped   26] | loc. loss = 0.2254981399, classif. loss = 0.5804679394
+2025-10-15 11:51:07,553 | INFO | iter is 1050 / 25000 [skipped   26] | loc. loss = 0.2156654596, classif. loss = 1.3807879686
+2025-10-15 11:51:37,849 | INFO | iter is 1100 / 25000 [skipped   28] | loc. loss = 0.6602978706, classif. loss = 0.7602781057
+2025-10-15 11:52:09,432 | INFO | iter is 1150 / 25000 [skipped   28] | loc. loss = 0.2457549870, classif. loss = 1.5372817516
+2025-10-15 11:52:40,383 | INFO | iter is 1200 / 25000 [skipped   29] | loc. loss = 0.2383185476, classif. loss = 1.3503274918
+2025-10-15 11:53:11,932 | INFO | iter is 1250 / 25000 [skipped   29] | loc. loss = 0.1472460479, classif. loss = 0.1692730188
+2025-10-15 11:53:42,925 | INFO | iter is 1300 / 25000 [skipped   30] | loc. loss = 0.2263145745, classif. loss = 0.7711850405
+2025-10-15 11:54:13,873 | INFO | iter is 1350 / 25000 [skipped   31] | loc. loss = 0.1559630930, classif. loss = 0.6427683830
+2025-10-15 11:54:44,218 | INFO | iter is 1400 / 25000 [skipped   33] | loc. loss = 0.1873578429, classif. loss = 1.2186114788
+2025-10-15 11:55:14,093 | INFO | iter is 1450 / 25000 [skipped   36] | loc. loss = 0.1444074214, classif. loss = 0.6223515272
+2025-10-15 11:55:43,345 | INFO | iter is 1500 / 25000 [skipped   40] | loc. loss = 0.2945466936, classif. loss = 0.7352098823
+2025-10-15 11:56:13,215 | INFO | iter is 1550 / 25000 [skipped   43] | loc. loss = 0.1532599032, classif. loss = 0.7328409553
+2025-10-15 11:56:20,801 | INFO | ---------starting evaluation-----------
+2025-10-15 11:56:22,002 | INFO | validation:    0/ 531 (2025-10-15_11-56-22)
+2025-10-15 11:56:42,449 | INFO | validation:  100/ 531 (2025-10-15_11-56-42)
+2025-10-15 11:57:00,644 | INFO | validation:  200/ 531 (2025-10-15_11-57-00)
+2025-10-15 11:57:19,542 | INFO | validation:  300/ 531 (2025-10-15_11-57-19)
+2025-10-15 11:57:44,051 | INFO | validation:  400/ 531 (2025-10-15_11-57-44)
+2025-10-15 11:58:14,574 | INFO | validation:  500/ 531 (2025-10-15_11-58-14)
+2025-10-15 11:58:23,284 | INFO | Confusion Matrix of Localization:
+[[136700500    323652]
+ [   354576   1819736]]
+2025-10-15 11:58:23,284 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99763799 0.00236201]
+ [0.16307503 0.83692497]]
+2025-10-15 11:58:23,284 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1595646  137645     194   24907]
+ [      0   20256  204131    1354   14782]
+ [      0     662   29960   12996    9227]
+ [      0   24667    9163    3013   85709]]
+2025-10-15 11:58:23,285 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.07446121e-01 7.82789048e-02 1.10328072e-04
+  1.41646459e-02]
+ [0.00000000e+00 8.42164783e-02 8.48696382e-01 5.62939927e-03
+  6.14577400e-02]
+ [0.00000000e+00 1.25272022e-02 5.66941054e-01 2.45926767e-01
+  1.74604977e-01]
+ [0.00000000e+00 2.01277825e-01 7.47682616e-02 2.45854821e-02
+  6.99368431e-01]]
+2025-10-15 11:58:23,285 | INFO | lofF1 is 84.2919, clfF1 is 58.8556, oaF1 is 66.4865, sub class F1 score is [93.8719 65.698  36.9194 66.6537]
+2025-10-15 11:58:23,550 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step1562.pth
+2025-10-15 11:58:23,550 | INFO | ---------starting train set evaluation-----------
+2025-10-15 11:58:23,550 | INFO | Train buffer size: 1519.
+2025-10-15 11:58:29,304 | INFO | [TrainBuf] locF1 is 71.1110, clfF1 is 54.6897, oaF1 is 59.6161, sub class F1 score is [93.9267 56.7963 35.2526 60.5331]
+2025-10-15 11:58:52,542 | INFO | iter is 1600 / 25000 [skipped   44] | loc. loss = 0.1997675151, classif. loss = 0.0173541605
+2025-10-15 11:59:23,387 | INFO | iter is 1650 / 25000 [skipped   45] | loc. loss = 0.2641806304, classif. loss = 0.8734368682
+2025-10-15 11:59:53,073 | INFO | iter is 1700 / 25000 [skipped   48] | loc. loss = 0.2634809315, classif. loss = 0.2874001265
+2025-10-15 12:00:24,019 | INFO | iter is 1750 / 25000 [skipped   49] | loc. loss = 0.0611501187, classif. loss = 0.0108821429
+2025-10-15 12:00:54,882 | INFO | iter is 1800 / 25000 [skipped   50] | loc. loss = 0.1676206738, classif. loss = 2.2756352425
+2025-10-15 12:01:25,145 | INFO | iter is 1850 / 25000 [skipped   52] | loc. loss = 0.1416546702, classif. loss = 0.5768615603
+2025-10-15 12:01:55,474 | INFO | iter is 1900 / 25000 [skipped   54] | loc. loss = 0.1746870577, classif. loss = 0.1044886857
+2025-10-15 12:02:26,357 | INFO | iter is 1950 / 25000 [skipped   55] | loc. loss = 0.1738446355, classif. loss = 0.0493867584
+2025-10-15 12:02:56,634 | INFO | iter is 2000 / 25000 [skipped   57] | loc. loss = 0.1494099349, classif. loss = 0.5196193457
+2025-10-15 12:03:26,910 | INFO | iter is 2050 / 25000 [skipped   59] | loc. loss = 0.4752716124, classif. loss = 0.4131714404
+2025-10-15 12:03:57,886 | INFO | iter is 2100 / 25000 [skipped   60] | loc. loss = 0.0799356773, classif. loss = 0.4374997914
+2025-10-15 12:04:28,172 | INFO | iter is 2150 / 25000 [skipped   62] | loc. loss = 0.1668009609, classif. loss = 1.1379722357
+2025-10-15 12:04:58,531 | INFO | iter is 2200 / 25000 [skipped   64] | loc. loss = 0.1404329389, classif. loss = 0.2505117059
+2025-10-15 12:05:29,444 | INFO | iter is 2250 / 25000 [skipped   65] | loc. loss = 0.1665556431, classif. loss = 0.0982992053
+2025-10-15 12:06:00,398 | INFO | iter is 2300 / 25000 [skipped   66] | loc. loss = 0.1092675105, classif. loss = 0.3684912920
+2025-10-15 12:06:31,302 | INFO | iter is 2350 / 25000 [skipped   67] | loc. loss = 0.1934051514, classif. loss = 0.1343598664
+2025-10-15 12:07:02,216 | INFO | iter is 2400 / 25000 [skipped   68] | loc. loss = 0.1450096816, classif. loss = 0.2815009356
+2025-10-15 12:07:33,133 | INFO | iter is 2450 / 25000 [skipped   69] | loc. loss = 0.2841760814, classif. loss = 1.2820782661
+2025-10-15 12:08:35,679 | INFO | iter is 2550 / 25000 [skipped   70] | loc. loss = 0.1917699873, classif. loss = 0.0175352171
+2025-10-15 12:09:06,044 | INFO | iter is 2600 / 25000 [skipped   72] | loc. loss = 0.2291179448, classif. loss = 1.2776722908
+2025-10-15 12:09:36,978 | INFO | iter is 2650 / 25000 [skipped   73] | loc. loss = 0.2068006247, classif. loss = 0.1994906664
+2025-10-15 12:10:08,594 | INFO | iter is 2700 / 25000 [skipped   73] | loc. loss = 0.1822457016, classif. loss = 0.3509076536
+2025-10-15 12:10:39,574 | INFO | iter is 2750 / 25000 [skipped   74] | loc. loss = 0.1381812990, classif. loss = 0.5542408824
+2025-10-15 12:11:11,245 | INFO | iter is 2800 / 25000 [skipped   74] | loc. loss = 0.0290804859, classif. loss = 0.0645880401
+2025-10-15 12:11:42,240 | INFO | iter is 2850 / 25000 [skipped   75] | loc. loss = 0.1848372519, classif. loss = 0.4459445179
+2025-10-15 12:12:12,699 | INFO | iter is 2900 / 25000 [skipped   77] | loc. loss = 0.1947245598, classif. loss = 0.2124432474
+2025-10-15 12:13:15,427 | INFO | iter is 3000 / 25000 [skipped   78] | loc. loss = 0.1968615353, classif. loss = 0.3744444251
+2025-10-15 12:13:45,816 | INFO | iter is 3050 / 25000 [skipped   80] | loc. loss = 0.1520444006, classif. loss = 0.2784559131
+2025-10-15 12:14:16,265 | INFO | iter is 3100 / 25000 [skipped   82] | loc. loss = 0.1727218777, classif. loss = 0.5986101627
+2025-10-15 12:14:31,442 | INFO | ---------starting evaluation-----------
+2025-10-15 12:14:32,702 | INFO | validation:    0/ 531 (2025-10-15_12-14-32)
+2025-10-15 12:14:45,452 | INFO | validation:  100/ 531 (2025-10-15_12-14-45)
+2025-10-15 12:14:58,165 | INFO | validation:  200/ 531 (2025-10-15_12-14-58)
+2025-10-15 12:15:10,918 | INFO | validation:  300/ 531 (2025-10-15_12-15-10)
+2025-10-15 12:15:23,637 | INFO | validation:  400/ 531 (2025-10-15_12-15-23)
+2025-10-15 12:15:36,349 | INFO | validation:  500/ 531 (2025-10-15_12-15-36)
+2025-10-15 12:15:40,647 | INFO | Confusion Matrix of Localization:
+[[136583401    440751]
+ [   239582   1934730]]
+2025-10-15 12:15:40,647 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99678341 0.00321659]
+ [0.1101875  0.8898125 ]]
+2025-10-15 12:15:40,647 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1690836   41495    1817   24244]
+ [      0   29230  168570   29410   13313]
+ [      0     662   14953   26696   10534]
+ [      0   19622    5200    2691   95039]]
+2025-10-15 12:15:40,647 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.96158081 0.02359826 0.00103333 0.0137876 ]
+ [0.         0.12152684 0.70084774 0.12227521 0.05535022]
+ [0.         0.0125272  0.2829596  0.50517551 0.19933769]
+ [0.         0.16011163 0.04243097 0.02195803 0.77549938]]
+2025-10-15 12:15:40,647 | INFO | lofF1 is 85.0469, clfF1 is 67.1855, oaF1 is 72.5439, sub class F1 score is [96.6539 71.619  47.0584 71.5434]
+2025-10-15 12:15:40,913 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step3124.pth
+2025-10-15 12:15:40,913 | INFO | ---------starting train set evaluation-----------
+2025-10-15 12:15:40,913 | INFO | Train buffer size: 1523.
+2025-10-15 12:15:46,704 | INFO | [TrainBuf] locF1 is 83.5617, clfF1 is 68.0665, oaF1 is 72.7151, sub class F1 score is [96.1203 68.2883 50.3744 72.1122]
+2025-10-15 12:16:03,130 | INFO | iter is 3150 / 25000 [skipped   82] | loc. loss = 0.1753832996, classif. loss = 0.2457431853
+2025-10-15 12:16:35,333 | INFO | iter is 3200 / 25000 [skipped   82] | loc. loss = 0.2444388270, classif. loss = 0.3395816088
+2025-10-15 12:17:05,591 | INFO | iter is 3250 / 25000 [skipped   84] | loc. loss = 0.4898101687, classif. loss = 2.1579287052
+2025-10-15 12:17:36,529 | INFO | iter is 3300 / 25000 [skipped   85] | loc. loss = 0.1657507420, classif. loss = 0.5030942559
+2025-10-15 12:18:06,778 | INFO | iter is 3350 / 25000 [skipped   87] | loc. loss = 0.1379332095, classif. loss = 0.0961393863
+2025-10-15 12:18:38,338 | INFO | iter is 3400 / 25000 [skipped   87] | loc. loss = 0.1950078458, classif. loss = 2.5928363800
+2025-10-15 12:19:09,146 | INFO | iter is 3450 / 25000 [skipped   88] | loc. loss = 0.0794255957, classif. loss = 1.1199350357
+2025-10-15 12:19:39,359 | INFO | iter is 3500 / 25000 [skipped   90] | loc. loss = 0.1456768811, classif. loss = 0.6607742906
+2025-10-15 12:20:09,595 | INFO | iter is 3550 / 25000 [skipped   92] | loc. loss = 0.4622935355, classif. loss = 0.5312641859
+2025-10-15 12:20:39,870 | INFO | iter is 3600 / 25000 [skipped   94] | loc. loss = 0.2498101741, classif. loss = 0.7356221676
+2025-10-15 12:21:10,708 | INFO | iter is 3650 / 25000 [skipped   95] | loc. loss = 0.1699398309, classif. loss = 1.9928135872
+2025-10-15 12:21:40,997 | INFO | iter is 3700 / 25000 [skipped   97] | loc. loss = 0.1006683633, classif. loss = 0.0224087387
+2025-10-15 12:23:13,606 | INFO | iter is 3850 / 25000 [skipped  100] | loc. loss = 0.1590712070, classif. loss = 0.6354165077
+2025-10-15 12:23:45,055 | INFO | iter is 3900 / 25000 [skipped  100] | loc. loss = 0.2018894106, classif. loss = 0.3084163964
+2025-10-15 12:24:15,908 | INFO | iter is 3950 / 25000 [skipped  101] | loc. loss = 0.1494742483, classif. loss = 0.7030661106
+2025-10-15 12:24:46,232 | INFO | iter is 4000 / 25000 [skipped  103] | loc. loss = 0.0983661935, classif. loss = 0.6518842578
+2025-10-15 12:25:16,473 | INFO | iter is 4050 / 25000 [skipped  105] | loc. loss = 0.1749037355, classif. loss = 0.3408226073
+2025-10-15 12:25:46,782 | INFO | iter is 4100 / 25000 [skipped  107] | loc. loss = 0.2116502970, classif. loss = 0.3097258210
+2025-10-15 12:26:17,042 | INFO | iter is 4150 / 25000 [skipped  109] | loc. loss = 0.0792696700, classif. loss = 0.5655083060
+2025-10-15 12:26:47,311 | INFO | iter is 4200 / 25000 [skipped  111] | loc. loss = 0.1163953543, classif. loss = 1.8243718147
+2025-10-15 12:27:17,633 | INFO | iter is 4250 / 25000 [skipped  113] | loc. loss = 0.2157190293, classif. loss = 0.4618554115
+2025-10-15 12:27:49,132 | INFO | iter is 4300 / 25000 [skipped  113] | loc. loss = 0.1633787602, classif. loss = 0.2567390501
+2025-10-15 12:28:20,027 | INFO | iter is 4350 / 25000 [skipped  114] | loc. loss = 0.1498064101, classif. loss = 2.0027604103
+2025-10-15 12:28:51,531 | INFO | iter is 4400 / 25000 [skipped  114] | loc. loss = 0.1984701455, classif. loss = 0.1597518921
+2025-10-15 12:29:22,499 | INFO | iter is 4450 / 25000 [skipped  115] | loc. loss = 0.1360653043, classif. loss = 0.2373324782
+2025-10-15 12:29:53,476 | INFO | iter is 4500 / 25000 [skipped  116] | loc. loss = 0.2117515951, classif. loss = 0.1190155298
+2025-10-15 12:30:25,016 | INFO | iter is 4550 / 25000 [skipped  116] | loc. loss = 0.1227631718, classif. loss = 0.4296014309
+2025-10-15 12:30:55,939 | INFO | iter is 4600 / 25000 [skipped  117] | loc. loss = 0.1711635143, classif. loss = 0.5280087590
+2025-10-15 12:31:26,312 | INFO | iter is 4650 / 25000 [skipped  119] | loc. loss = 0.1737942994, classif. loss = 0.7320842743
+2025-10-15 12:31:48,402 | INFO | ---------starting evaluation-----------
+2025-10-15 12:31:49,682 | INFO | validation:    0/ 531 (2025-10-15_12-31-49)
+2025-10-15 12:32:02,424 | INFO | validation:  100/ 531 (2025-10-15_12-32-02)
+2025-10-15 12:32:15,159 | INFO | validation:  200/ 531 (2025-10-15_12-32-15)
+2025-10-15 12:32:27,868 | INFO | validation:  300/ 531 (2025-10-15_12-32-27)
+2025-10-15 12:32:40,589 | INFO | validation:  400/ 531 (2025-10-15_12-32-40)
+2025-10-15 12:32:53,299 | INFO | validation:  500/ 531 (2025-10-15_12-32-53)
+2025-10-15 12:32:57,600 | INFO | Confusion Matrix of Localization:
+[[136777831    246321]
+ [   305011   1869301]]
+2025-10-15 12:32:57,601 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99820235 0.00179765]
+ [0.14027932 0.85972068]]
+2025-10-15 12:32:57,601 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1695697   42866     131   19698]
+ [      0   27770  191757   14003    6993]
+ [      0     662   23374   20922    7887]
+ [      0   24292    9476    2934   85850]]
+2025-10-15 12:32:57,601 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.64345265e-01 2.43779544e-02 7.44998840e-05
+  1.12022803e-02]
+ [0.00000000e+00 1.15456734e-01 7.97250159e-01 5.82189645e-02
+  2.90741426e-02]
+ [0.00000000e+00 1.25272022e-02 4.42312423e-01 3.95912575e-01
+  1.49247800e-01]
+ [0.00000000e+00 1.98217899e-01 7.73222795e-02 2.39408578e-02
+  7.00518963e-01]]
+2025-10-15 12:32:57,601 | INFO | lofF1 is 87.1482, clfF1 is 67.2884, oaF1 is 73.2464, sub class F1 score is [96.7087 75.4955 46.0659 70.6642]
+2025-10-15 12:32:57,856 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step4686.pth
+2025-10-15 12:32:57,857 | INFO | ---------starting train set evaluation-----------
+2025-10-15 12:32:57,857 | INFO | Train buffer size: 1524.
+2025-10-15 12:33:03,618 | INFO | [TrainBuf] locF1 is 85.1136, clfF1 is 74.6711, oaF1 is 77.8038, sub class F1 score is [96.3116 70.94   63.4086 75.0854]
+2025-10-15 12:33:12,459 | INFO | iter is 4700 / 25000 [skipped  120] | loc. loss = 0.2223933488, classif. loss = 0.1125387251
+2025-10-15 12:33:43,313 | INFO | iter is 4750 / 25000 [skipped  121] | loc. loss = 0.1944013089, classif. loss = 0.0160112660
+2025-10-15 12:34:14,129 | INFO | iter is 4800 / 25000 [skipped  122] | loc. loss = 0.2204268575, classif. loss = 0.3692530990
+2025-10-15 12:34:44,319 | INFO | iter is 4850 / 25000 [skipped  124] | loc. loss = 0.1431999207, classif. loss = 0.7366527319
+2025-10-15 12:35:15,174 | INFO | iter is 4900 / 25000 [skipped  125] | loc. loss = 0.1031667516, classif. loss = 0.2530546188
+2025-10-15 12:35:45,992 | INFO | iter is 4950 / 25000 [skipped  126] | loc. loss = 0.1883123815, classif. loss = 0.2097184211
+2025-10-15 12:36:14,992 | INFO | iter is 5000 / 25000 [skipped  130] | loc. loss = 0.1586566865, classif. loss = 0.5275537372
+2025-10-15 12:36:45,216 | INFO | iter is 5050 / 25000 [skipped  132] | loc. loss = 0.0929186866, classif. loss = 0.3535060287
+2025-10-15 12:37:45,788 | INFO | iter is 5150 / 25000 [skipped  136] | loc. loss = 0.3162124157, classif. loss = 0.3174508810
+2025-10-15 12:38:16,629 | INFO | iter is 5200 / 25000 [skipped  137] | loc. loss = 0.2511413693, classif. loss = 1.0114787817
+2025-10-15 12:38:48,094 | INFO | iter is 5250 / 25000 [skipped  137] | loc. loss = 0.1415735334, classif. loss = 0.1527481675
+2025-10-15 12:39:18,394 | INFO | iter is 5300 / 25000 [skipped  139] | loc. loss = 0.1436412781, classif. loss = 0.2697579861
+2025-10-15 12:39:48,636 | INFO | iter is 5350 / 25000 [skipped  141] | loc. loss = 0.2222046256, classif. loss = 0.0580938123
+2025-10-15 12:40:20,114 | INFO | iter is 5400 / 25000 [skipped  141] | loc. loss = 0.1267271787, classif. loss = 0.5168966651
+2025-10-15 12:40:51,596 | INFO | iter is 5450 / 25000 [skipped  141] | loc. loss = 0.1707147360, classif. loss = 1.1258145571
+2025-10-15 12:41:20,684 | INFO | iter is 5500 / 25000 [skipped  145] | loc. loss = 0.1631559283, classif. loss = 0.2819011509
+2025-10-15 12:41:50,943 | INFO | iter is 5550 / 25000 [skipped  147] | loc. loss = 0.1797345579, classif. loss = 0.4106530547
+2025-10-15 12:42:20,637 | INFO | iter is 5600 / 25000 [skipped  150] | loc. loss = 0.2167180777, classif. loss = 0.8797320127
+2025-10-15 12:42:50,894 | INFO | iter is 5650 / 25000 [skipped  152] | loc. loss = 0.0899402127, classif. loss = 0.7407035828
+2025-10-15 12:43:19,989 | INFO | iter is 5700 / 25000 [skipped  156] | loc. loss = 0.2613078356, classif. loss = 0.5862615705
+2025-10-15 12:43:50,244 | INFO | iter is 5750 / 25000 [skipped  158] | loc. loss = 0.1844894886, classif. loss = 0.3675771356
+2025-10-15 12:44:20,525 | INFO | iter is 5800 / 25000 [skipped  160] | loc. loss = 0.2264146507, classif. loss = 0.8885858059
+2025-10-15 12:44:50,797 | INFO | iter is 5850 / 25000 [skipped  162] | loc. loss = 0.2185029984, classif. loss = 1.1095793247
+2025-10-15 12:45:20,501 | INFO | iter is 5900 / 25000 [skipped  165] | loc. loss = 0.0818004310, classif. loss = 0.6755269766
+2025-10-15 12:45:51,390 | INFO | iter is 5950 / 25000 [skipped  166] | loc. loss = 0.1696234345, classif. loss = 0.1578933150
+2025-10-15 12:46:21,747 | INFO | iter is 6000 / 25000 [skipped  168] | loc. loss = 0.0468982011, classif. loss = 7.0563540459
+2025-10-15 12:46:51,432 | INFO | iter is 6050 / 25000 [skipped  171] | loc. loss = 0.0885207504, classif. loss = 0.4604246318
+2025-10-15 12:47:23,028 | INFO | iter is 6100 / 25000 [skipped  171] | loc. loss = 0.3027249277, classif. loss = 0.0473060012
+2025-10-15 12:47:53,345 | INFO | iter is 6150 / 25000 [skipped  173] | loc. loss = 0.0958334282, classif. loss = 0.3095335662
+2025-10-15 12:48:23,651 | INFO | iter is 6200 / 25000 [skipped  175] | loc. loss = 0.1300566643, classif. loss = 0.1918177307
+2025-10-15 12:48:52,072 | INFO | ---------starting evaluation-----------
+2025-10-15 12:48:53,363 | INFO | validation:    0/ 531 (2025-10-15_12-48-53)
+2025-10-15 12:49:06,141 | INFO | validation:  100/ 531 (2025-10-15_12-49-06)
+2025-10-15 12:49:18,890 | INFO | validation:  200/ 531 (2025-10-15_12-49-18)
+2025-10-15 12:49:31,622 | INFO | validation:  300/ 531 (2025-10-15_12-49-31)
+2025-10-15 12:49:44,371 | INFO | validation:  400/ 531 (2025-10-15_12-49-44)
+2025-10-15 12:49:57,104 | INFO | validation:  500/ 531 (2025-10-15_12-49-57)
+2025-10-15 12:50:01,372 | INFO | Confusion Matrix of Localization:
+[[136730489    293663]
+ [   264233   1910079]]
+2025-10-15 12:50:01,373 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99785685 0.00214315]
+ [0.12152488 0.87847512]]
+2025-10-15 12:50:01,373 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1726062   23915       0    8415]
+ [      0   39986  192442    3272    4823]
+ [      0    2053   33050   11310    6432]
+ [      0   30835    9375    1055   81287]]
+2025-10-15 12:50:01,373 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.98161388 0.01360049 0.         0.00478562]
+ [0.         0.16624606 0.80009812 0.01360369 0.02005214]
+ [0.         0.03884947 0.62541395 0.21402214 0.12171445]
+ [0.         0.25160748 0.07649814 0.00860859 0.66328579]]
+2025-10-15 12:50:01,373 | INFO | lofF1 is 87.2570, clfF1 is 59.4347, oaF1 is 67.7814, sub class F1 score is [97.0426 77.0839 33.0306 72.7371]
+2025-10-15 12:50:01,373 | INFO | ---------starting train set evaluation-----------
+2025-10-15 12:50:01,373 | INFO | Train buffer size: 1504.
+2025-10-15 12:50:07,056 | INFO | [TrainBuf] locF1 is 86.2387, clfF1 is 75.5761, oaF1 is 78.7749, sub class F1 score is [96.791  73.6217 62.3473 77.0827]
+2025-10-15 12:50:08,356 | INFO | iter is 6250 / 25000 [skipped  178] | loc. loss = 0.2088297457, classif. loss = 1.4339041710
+2025-10-15 12:51:09,388 | INFO | iter is 6350 / 25000 [skipped  181] | loc. loss = 0.2776355147, classif. loss = 1.2092235088
+2025-10-15 12:51:39,630 | INFO | iter is 6400 / 25000 [skipped  183] | loc. loss = 0.0600371398, classif. loss = 0.0893449336
+2025-10-15 12:52:10,438 | INFO | iter is 6450 / 25000 [skipped  184] | loc. loss = 0.0826899111, classif. loss = 0.8898721337
+2025-10-15 12:52:40,651 | INFO | iter is 6500 / 25000 [skipped  186] | loc. loss = 0.2791322172, classif. loss = 0.5116747618
+2025-10-15 12:53:41,758 | INFO | iter is 6600 / 25000 [skipped  189] | loc. loss = 0.1404046118, classif. loss = 1.2102190256
+2025-10-15 12:54:13,203 | INFO | iter is 6650 / 25000 [skipped  189] | loc. loss = 0.1400257945, classif. loss = 0.0536335632
+2025-10-15 12:54:42,862 | INFO | iter is 6700 / 25000 [skipped  192] | loc. loss = 0.1375784874, classif. loss = 0.2531284988
+2025-10-15 12:55:14,314 | INFO | iter is 6750 / 25000 [skipped  192] | loc. loss = 0.1265036613, classif. loss = 0.7968991995
+2025-10-15 12:55:44,603 | INFO | iter is 6800 / 25000 [skipped  194] | loc. loss = 0.1862676889, classif. loss = 0.0763603598
+2025-10-15 12:56:16,073 | INFO | iter is 6850 / 25000 [skipped  194] | loc. loss = 0.0788001865, classif. loss = 0.0289730914
+2025-10-15 12:56:46,328 | INFO | iter is 6900 / 25000 [skipped  196] | loc. loss = 0.2139238864, classif. loss = 0.1766750515
+2025-10-15 12:57:16,570 | INFO | iter is 6950 / 25000 [skipped  198] | loc. loss = 0.1988659054, classif. loss = 0.5609290004
+2025-10-15 12:57:47,496 | INFO | iter is 7000 / 25000 [skipped  199] | loc. loss = 0.1976567358, classif. loss = 0.8389867544
+2025-10-15 12:58:17,737 | INFO | iter is 7050 / 25000 [skipped  201] | loc. loss = 0.2635007203, classif. loss = 0.4322113991
+2025-10-15 12:58:49,276 | INFO | iter is 7100 / 25000 [skipped  201] | loc. loss = 0.1316374689, classif. loss = 0.7949608564
+2025-10-15 12:59:19,540 | INFO | iter is 7150 / 25000 [skipped  203] | loc. loss = 0.1802406162, classif. loss = 0.5042638779
+2025-10-15 12:59:49,257 | INFO | iter is 7200 / 25000 [skipped  206] | loc. loss = 0.1648457348, classif. loss = 0.4667768478
+2025-10-15 13:00:19,547 | INFO | iter is 7250 / 25000 [skipped  208] | loc. loss = 0.1592228860, classif. loss = 0.4886916876
+2025-10-15 13:00:50,437 | INFO | iter is 7300 / 25000 [skipped  209] | loc. loss = 0.1436299980, classif. loss = 0.2302834690
+2025-10-15 13:01:20,173 | INFO | iter is 7350 / 25000 [skipped  212] | loc. loss = 0.1531494260, classif. loss = 0.8263893723
+2025-10-15 13:01:49,892 | INFO | iter is 7400 / 25000 [skipped  215] | loc. loss = 0.1658964604, classif. loss = 0.2845564783
+2025-10-15 13:02:21,411 | INFO | iter is 7450 / 25000 [skipped  215] | loc. loss = 0.1670845151, classif. loss = 0.5956479907
+2025-10-15 13:02:52,343 | INFO | iter is 7500 / 25000 [skipped  216] | loc. loss = 0.2043876797, classif. loss = 0.0859531909
+2025-10-15 13:03:23,941 | INFO | iter is 7550 / 25000 [skipped  216] | loc. loss = 0.2043932825, classif. loss = 1.3408579826
+2025-10-15 13:03:54,317 | INFO | iter is 7600 / 25000 [skipped  218] | loc. loss = 0.1482633352, classif. loss = 0.8578298092
+2025-10-15 13:04:25,236 | INFO | iter is 7650 / 25000 [skipped  219] | loc. loss = 0.1408392340, classif. loss = 0.4278395176
+2025-10-15 13:04:56,158 | INFO | iter is 7700 / 25000 [skipped  220] | loc. loss = 0.4320825040, classif. loss = 0.0015526322
+2025-10-15 13:05:27,755 | INFO | iter is 7750 / 25000 [skipped  220] | loc. loss = 0.1716713011, classif. loss = 0.4705944955
+2025-10-15 13:05:57,423 | INFO | iter is 7800 / 25000 [skipped  223] | loc. loss = 0.1310301721, classif. loss = 1.1187617779
+2025-10-15 13:06:03,743 | INFO | ---------starting evaluation-----------
+2025-10-15 13:06:05,062 | INFO | validation:    0/ 531 (2025-10-15_13-06-05)
+2025-10-15 13:06:17,806 | INFO | validation:  100/ 531 (2025-10-15_13-06-17)
+2025-10-15 13:06:30,518 | INFO | validation:  200/ 531 (2025-10-15_13-06-30)
+2025-10-15 13:06:43,224 | INFO | validation:  300/ 531 (2025-10-15_13-06-43)
+2025-10-15 13:06:55,947 | INFO | validation:  400/ 531 (2025-10-15_13-06-55)
+2025-10-15 13:07:08,673 | INFO | validation:  500/ 531 (2025-10-15_13-07-08)
+2025-10-15 13:07:12,993 | INFO | Confusion Matrix of Localization:
+[[136746240    277912]
+ [   286566   1887746]]
+2025-10-15 13:07:12,993 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.9979718  0.0020282 ]
+ [0.13179617 0.86820383]]
+2025-10-15 13:07:12,993 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1684477   57920    2201   13794]
+ [      0   28270  194658   10560    7035]
+ [      0     662   19102   24198    8883]
+ [      0   21393    7392    1785   91982]]
+2025-10-15 13:07:12,993 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.95796444 0.03293919 0.00125171 0.00784467]
+ [0.         0.11753554 0.80931138 0.04390433 0.02924876]
+ [0.         0.0125272  0.36147223 0.45790519 0.16809537]
+ [0.         0.17456263 0.06031725 0.01456525 0.75055487]]
+2025-10-15 13:07:12,993 | INFO | lofF1 is 86.9935, clfF1 is 71.5347, oaF1 is 76.1724, sub class F1 score is [96.4434 74.9268 52.8404 75.3191]
+2025-10-15 13:07:13,253 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step7810.pth
+2025-10-15 13:07:13,253 | INFO | ---------starting train set evaluation-----------
+2025-10-15 13:07:13,253 | INFO | Train buffer size: 1517.
+2025-10-15 13:07:18,972 | INFO | [TrainBuf] locF1 is 86.9946, clfF1 is 78.0546, oaF1 is 80.7366, sub class F1 score is [96.7685 77.7068 65.8093 77.8337]
+2025-10-15 13:07:42,891 | INFO | iter is 7850 / 25000 [skipped  225] | loc. loss = 0.1190655679, classif. loss = 0.4903251529
+2025-10-15 13:08:13,729 | INFO | iter is 7900 / 25000 [skipped  226] | loc. loss = 0.2112056762, classif. loss = 1.8579941988
+2025-10-15 13:08:42,685 | INFO | iter is 7950 / 25000 [skipped  230] | loc. loss = 0.1591621339, classif. loss = 0.6295946240
+2025-10-15 13:09:12,326 | INFO | iter is 8000 / 25000 [skipped  233] | loc. loss = 0.1450032592, classif. loss = 0.4896891713
+2025-10-15 13:09:42,554 | INFO | iter is 8050 / 25000 [skipped  235] | loc. loss = 0.1897336394, classif. loss = 0.5467225313
+2025-10-15 13:10:13,378 | INFO | iter is 8100 / 25000 [skipped  236] | loc. loss = 0.1628157198, classif. loss = 1.0287569761
+2025-10-15 13:10:43,597 | INFO | iter is 8150 / 25000 [skipped  238] | loc. loss = 0.1633404195, classif. loss = 0.7823327184
+2025-10-15 13:11:13,264 | INFO | iter is 8200 / 25000 [skipped  241] | loc. loss = 0.1315805018, classif. loss = 0.3042038679
+2025-10-15 13:11:43,478 | INFO | iter is 8250 / 25000 [skipped  243] | loc. loss = 0.1824172288, classif. loss = 0.1929186285
+2025-10-15 13:12:14,374 | INFO | iter is 8300 / 25000 [skipped  244] | loc. loss = 0.0935699940, classif. loss = 0.2820887268
+2025-10-15 13:12:45,217 | INFO | iter is 8350 / 25000 [skipped  245] | loc. loss = 0.0850225538, classif. loss = 0.0171509720
+2025-10-15 13:13:16,123 | INFO | iter is 8400 / 25000 [skipped  246] | loc. loss = 0.1746471971, classif. loss = 0.3009517789
+2025-10-15 13:13:45,745 | INFO | iter is 8450 / 25000 [skipped  249] | loc. loss = 0.1405908018, classif. loss = 1.5348607302
+2025-10-15 13:14:16,604 | INFO | iter is 8500 / 25000 [skipped  250] | loc. loss = 0.1378453970, classif. loss = 0.2479313314
+2025-10-15 13:14:46,857 | INFO | iter is 8550 / 25000 [skipped  252] | loc. loss = 0.0917213559, classif. loss = 0.8503775001
+2025-10-15 13:15:17,795 | INFO | iter is 8600 / 25000 [skipped  253] | loc. loss = 0.0763403624, classif. loss = 0.2878478169
+2025-10-15 13:16:16,539 | INFO | iter is 8700 / 25000 [skipped  260] | loc. loss = 0.1884796619, classif. loss = 0.0262210779
+2025-10-15 13:16:48,031 | INFO | iter is 8750 / 25000 [skipped  260] | loc. loss = 0.1427858919, classif. loss = 0.4203717411
+2025-10-15 13:17:18,980 | INFO | iter is 8800 / 25000 [skipped  261] | loc. loss = 0.0824085474, classif. loss = 2.9088444710
+2025-10-15 13:17:49,855 | INFO | iter is 8850 / 25000 [skipped  262] | loc. loss = 0.2736726403, classif. loss = 0.2247125208
+2025-10-15 13:18:19,542 | INFO | iter is 8900 / 25000 [skipped  265] | loc. loss = 0.1414043307, classif. loss = 0.0143966693
+2025-10-15 13:18:49,211 | INFO | iter is 8950 / 25000 [skipped  268] | loc. loss = 0.1143033728, classif. loss = 0.8312795162
+2025-10-15 13:19:20,158 | INFO | iter is 9000 / 25000 [skipped  269] | loc. loss = 0.0869694948, classif. loss = 1.1583963633
+2025-10-15 13:19:51,051 | INFO | iter is 9050 / 25000 [skipped  270] | loc. loss = 0.2422318906, classif. loss = 0.0556087531
+2025-10-15 13:20:22,016 | INFO | iter is 9100 / 25000 [skipped  271] | loc. loss = 0.2488426417, classif. loss = 0.0840028077
+2025-10-15 13:20:52,321 | INFO | iter is 9150 / 25000 [skipped  273] | loc. loss = 0.2351936251, classif. loss = 0.4922577143
+2025-10-15 13:21:23,932 | INFO | iter is 9200 / 25000 [skipped  273] | loc. loss = 0.0538131855, classif. loss = 1.5374836922
+2025-10-15 13:21:54,856 | INFO | iter is 9250 / 25000 [skipped  274] | loc. loss = 0.2297511250, classif. loss = 0.3863856494
+2025-10-15 13:22:23,971 | INFO | iter is 9300 / 25000 [skipped  278] | loc. loss = 0.0954622775, classif. loss = 0.0717257932
+2025-10-15 13:22:55,543 | INFO | iter is 9350 / 25000 [skipped  278] | loc. loss = 0.2483929098, classif. loss = 0.3572738767
+2025-10-15 13:23:09,429 | INFO | ---------starting evaluation-----------
+2025-10-15 13:23:10,756 | INFO | validation:    0/ 531 (2025-10-15_13-23-10)
+2025-10-15 13:23:23,536 | INFO | validation:  100/ 531 (2025-10-15_13-23-23)
+2025-10-15 13:23:36,260 | INFO | validation:  200/ 531 (2025-10-15_13-23-36)
+2025-10-15 13:23:48,988 | INFO | validation:  300/ 531 (2025-10-15_13-23-48)
+2025-10-15 13:24:01,717 | INFO | validation:  400/ 531 (2025-10-15_13-24-01)
+2025-10-15 13:24:14,437 | INFO | validation:  500/ 531 (2025-10-15_13-24-14)
+2025-10-15 13:24:18,761 | INFO | Confusion Matrix of Localization:
+[[136841048    183104]
+ [   355050   1819262]]
+2025-10-15 13:24:18,762 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99866371 0.00133629]
+ [0.16329303 0.83670697]]
+2025-10-15 13:24:18,762 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1661064   51153    1332   44843]
+ [      0   28538  191856    9028   11101]
+ [      0    1504   16061   23081   12199]
+ [      0   13308    4503    1009  103732]]
+2025-10-15 13:24:18,762 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.44649430e-01 2.90907829e-02 7.57510271e-04
+  2.55022771e-02]
+ [0.00000000e+00 1.18649776e-01 7.97661762e-01 3.75348719e-02
+  4.61535903e-02]
+ [0.00000000e+00 2.84605923e-02 3.03926578e-01 4.36767906e-01
+  2.30844924e-01]
+ [0.00000000e+00 1.08590639e-01 3.67435864e-02 8.23323977e-03
+  8.46432535e-01]]
+2025-10-15 13:24:18,762 | INFO | lofF1 is 87.1153, clfF1 is 70.5927, oaF1 is 75.5494, sub class F1 score is [95.9375 76.1188 52.8805 70.4636]
+2025-10-15 13:24:18,762 | INFO | ---------starting train set evaluation-----------
+2025-10-15 13:24:18,762 | INFO | Train buffer size: 1507.
+2025-10-15 13:24:24,442 | INFO | [TrainBuf] locF1 is 86.8718, clfF1 is 79.6976, oaF1 is 81.8499, sub class F1 score is [96.7285 77.5518 70.9287 77.7711]
+2025-10-15 13:24:42,151 | INFO | iter is 9400 / 25000 [skipped  278] | loc. loss = 0.2652645111, classif. loss = 0.6007850766
+2025-10-15 13:25:13,626 | INFO | iter is 9450 / 25000 [skipped  278] | loc. loss = 0.1302927434, classif. loss = 0.9107493162
+2025-10-15 13:25:43,904 | INFO | iter is 9500 / 25000 [skipped  280] | loc. loss = 0.1833718568, classif. loss = 0.1266704053
+2025-10-15 13:26:14,117 | INFO | iter is 9550 / 25000 [skipped  282] | loc. loss = 0.1397332847, classif. loss = 0.7632551193
+2025-10-15 13:26:44,337 | INFO | iter is 9600 / 25000 [skipped  284] | loc. loss = 0.0984612107, classif. loss = 0.0044618091
+2025-10-15 13:27:14,566 | INFO | iter is 9650 / 25000 [skipped  286] | loc. loss = 0.1631393433, classif. loss = 0.7430695295
+2025-10-15 13:27:45,457 | INFO | iter is 9700 / 25000 [skipped  287] | loc. loss = 0.1453386992, classif. loss = 0.1529869139
+2025-10-15 13:28:14,468 | INFO | iter is 9750 / 25000 [skipped  291] | loc. loss = 0.1822173148, classif. loss = 1.3210268021
+2025-10-15 13:28:45,377 | INFO | iter is 9800 / 25000 [skipped  292] | loc. loss = 0.1557246745, classif. loss = 0.0093020955
+2025-10-15 13:29:15,616 | INFO | iter is 9850 / 25000 [skipped  294] | loc. loss = 0.0783658549, classif. loss = 0.4633434415
+2025-10-15 13:29:46,474 | INFO | iter is 9900 / 25000 [skipped  295] | loc. loss = 0.2571030855, classif. loss = 0.1899243295
+2025-10-15 13:30:16,168 | INFO | iter is 9950 / 25000 [skipped  298] | loc. loss = 0.1040382162, classif. loss = 0.0029542949
+2025-10-15 13:30:46,443 | INFO | iter is 10000 / 25000 [skipped  300] | loc. loss = 0.1568032205, classif. loss = 0.4545963705
+2025-10-15 13:31:17,317 | INFO | iter is 10050 / 25000 [skipped  301] | loc. loss = 0.1954511702, classif. loss = 0.1275620162
+2025-10-15 13:31:48,212 | INFO | iter is 10100 / 25000 [skipped  302] | loc. loss = 0.1335613430, classif. loss = 1.7625463009
+2025-10-15 13:32:19,799 | INFO | iter is 10150 / 25000 [skipped  302] | loc. loss = 0.1149743199, classif. loss = 0.4019503891
+2025-10-15 13:32:51,369 | INFO | iter is 10200 / 25000 [skipped  302] | loc. loss = 0.1868761182, classif. loss = 0.3361271620
+2025-10-15 13:33:22,336 | INFO | iter is 10250 / 25000 [skipped  303] | loc. loss = 0.2602381706, classif. loss = 0.6102433205
+2025-10-15 13:33:52,083 | INFO | iter is 10300 / 25000 [skipped  306] | loc. loss = 0.2039808631, classif. loss = 0.0102394018
+2025-10-15 13:34:21,214 | INFO | iter is 10350 / 25000 [skipped  310] | loc. loss = 0.1536465734, classif. loss = 0.1529834569
+2025-10-15 13:34:50,316 | INFO | iter is 10400 / 25000 [skipped  314] | loc. loss = 0.1302954555, classif. loss = 0.0931078047
+2025-10-15 13:35:20,019 | INFO | iter is 10450 / 25000 [skipped  317] | loc. loss = 0.2229010165, classif. loss = 0.5994226336
+2025-10-15 13:35:50,953 | INFO | iter is 10500 / 25000 [skipped  318] | loc. loss = 0.1493505239, classif. loss = 0.3360348642
+2025-10-15 13:36:22,565 | INFO | iter is 10550 / 25000 [skipped  318] | loc. loss = 0.0570614077, classif. loss = 0.0019521292
+2025-10-15 13:36:52,254 | INFO | iter is 10600 / 25000 [skipped  321] | loc. loss = 0.1347292364, classif. loss = 0.3405408859
+2025-10-15 13:37:23,252 | INFO | iter is 10650 / 25000 [skipped  322] | loc. loss = 0.2591508031, classif. loss = 0.8073295355
+2025-10-15 13:37:53,578 | INFO | iter is 10700 / 25000 [skipped  324] | loc. loss = 0.2727452517, classif. loss = 0.5165456533
+2025-10-15 13:38:24,057 | INFO | iter is 10750 / 25000 [skipped  326] | loc. loss = 0.1036895812, classif. loss = 0.5696756840
+2025-10-15 13:38:55,905 | INFO | iter is 10800 / 25000 [skipped  326] | loc. loss = 0.1461616457, classif. loss = 0.0218292996
+2025-10-15 13:39:25,181 | INFO | iter is 10850 / 25000 [skipped  330] | loc. loss = 0.1386668682, classif. loss = 0.8359537721
+2025-10-15 13:39:54,905 | INFO | iter is 10900 / 25000 [skipped  333] | loc. loss = 0.1076361090, classif. loss = 0.1843119860
+2025-10-15 13:40:15,764 | INFO | ---------starting evaluation-----------
+2025-10-15 13:40:17,096 | INFO | validation:    0/ 531 (2025-10-15_13-40-17)
+2025-10-15 13:40:29,867 | INFO | validation:  100/ 531 (2025-10-15_13-40-29)
+2025-10-15 13:40:42,583 | INFO | validation:  200/ 531 (2025-10-15_13-40-42)
+2025-10-15 13:40:55,324 | INFO | validation:  300/ 531 (2025-10-15_13-40-55)
+2025-10-15 13:41:08,063 | INFO | validation:  400/ 531 (2025-10-15_13-41-08)
+2025-10-15 13:41:20,805 | INFO | validation:  500/ 531 (2025-10-15_13-41-20)
+2025-10-15 13:41:25,143 | INFO | Confusion Matrix of Localization:
+[[136598202    425950]
+ [   166909   2007403]]
+2025-10-15 13:41:25,143 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99689142 0.00310858]
+ [0.07676405 0.92323595]]
+2025-10-15 13:41:25,143 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1665358   76470     227   16337]
+ [      0   24053  209458    3317    3695]
+ [      0     662   36709   10088    5386]
+ [      0   23654   12761     512   85625]]
+2025-10-15 13:41:25,144 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.47091434e-01 4.34885964e-02 1.29095219e-04
+  9.29087484e-03]
+ [0.00000000e+00 1.00002910e-01 8.70843953e-01 1.37907809e-02
+  1.53623562e-02]
+ [0.00000000e+00 1.25272022e-02 6.94654177e-01 1.90897909e-01
+  1.01920712e-01]
+ [0.00000000e+00 1.93011946e-01 1.04127228e-01 4.17781840e-03
+  6.98683008e-01]]
+2025-10-15 13:41:25,144 | INFO | lofF1 is 87.1332, clfF1 is 56.3259, oaF1 is 65.5681, sub class F1 score is [95.9275 72.7384 30.1184 73.3106]
+2025-10-15 13:41:25,144 | INFO | ---------starting train set evaluation-----------
+2025-10-15 13:41:25,144 | INFO | Train buffer size: 1506.
+2025-10-15 13:41:30,857 | INFO | [TrainBuf] locF1 is 87.3001, clfF1 is 79.2202, oaF1 is 81.6442, sub class F1 score is [96.993  80.3886 66.1375 79.2232]
+2025-10-15 13:41:40,407 | INFO | iter is 10950 / 25000 [skipped  335] | loc. loss = 0.2297474593, classif. loss = 2.0834286213
+2025-10-15 13:42:10,595 | INFO | iter is 11000 / 25000 [skipped  337] | loc. loss = 0.1690956056, classif. loss = 0.1311489344
+2025-10-15 13:42:42,092 | INFO | iter is 11050 / 25000 [skipped  337] | loc. loss = 0.1672527492, classif. loss = 1.0025556087
+2025-10-15 13:43:11,697 | INFO | iter is 11100 / 25000 [skipped  340] | loc. loss = 0.1591956317, classif. loss = 0.1489520073
+2025-10-15 13:43:42,586 | INFO | iter is 11150 / 25000 [skipped  341] | loc. loss = 0.2293854803, classif. loss = 0.3852493167
+2025-10-15 13:44:14,045 | INFO | iter is 11200 / 25000 [skipped  341] | loc. loss = 0.1651952416, classif. loss = 0.1327398866
+2025-10-15 13:44:43,676 | INFO | iter is 11250 / 25000 [skipped  344] | loc. loss = 0.1297160685, classif. loss = 0.0022891518
+2025-10-15 13:45:15,132 | INFO | iter is 11300 / 25000 [skipped  344] | loc. loss = 0.1797069609, classif. loss = 1.2654695511
+2025-10-15 13:45:46,029 | INFO | iter is 11350 / 25000 [skipped  345] | loc. loss = 0.2303998917, classif. loss = 0.6792407632
+2025-10-15 13:46:16,285 | INFO | iter is 11400 / 25000 [skipped  347] | loc. loss = 0.1742547303, classif. loss = 0.6748366356
+2025-10-15 13:46:47,847 | INFO | iter is 11450 / 25000 [skipped  347] | loc. loss = 0.1455018520, classif. loss = 0.4183272123
+2025-10-15 13:47:17,504 | INFO | iter is 11500 / 25000 [skipped  350] | loc. loss = 0.1711290777, classif. loss = 0.0219594426
+2025-10-15 13:47:48,426 | INFO | iter is 11550 / 25000 [skipped  351] | loc. loss = 0.2259324491, classif. loss = 0.7983174920
+2025-10-15 13:48:19,307 | INFO | iter is 11600 / 25000 [skipped  352] | loc. loss = 0.1865591556, classif. loss = 0.5439772606
+2025-10-15 13:48:50,795 | INFO | iter is 11650 / 25000 [skipped  352] | loc. loss = 0.0277518313, classif. loss = 0.6815406084
+2025-10-15 13:49:21,058 | INFO | iter is 11700 / 25000 [skipped  354] | loc. loss = 0.1989568472, classif. loss = 0.5821393728
+2025-10-15 13:49:50,746 | INFO | iter is 11750 / 25000 [skipped  357] | loc. loss = 0.0350162350, classif. loss = 0.0187506247
+2025-10-15 13:50:22,260 | INFO | iter is 11800 / 25000 [skipped  357] | loc. loss = 0.1357962042, classif. loss = 0.7502915859
+2025-10-15 13:50:51,985 | INFO | iter is 11850 / 25000 [skipped  360] | loc. loss = 0.1320415884, classif. loss = 0.0557008572
+2025-10-15 13:51:22,926 | INFO | iter is 11900 / 25000 [skipped  361] | loc. loss = 0.2511789203, classif. loss = 0.1743907183
+2025-10-15 13:51:53,831 | INFO | iter is 11950 / 25000 [skipped  362] | loc. loss = 0.1043519601, classif. loss = 1.5858370066
+2025-10-15 13:52:24,159 | INFO | iter is 12000 / 25000 [skipped  364] | loc. loss = 0.1495486349, classif. loss = 2.0786452293
+2025-10-15 13:52:54,448 | INFO | iter is 12050 / 25000 [skipped  366] | loc. loss = 0.1405667812, classif. loss = 0.0182666108
+2025-10-15 13:53:25,366 | INFO | iter is 12100 / 25000 [skipped  367] | loc. loss = 0.1875843406, classif. loss = 0.1190449893
+2025-10-15 13:53:55,042 | INFO | iter is 12150 / 25000 [skipped  370] | loc. loss = 0.1814755499, classif. loss = 0.6210501790
+2025-10-15 13:54:26,023 | INFO | iter is 12200 / 25000 [skipped  371] | loc. loss = 0.1482137144, classif. loss = 0.5072286129
+2025-10-15 13:54:56,359 | INFO | iter is 12250 / 25000 [skipped  373] | loc. loss = 0.0382333919, classif. loss = 0.1498785317
+2025-10-15 13:55:26,044 | INFO | iter is 12300 / 25000 [skipped  376] | loc. loss = 0.1278541088, classif. loss = 0.0098932683
+2025-10-15 13:55:56,350 | INFO | iter is 12350 / 25000 [skipped  378] | loc. loss = 0.1389379501, classif. loss = 0.6291041374
+2025-10-15 13:56:26,730 | INFO | iter is 12400 / 25000 [skipped  380] | loc. loss = 0.1137607321, classif. loss = 0.0806974098
+2025-10-15 13:56:58,299 | INFO | iter is 12450 / 25000 [skipped  380] | loc. loss = 0.1371061504, classif. loss = 0.2841712832
+2025-10-15 13:57:26,726 | INFO | ---------starting evaluation-----------
+2025-10-15 13:57:28,070 | INFO | validation:    0/ 531 (2025-10-15_13-57-28)
+2025-10-15 13:57:40,820 | INFO | validation:  100/ 531 (2025-10-15_13-57-40)
+2025-10-15 13:57:53,542 | INFO | validation:  200/ 531 (2025-10-15_13-57-53)
+2025-10-15 13:58:06,276 | INFO | validation:  300/ 531 (2025-10-15_13-58-06)
+2025-10-15 13:58:18,992 | INFO | validation:  400/ 531 (2025-10-15_13-58-18)
+2025-10-15 13:58:31,718 | INFO | validation:  500/ 531 (2025-10-15_13-58-31)
+2025-10-15 13:58:36,043 | INFO | Confusion Matrix of Localization:
+[[136720720    303432]
+ [   294294   1880018]]
+2025-10-15 13:58:36,043 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99778556 0.00221444]
+ [0.1353504  0.8646496 ]]
+2025-10-15 13:58:36,043 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1705538   34129    1015   17710]
+ [      0   27581  194348    7768   10826]
+ [      0     704   23605   22034    6502]
+ [      0   22285    3341    3510   93416]]
+2025-10-15 13:58:36,043 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.69941856e-01 1.94092102e-02 5.77231926e-04
+  1.00717019e-02]
+ [0.00000000e+00 1.14670946e-01 8.08022518e-01 3.22962877e-02
+  4.50102485e-02]
+ [0.00000000e+00 1.33219794e-02 4.46683698e-01 4.16955246e-01
+  1.23039077e-01]
+ [0.00000000e+00 1.81841178e-01 2.72618970e-02 2.86409035e-02
+  7.62256022e-01]]
+2025-10-15 13:58:36,043 | INFO | lofF1 is 86.2836, clfF1 is 71.0751, oaF1 is 75.6376, sub class F1 score is [97.0572 78.3747 50.5529 74.4333]
+2025-10-15 13:58:36,044 | INFO | ---------starting train set evaluation-----------
+2025-10-15 13:58:36,044 | INFO | Train buffer size: 1515.
+2025-10-15 13:58:41,738 | INFO | [TrainBuf] locF1 is 87.2949, clfF1 is 81.7259, oaF1 is 83.3966, sub class F1 score is [97.2959 79.7267 74.1878 79.0887]
+2025-10-15 13:58:44,299 | INFO | iter is 12500 / 25000 [skipped  381] | loc. loss = 0.0855632797, classif. loss = 0.3021197915
+2025-10-15 13:59:14,467 | INFO | iter is 12550 / 25000 [skipped  383] | loc. loss = 0.1237689182, classif. loss = 2.3810417652
+2025-10-15 13:59:44,112 | INFO | iter is 12600 / 25000 [skipped  386] | loc. loss = 0.1089825854, classif. loss = 0.3153342009
+2025-10-15 14:00:13,743 | INFO | iter is 12650 / 25000 [skipped  389] | loc. loss = 0.1157882214, classif. loss = 0.5739998817
+2025-10-15 14:00:44,652 | INFO | iter is 12700 / 25000 [skipped  390] | loc. loss = 0.1472463310, classif. loss = 0.4237742126
+2025-10-15 14:01:14,917 | INFO | iter is 12750 / 25000 [skipped  392] | loc. loss = 0.0744179338, classif. loss = 0.2915785909
+2025-10-15 14:01:43,361 | INFO | iter is 12800 / 25000 [skipped  397] | loc. loss = 0.1235522926, classif. loss = 0.2057611793
+2025-10-15 14:02:14,258 | INFO | iter is 12850 / 25000 [skipped  398] | loc. loss = 0.1349973083, classif. loss = 0.3906393349
+2025-10-15 14:02:44,519 | INFO | iter is 12900 / 25000 [skipped  400] | loc. loss = 0.1340894997, classif. loss = 0.3341479301
+2025-10-15 14:03:14,150 | INFO | iter is 12950 / 25000 [skipped  403] | loc. loss = 0.0577790216, classif. loss = 0.0008485705
+2025-10-15 14:03:43,839 | INFO | iter is 13000 / 25000 [skipped  406] | loc. loss = 0.0474249534, classif. loss = 0.0447042808
+2025-10-15 14:04:15,327 | INFO | iter is 13050 / 25000 [skipped  406] | loc. loss = 0.0933429450, classif. loss = 0.7365280390
+2025-10-15 14:04:46,382 | INFO | iter is 13100 / 25000 [skipped  407] | loc. loss = 0.1435249746, classif. loss = 0.8417527676
+2025-10-15 14:05:16,872 | INFO | iter is 13150 / 25000 [skipped  409] | loc. loss = 0.1010684446, classif. loss = 0.1722396612
+2025-10-15 14:05:48,091 | INFO | iter is 13200 / 25000 [skipped  410] | loc. loss = 0.1706649959, classif. loss = 0.0431733318
+2025-10-15 14:06:18,555 | INFO | iter is 13250 / 25000 [skipped  412] | loc. loss = 0.2137359977, classif. loss = 2.5144023895
+2025-10-15 14:06:50,164 | INFO | iter is 13300 / 25000 [skipped  412] | loc. loss = 0.1771677732, classif. loss = 0.0475265980
+2025-10-15 14:07:21,081 | INFO | iter is 13350 / 25000 [skipped  413] | loc. loss = 0.1156866923, classif. loss = 0.7839301825
+2025-10-15 14:07:50,772 | INFO | iter is 13400 / 25000 [skipped  416] | loc. loss = 0.0599485934, classif. loss = 0.0470448211
+2025-10-15 14:08:22,325 | INFO | iter is 13450 / 25000 [skipped  416] | loc. loss = 0.1407329738, classif. loss = 0.2944063842
+2025-10-15 14:08:49,688 | INFO | iter is 13500 / 25000 [skipped  423] | loc. loss = 0.0644439757, classif. loss = 1.9695844650
+2025-10-15 14:09:20,102 | INFO | iter is 13550 / 25000 [skipped  425] | loc. loss = 0.1413602531, classif. loss = 0.0163728930
+2025-10-15 14:09:49,458 | INFO | iter is 13600 / 25000 [skipped  429] | loc. loss = 0.1235315651, classif. loss = 2.9394030571
+2025-10-15 14:10:20,667 | INFO | iter is 13650 / 25000 [skipped  430] | loc. loss = 0.1540546268, classif. loss = 0.0663757771
+2025-10-15 14:10:51,650 | INFO | iter is 13700 / 25000 [skipped  431] | loc. loss = 0.1776722521, classif. loss = 0.5613231659
+2025-10-15 14:11:23,210 | INFO | iter is 13750 / 25000 [skipped  431] | loc. loss = 0.0946181044, classif. loss = 0.1711003333
+2025-10-15 14:11:54,175 | INFO | iter is 13800 / 25000 [skipped  432] | loc. loss = 0.0598138124, classif. loss = 0.0900604427
+2025-10-15 14:12:25,209 | INFO | iter is 13850 / 25000 [skipped  433] | loc. loss = 0.2075152844, classif. loss = 0.4186922610
+2025-10-15 14:12:55,598 | INFO | iter is 13900 / 25000 [skipped  435] | loc. loss = 0.1394906640, classif. loss = 0.1339010894
+2025-10-15 14:13:25,929 | INFO | iter is 13950 / 25000 [skipped  437] | loc. loss = 0.1369664073, classif. loss = 0.7298390865
+2025-10-15 14:13:56,879 | INFO | iter is 14000 / 25000 [skipped  438] | loc. loss = 0.1647161692, classif. loss = 0.0987961590
+2025-10-15 14:14:26,672 | INFO | iter is 14050 / 25000 [skipped  441] | loc. loss = 0.1502269506, classif. loss = 0.5510812402
+2025-10-15 14:14:31,725 | INFO | ---------starting evaluation-----------
+2025-10-15 14:14:33,074 | INFO | validation:    0/ 531 (2025-10-15_14-14-33)
+2025-10-15 14:14:45,872 | INFO | validation:  100/ 531 (2025-10-15_14-14-45)
+2025-10-15 14:14:58,642 | INFO | validation:  200/ 531 (2025-10-15_14-14-58)
+2025-10-15 14:15:11,388 | INFO | validation:  300/ 531 (2025-10-15_14-15-11)
+2025-10-15 14:15:24,147 | INFO | validation:  400/ 531 (2025-10-15_14-15-24)
+2025-10-15 14:15:36,894 | INFO | validation:  500/ 531 (2025-10-15_14-15-36)
+2025-10-15 14:15:41,245 | INFO | Confusion Matrix of Localization:
+[[136687552    336600]
+ [   206060   1968252]]
+2025-10-15 14:15:41,245 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.9975435  0.0024565 ]
+ [0.09477021 0.90522979]]
+2025-10-15 14:15:41,245 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1671919   60723    1412   24338]
+ [      0   22725  204793    8925    4080]
+ [      0     662   23177   24955    4051]
+ [      0   14599    6760    5907   95286]]
+2025-10-15 14:15:41,246 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.50822683e-01 3.45332554e-02 8.03006383e-04
+  1.38410548e-02]
+ [0.00000000e+00 9.44816088e-02 8.51448718e-01 3.71066385e-02
+  1.69630347e-02]
+ [0.00000000e+00 1.25272022e-02 4.38584540e-01 4.72230107e-01
+  7.66581512e-02]
+ [0.00000000e+00 1.19124943e-01 5.51602585e-02 4.81999478e-02
+  7.77514851e-01]]
+2025-10-15 14:15:41,246 | INFO | lofF1 is 87.8848, clfF1 is 72.1563, oaF1 is 76.8748, sub class F1 score is [96.4115 76.4187 53.0709 76.1353]
+2025-10-15 14:15:41,512 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step14058.pth
+2025-10-15 14:15:41,512 | INFO | ---------starting train set evaluation-----------
+2025-10-15 14:15:41,512 | INFO | Train buffer size: 1502.
+2025-10-15 14:15:47,225 | INFO | [TrainBuf] locF1 is 87.9528, clfF1 is 82.3306, oaF1 is 84.0173, sub class F1 score is [97.3318 81.6786 72.8378 81.0491]
+2025-10-15 14:16:13,655 | INFO | iter is 14100 / 25000 [skipped  441] | loc. loss = 0.1698926985, classif. loss = 0.9221274853
+2025-10-15 14:16:43,860 | INFO | iter is 14150 / 25000 [skipped  443] | loc. loss = 0.1343922466, classif. loss = 1.9923059940
+2025-10-15 14:17:14,750 | INFO | iter is 14200 / 25000 [skipped  444] | loc. loss = 0.1475461423, classif. loss = 0.4240100086
+2025-10-15 14:17:45,591 | INFO | iter is 14250 / 25000 [skipped  445] | loc. loss = 0.0346187316, classif. loss = 3.0042080879
+2025-10-15 14:18:15,844 | INFO | iter is 14300 / 25000 [skipped  447] | loc. loss = 0.1357504874, classif. loss = 0.3310652971
+2025-10-15 14:18:45,465 | INFO | iter is 14350 / 25000 [skipped  450] | loc. loss = 0.1211778298, classif. loss = 1.8033590317
+2025-10-15 14:19:15,718 | INFO | iter is 14400 / 25000 [skipped  452] | loc. loss = 0.2030622661, classif. loss = 0.1051043123
+2025-10-15 14:19:46,022 | INFO | iter is 14450 / 25000 [skipped  454] | loc. loss = 0.1656177193, classif. loss = 0.2677884698
+2025-10-15 14:20:17,548 | INFO | iter is 14500 / 25000 [skipped  454] | loc. loss = 0.0708180219, classif. loss = 0.0063475696
+2025-10-15 14:20:46,554 | INFO | iter is 14550 / 25000 [skipped  458] | loc. loss = 0.0575197078, classif. loss = 0.0409922600
+2025-10-15 14:21:14,943 | INFO | iter is 14600 / 25000 [skipped  463] | loc. loss = 0.2464147955, classif. loss = 0.7685396671
+2025-10-15 14:21:45,876 | INFO | iter is 14650 / 25000 [skipped  464] | loc. loss = 0.1389722228, classif. loss = 0.4287940264
+2025-10-15 14:22:44,584 | INFO | iter is 14750 / 25000 [skipped  471] | loc. loss = 0.1132321507, classif. loss = 0.2191810608
+2025-10-15 14:23:14,865 | INFO | iter is 14800 / 25000 [skipped  473] | loc. loss = 0.0929146782, classif. loss = 0.0475282408
+2025-10-15 14:23:46,424 | INFO | iter is 14850 / 25000 [skipped  473] | loc. loss = 0.1186045930, classif. loss = 0.1148794293
+2025-10-15 14:24:16,102 | INFO | iter is 14900 / 25000 [skipped  476] | loc. loss = 0.1356495023, classif. loss = 1.2457954884
+2025-10-15 14:24:47,680 | INFO | iter is 14950 / 25000 [skipped  476] | loc. loss = 0.1917057037, classif. loss = 0.0645019934
+2025-10-15 14:25:19,210 | INFO | iter is 15000 / 25000 [skipped  476] | loc. loss = 0.1354598254, classif. loss = 0.5671085119
+2025-10-15 14:25:50,189 | INFO | iter is 15050 / 25000 [skipped  477] | loc. loss = 0.1781132221, classif. loss = 0.3948018849
+2025-10-15 14:26:19,881 | INFO | iter is 15100 / 25000 [skipped  480] | loc. loss = 0.0912555307, classif. loss = 0.6805351377
+2025-10-15 14:26:50,778 | INFO | iter is 15150 / 25000 [skipped  481] | loc. loss = 0.1482416838, classif. loss = 0.3606176674
+2025-10-15 14:27:20,474 | INFO | iter is 15200 / 25000 [skipped  484] | loc. loss = 0.2646723986, classif. loss = 0.0265755672
+2025-10-15 14:27:50,829 | INFO | iter is 15250 / 25000 [skipped  486] | loc. loss = 0.1531101614, classif. loss = 0.6131767631
+2025-10-15 14:28:21,752 | INFO | iter is 15300 / 25000 [skipped  487] | loc. loss = 0.1354064494, classif. loss = 0.0134813823
+2025-10-15 14:28:51,513 | INFO | iter is 15350 / 25000 [skipped  490] | loc. loss = 0.1751783192, classif. loss = 0.5933079720
+2025-10-15 14:29:21,214 | INFO | iter is 15400 / 25000 [skipped  493] | loc. loss = 0.1825677902, classif. loss = 0.7832683325
+2025-10-15 14:29:51,600 | INFO | iter is 15450 / 25000 [skipped  495] | loc. loss = 0.1026023850, classif. loss = 0.1470078230
+2025-10-15 14:30:52,876 | INFO | iter is 15550 / 25000 [skipped  498] | loc. loss = 0.2380064577, classif. loss = 0.9142102003
+2025-10-15 14:31:23,279 | INFO | iter is 15600 / 25000 [skipped  500] | loc. loss = 0.1703616977, classif. loss = 0.0108042639
+2025-10-15 14:31:34,675 | INFO | ---------starting evaluation-----------
+2025-10-15 14:31:36,030 | INFO | validation:    0/ 531 (2025-10-15_14-31-36)
+2025-10-15 14:31:48,801 | INFO | validation:  100/ 531 (2025-10-15_14-31-48)
+2025-10-15 14:32:01,540 | INFO | validation:  200/ 531 (2025-10-15_14-32-01)
+2025-10-15 14:32:14,259 | INFO | validation:  300/ 531 (2025-10-15_14-32-14)
+2025-10-15 14:32:26,993 | INFO | validation:  400/ 531 (2025-10-15_14-32-26)
+2025-10-15 14:32:39,715 | INFO | validation:  500/ 531 (2025-10-15_14-32-39)
+2025-10-15 14:32:44,031 | INFO | Confusion Matrix of Localization:
+[[136685891    338261]
+ [   204880   1969432]]
+2025-10-15 14:32:44,031 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99753138 0.00246862]
+ [0.09422751 0.90577249]]
+2025-10-15 14:32:44,031 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1723671   21947     302   12472]
+ [      0   40354  188172    4421    7576]
+ [      0     667   24138   22196    5844]
+ [      0   23051    4240    3560   91701]]
+2025-10-15 14:32:44,031 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.80254119e-01 1.24812897e-02 1.71747824e-04
+  7.09284392e-03]
+ [0.00000000e+00 1.67776055e-01 7.82345140e-01 1.83807786e-02
+  3.14980272e-02]
+ [0.00000000e+00 1.26218185e-02 4.56769798e-01 4.20020816e-01
+  1.10587567e-01]
+ [0.00000000e+00 1.88091586e-01 3.45975586e-02 2.90488935e-02
+  7.48261962e-01]]
+2025-10-15 14:32:44,031 | INFO | lofF1 is 87.8817, clfF1 is 72.8879, oaF1 is 77.3861, sub class F1 score is [97.2141 78.5654 53.2764 76.3714]
+2025-10-15 14:32:44,288 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step15620.pth
+2025-10-15 14:32:44,288 | INFO | ---------starting train set evaluation-----------
+2025-10-15 14:32:44,288 | INFO | Train buffer size: 1501.
+2025-10-15 14:32:49,940 | INFO | [TrainBuf] locF1 is 88.0051, clfF1 is 82.5746, oaF1 is 84.2037, sub class F1 score is [97.5374 80.825  73.4019 82.0174]
+2025-10-15 14:33:08,221 | INFO | iter is 15650 / 25000 [skipped  503] | loc. loss = 0.2030356377, classif. loss = 0.9809519053
+2025-10-15 14:33:39,037 | INFO | iter is 15700 / 25000 [skipped  504] | loc. loss = 0.1258426756, classif. loss = 0.3346806169
+2025-10-15 14:34:09,245 | INFO | iter is 15750 / 25000 [skipped  506] | loc. loss = 0.1606750637, classif. loss = 0.2157980055
+2025-10-15 14:34:40,771 | INFO | iter is 15800 / 25000 [skipped  506] | loc. loss = 0.0732453391, classif. loss = 0.1173211783
+2025-10-15 14:35:11,686 | INFO | iter is 15850 / 25000 [skipped  507] | loc. loss = 0.1419978738, classif. loss = 0.2042003274
+2025-10-15 14:35:42,527 | INFO | iter is 15900 / 25000 [skipped  508] | loc. loss = 0.1094109267, classif. loss = 1.1845214367
+2025-10-15 14:36:13,388 | INFO | iter is 15950 / 25000 [skipped  509] | loc. loss = 0.0949070007, classif. loss = 1.2401056290
+2025-10-15 14:37:13,332 | INFO | iter is 16050 / 25000 [skipped  514] | loc. loss = 0.1055930257, classif. loss = 0.4050888419
+2025-10-15 14:37:43,594 | INFO | iter is 16100 / 25000 [skipped  516] | loc. loss = 0.1758294255, classif. loss = 0.2905721068
+2025-10-15 14:38:14,483 | INFO | iter is 16150 / 25000 [skipped  517] | loc. loss = 0.0938859433, classif. loss = 0.3607695103
+2025-10-15 14:38:46,266 | INFO | iter is 16200 / 25000 [skipped  517] | loc. loss = 0.1772658825, classif. loss = 0.7956546545
+2025-10-15 14:39:17,869 | INFO | iter is 16250 / 25000 [skipped  517] | loc. loss = 0.4401783645, classif. loss = 0.0369004868
+2025-10-15 14:39:49,656 | INFO | iter is 16300 / 25000 [skipped  517] | loc. loss = 0.1774210632, classif. loss = 0.6483989954
+2025-10-15 14:40:20,009 | INFO | iter is 16350 / 25000 [skipped  519] | loc. loss = 0.1736184359, classif. loss = 0.3987086415
+2025-10-15 14:40:51,696 | INFO | iter is 16400 / 25000 [skipped  519] | loc. loss = 0.1987037063, classif. loss = 0.0685944781
+2025-10-15 14:41:23,350 | INFO | iter is 16450 / 25000 [skipped  519] | loc. loss = 0.1612142622, classif. loss = 0.9877915382
+2025-10-15 14:41:54,277 | INFO | iter is 16500 / 25000 [skipped  520] | loc. loss = 0.2705009282, classif. loss = 0.8403424025
+2025-10-15 14:42:25,825 | INFO | iter is 16550 / 25000 [skipped  520] | loc. loss = 0.1307303160, classif. loss = 0.5276365876
+2025-10-15 14:42:56,833 | INFO | iter is 16600 / 25000 [skipped  521] | loc. loss = 0.0431223251, classif. loss = 0.0014160826
+2025-10-15 14:43:28,089 | INFO | iter is 16650 / 25000 [skipped  522] | loc. loss = 0.1241782010, classif. loss = 0.6094039679
+2025-10-15 14:43:58,435 | INFO | iter is 16700 / 25000 [skipped  524] | loc. loss = 0.2492867708, classif. loss = 0.0247387774
+2025-10-15 14:44:29,374 | INFO | iter is 16750 / 25000 [skipped  525] | loc. loss = 0.0517002642, classif. loss = 0.3973916471
+2025-10-15 14:44:59,099 | INFO | iter is 16800 / 25000 [skipped  528] | loc. loss = 0.0819217563, classif. loss = 0.6311889887
+2025-10-15 14:45:30,870 | INFO | iter is 16850 / 25000 [skipped  528] | loc. loss = 0.1472941935, classif. loss = 0.2244369388
+2025-10-15 14:46:01,333 | INFO | iter is 16900 / 25000 [skipped  530] | loc. loss = 0.1652032733, classif. loss = 0.2744496167
+2025-10-15 14:46:32,993 | INFO | iter is 16950 / 25000 [skipped  530] | loc. loss = 0.2169696391, classif. loss = 0.0674891621
+2025-10-15 14:47:04,014 | INFO | iter is 17000 / 25000 [skipped  531] | loc. loss = 0.1415366679, classif. loss = 0.8378552794
+2025-10-15 14:47:34,434 | INFO | iter is 17050 / 25000 [skipped  533] | loc. loss = 0.0929091126, classif. loss = 0.1986456513
+2025-10-15 14:48:03,666 | INFO | iter is 17100 / 25000 [skipped  537] | loc. loss = 0.2556552887, classif. loss = 1.0572240353
+2025-10-15 14:48:34,489 | INFO | iter is 17150 / 25000 [skipped  539] | loc. loss = 0.1312290728, classif. loss = 0.0037655123
+2025-10-15 14:48:54,147 | INFO | ---------starting evaluation-----------
+2025-10-15 14:48:55,503 | INFO | validation:    0/ 531 (2025-10-15_14-48-55)
+2025-10-15 14:49:08,317 | INFO | validation:  100/ 531 (2025-10-15_14-49-08)
+2025-10-15 14:49:21,101 | INFO | validation:  200/ 531 (2025-10-15_14-49-21)
+2025-10-15 14:49:33,879 | INFO | validation:  300/ 531 (2025-10-15_14-49-33)
+2025-10-15 14:49:46,651 | INFO | validation:  400/ 531 (2025-10-15_14-49-46)
+2025-10-15 14:49:59,415 | INFO | validation:  500/ 531 (2025-10-15_14-49-59)
+2025-10-15 14:50:03,772 | INFO | Confusion Matrix of Localization:
+[[136828380    195772]
+ [   293979   1880333]]
+2025-10-15 14:50:03,773 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99857126 0.00142874]
+ [0.13520553 0.86479447]]
+2025-10-15 14:50:03,773 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1642837   43325    1695   70535]
+ [      0   24506  195985    4770   15262]
+ [      0     662   19750   19249   13184]
+ [      0    5326    2053     865  114308]]
+2025-10-15 14:50:03,773 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.93428371 0.02463899 0.00096395 0.04011335]
+ [0.         0.10188631 0.81482852 0.01983178 0.06345339]
+ [0.         0.0125272  0.37373451 0.36425395 0.24948434]
+ [0.         0.0434591  0.01675207 0.00705823 0.9327306 ]]
+2025-10-15 14:50:03,773 | INFO | lofF1 is 88.4776, clfF1 is 68.3023, oaF1 is 74.3549, sub class F1 score is [95.7441 78.1383 48.4715 68.0727]
+2025-10-15 14:50:03,774 | INFO | ---------starting train set evaluation-----------
+2025-10-15 14:50:03,774 | INFO | Train buffer size: 1524.
+2025-10-15 14:50:09,595 | INFO | [TrainBuf] locF1 is 88.5075, clfF1 is 84.2705, oaF1 is 85.5416, sub class F1 score is [97.7584 84.3568 76.1092 81.6762]
+2025-10-15 14:50:21,000 | INFO | iter is 17200 / 25000 [skipped  540] | loc. loss = 0.1742407382, classif. loss = 0.3624772429
+2025-10-15 14:50:52,458 | INFO | iter is 17250 / 25000 [skipped  540] | loc. loss = 0.0351858288, classif. loss = 0.0017208821
+2025-10-15 14:51:23,942 | INFO | iter is 17300 / 25000 [skipped  540] | loc. loss = 0.1025238186, classif. loss = 0.2617585659
+2025-10-15 14:51:54,885 | INFO | iter is 17350 / 25000 [skipped  541] | loc. loss = 0.0904996321, classif. loss = 1.1523505449
+2025-10-15 14:52:56,271 | INFO | iter is 17450 / 25000 [skipped  545] | loc. loss = 0.1307326853, classif. loss = 0.0888023749
+2025-10-15 14:53:26,841 | INFO | iter is 17500 / 25000 [skipped  547] | loc. loss = 0.2175367773, classif. loss = 0.3708108366
+2025-10-15 14:53:57,883 | INFO | iter is 17550 / 25000 [skipped  548] | loc. loss = 0.1894318461, classif. loss = 0.2399957478
+2025-10-15 14:54:28,229 | INFO | iter is 17600 / 25000 [skipped  550] | loc. loss = 0.1115473360, classif. loss = 0.0127959568
+2025-10-15 14:54:59,355 | INFO | iter is 17650 / 25000 [skipped  551] | loc. loss = 0.1665080190, classif. loss = 1.0468995571
+2025-10-15 14:55:30,746 | INFO | iter is 17700 / 25000 [skipped  552] | loc. loss = 0.1188162789, classif. loss = 0.4949565530
+2025-10-15 14:56:00,663 | INFO | iter is 17750 / 25000 [skipped  555] | loc. loss = 0.0416934453, classif. loss = 0.0416581482
+2025-10-15 14:56:31,680 | INFO | iter is 17800 / 25000 [skipped  556] | loc. loss = 0.1085314825, classif. loss = 0.0076746661
+2025-10-15 14:57:02,608 | INFO | iter is 17850 / 25000 [skipped  557] | loc. loss = 0.2061880827, classif. loss = 0.4004893601
+2025-10-15 14:57:32,933 | INFO | iter is 17900 / 25000 [skipped  559] | loc. loss = 0.0500017181, classif. loss = 0.3488450646
+2025-10-15 14:58:03,252 | INFO | iter is 17950 / 25000 [skipped  561] | loc. loss = 0.1539235115, classif. loss = 0.3308478892
+2025-10-15 14:58:34,236 | INFO | iter is 18000 / 25000 [skipped  562] | loc. loss = 0.0851547644, classif. loss = 0.3076955080
+2025-10-15 14:59:03,983 | INFO | iter is 18050 / 25000 [skipped  565] | loc. loss = 0.0832378790, classif. loss = 0.0148492232
+2025-10-15 14:59:34,924 | INFO | iter is 18100 / 25000 [skipped  566] | loc. loss = 0.1128550470, classif. loss = 1.1154663563
+2025-10-15 15:00:06,476 | INFO | iter is 18150 / 25000 [skipped  566] | loc. loss = 0.1206592023, classif. loss = 0.3070181608
+2025-10-15 15:00:37,457 | INFO | iter is 18200 / 25000 [skipped  567] | loc. loss = 0.0878761187, classif. loss = 0.5187534094
+2025-10-15 15:01:08,404 | INFO | iter is 18250 / 25000 [skipped  568] | loc. loss = 0.1527855992, classif. loss = 0.0959895179
+2025-10-15 15:01:38,736 | INFO | iter is 18300 / 25000 [skipped  570] | loc. loss = 0.1442950815, classif. loss = 1.9193789959
+2025-10-15 15:02:08,473 | INFO | iter is 18350 / 25000 [skipped  573] | loc. loss = 0.1825470626, classif. loss = 0.1763598025
+2025-10-15 15:02:38,255 | INFO | iter is 18400 / 25000 [skipped  576] | loc. loss = 0.1611410975, classif. loss = 0.0346131325
+2025-10-15 15:03:09,210 | INFO | iter is 18450 / 25000 [skipped  577] | loc. loss = 0.0669699162, classif. loss = 0.3526189029
+2025-10-15 15:03:39,605 | INFO | iter is 18500 / 25000 [skipped  579] | loc. loss = 0.1201271638, classif. loss = 0.4086261392
+2025-10-15 15:04:10,580 | INFO | iter is 18550 / 25000 [skipped  580] | loc. loss = 0.1132759452, classif. loss = 0.6443264484
+2025-10-15 15:04:41,605 | INFO | iter is 18600 / 25000 [skipped  581] | loc. loss = 0.1330872625, classif. loss = 1.4510939121
+2025-10-15 15:05:12,579 | INFO | iter is 18650 / 25000 [skipped  582] | loc. loss = 0.1454748362, classif. loss = 0.2082973123
+2025-10-15 15:05:44,145 | INFO | iter is 18700 / 25000 [skipped  582] | loc. loss = 0.0959600285, classif. loss = 0.6319021583
+2025-10-15 15:06:11,956 | INFO | ---------starting evaluation-----------
+2025-10-15 15:06:13,317 | INFO | validation:    0/ 531 (2025-10-15_15-06-13)
+2025-10-15 15:06:26,110 | INFO | validation:  100/ 531 (2025-10-15_15-06-26)
+2025-10-15 15:06:38,850 | INFO | validation:  200/ 531 (2025-10-15_15-06-38)
+2025-10-15 15:06:51,591 | INFO | validation:  300/ 531 (2025-10-15_15-06-51)
+2025-10-15 15:07:04,351 | INFO | validation:  400/ 531 (2025-10-15_15-07-04)
+2025-10-15 15:07:17,099 | INFO | validation:  500/ 531 (2025-10-15_15-07-17)
+2025-10-15 15:07:21,447 | INFO | Confusion Matrix of Localization:
+[[136861077    163075]
+ [   328913   1845399]]
+2025-10-15 15:07:21,448 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99880988 0.00119012]
+ [0.15127222 0.84872778]]
+2025-10-15 15:07:21,448 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1686186   47148    1619   23439]
+ [      0   29777  192344    9666    8736]
+ [      0     662   14255   30737    7191]
+ [      0   15781    4124    3151   99496]]
+2025-10-15 15:07:21,448 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.58936346e-01 2.68131338e-02 9.20727574e-04
+  1.33297922e-02]
+ [0.00000000e+00 1.23801050e-01 7.99690674e-01 4.01874249e-02
+  3.63208508e-02]
+ [0.00000000e+00 1.25272022e-02 2.69751159e-01 5.81644432e-01
+  1.36077207e-01]
+ [0.00000000e+00 1.28769828e-01 3.36510216e-02 2.57115347e-02
+  8.11867615e-01]]
+2025-10-15 15:07:21,448 | INFO | lofF1 is 88.2378, clfF1 is 76.3526, oaF1 is 79.9182, sub class F1 score is [96.6075 77.1855 62.717  76.1214]
+2025-10-15 15:07:21,717 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step18744.pth
+2025-10-15 15:07:21,717 | INFO | ---------starting train set evaluation-----------
+2025-10-15 15:07:21,717 | INFO | Train buffer size: 1520.
+2025-10-15 15:07:27,421 | INFO | [TrainBuf] locF1 is 88.2380, clfF1 is 83.6869, oaF1 is 85.0522, sub class F1 score is [97.9075 84.7563 73.4919 82.1152]
+2025-10-15 15:07:30,630 | INFO | iter is 18750 / 25000 [skipped  583] | loc. loss = 0.1287888139, classif. loss = 0.3170654178
+2025-10-15 15:08:01,504 | INFO | iter is 18800 / 25000 [skipped  584] | loc. loss = 0.1546578705, classif. loss = 0.5215544105
+2025-10-15 15:08:32,970 | INFO | iter is 18850 / 25000 [skipped  584] | loc. loss = 0.0971584544, classif. loss = 0.1929938495
+2025-10-15 15:09:02,662 | INFO | iter is 18900 / 25000 [skipped  587] | loc. loss = 0.0959795192, classif. loss = 0.0412591845
+2025-10-15 15:09:32,919 | INFO | iter is 18950 / 25000 [skipped  589] | loc. loss = 0.0519722216, classif. loss = 1.3731870651
+2025-10-15 15:10:03,804 | INFO | iter is 19000 / 25000 [skipped  590] | loc. loss = 0.1148842573, classif. loss = 0.0285789222
+2025-10-15 15:10:34,673 | INFO | iter is 19050 / 25000 [skipped  591] | loc. loss = 0.3118790686, classif. loss = 0.1152148545
+2025-10-15 15:11:05,602 | INFO | iter is 19100 / 25000 [skipped  592] | loc. loss = 0.1646181643, classif. loss = 0.9623612165
+2025-10-15 15:11:37,103 | INFO | iter is 19150 / 25000 [skipped  592] | loc. loss = 0.0979096293, classif. loss = 0.6447249651
+2025-10-15 15:12:07,440 | INFO | iter is 19200 / 25000 [skipped  594] | loc. loss = 0.2135348469, classif. loss = 0.7801477313
+2025-10-15 15:12:37,170 | INFO | iter is 19250 / 25000 [skipped  597] | loc. loss = 0.0977394953, classif. loss = 0.1912187338
+2025-10-15 15:13:08,079 | INFO | iter is 19300 / 25000 [skipped  598] | loc. loss = 0.2123885006, classif. loss = 0.6300115585
+2025-10-15 15:13:39,039 | INFO | iter is 19350 / 25000 [skipped  599] | loc. loss = 0.1290485859, classif. loss = 1.0199782848
+2025-10-15 15:14:09,943 | INFO | iter is 19400 / 25000 [skipped  600] | loc. loss = 0.1301194578, classif. loss = 0.5237754583
+2025-10-15 15:14:40,309 | INFO | iter is 19450 / 25000 [skipped  602] | loc. loss = 0.0328842886, classif. loss = 0.1337131560
+2025-10-15 15:15:09,980 | INFO | iter is 19500 / 25000 [skipped  605] | loc. loss = 0.1191821396, classif. loss = 0.4188315868
+2025-10-15 15:15:40,949 | INFO | iter is 19550 / 25000 [skipped  606] | loc. loss = 0.1351664662, classif. loss = 0.7223073244
+2025-10-15 15:16:11,897 | INFO | iter is 19600 / 25000 [skipped  607] | loc. loss = 0.1327745169, classif. loss = 0.2968299091
+2025-10-15 15:16:43,427 | INFO | iter is 19650 / 25000 [skipped  607] | loc. loss = 0.1435981095, classif. loss = 0.4186981916
+2025-10-15 15:17:15,042 | INFO | iter is 19700 / 25000 [skipped  607] | loc. loss = 0.1674371362, classif. loss = 1.9324057102
+2025-10-15 15:17:46,024 | INFO | iter is 19750 / 25000 [skipped  608] | loc. loss = 0.2124015689, classif. loss = 0.1494149864
+2025-10-15 15:18:17,569 | INFO | iter is 19800 / 25000 [skipped  608] | loc. loss = 0.1245255992, classif. loss = 0.0353174955
+2025-10-15 15:18:48,504 | INFO | iter is 19850 / 25000 [skipped  609] | loc. loss = 0.1779278815, classif. loss = 0.3802260756
+2025-10-15 15:19:18,301 | INFO | iter is 19900 / 25000 [skipped  612] | loc. loss = 0.0786704943, classif. loss = 0.7885179520
+2025-10-15 15:19:49,256 | INFO | iter is 19950 / 25000 [skipped  613] | loc. loss = 0.1203260273, classif. loss = 0.0406974703
+2025-10-15 15:20:16,599 | INFO | iter is 20000 / 25000 [skipped  620] | loc. loss = 0.0704357326, classif. loss = 0.0842244476
+2025-10-15 15:20:46,342 | INFO | iter is 20050 / 25000 [skipped  623] | loc. loss = 0.0478898771, classif. loss = 0.0167957190
+2025-10-15 15:21:16,700 | INFO | iter is 20100 / 25000 [skipped  625] | loc. loss = 0.1515174508, classif. loss = 0.0140769100
+2025-10-15 15:21:46,480 | INFO | iter is 20150 / 25000 [skipped  628] | loc. loss = 0.3206700683, classif. loss = 0.0174450558
+2025-10-15 15:22:18,068 | INFO | iter is 20200 / 25000 [skipped  628] | loc. loss = 0.4311651289, classif. loss = 0.9964487553
+2025-10-15 15:22:48,411 | INFO | iter is 20250 / 25000 [skipped  630] | loc. loss = 0.0908803791, classif. loss = 0.2147787362
+2025-10-15 15:23:19,370 | INFO | iter is 20300 / 25000 [skipped  631] | loc. loss = 0.1466682106, classif. loss = 0.5401109457
+2025-10-15 15:23:23,160 | INFO | ---------starting evaluation-----------
+2025-10-15 15:23:24,513 | INFO | validation:    0/ 531 (2025-10-15_15-23-24)
+2025-10-15 15:23:37,226 | INFO | validation:  100/ 531 (2025-10-15_15-23-37)
+2025-10-15 15:23:49,911 | INFO | validation:  200/ 531 (2025-10-15_15-23-49)
+2025-10-15 15:24:02,613 | INFO | validation:  300/ 531 (2025-10-15_15-24-02)
+2025-10-15 15:24:15,324 | INFO | validation:  400/ 531 (2025-10-15_15-24-15)
+2025-10-15 15:24:28,032 | INFO | validation:  500/ 531 (2025-10-15_15-24-28)
+2025-10-15 15:24:32,368 | INFO | Confusion Matrix of Localization:
+[[136804681    219471]
+ [   265275   1909037]]
+2025-10-15 15:24:32,369 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.9983983  0.0016017 ]
+ [0.12200411 0.87799589]]
+2025-10-15 15:24:32,369 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1656703   76308    1535   23846]
+ [      0   25617  203777    8951    2178]
+ [      0     662   17071   31503    3609]
+ [      0   15871   13432    6293   86956]]
+2025-10-15 15:24:32,369 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.42169323e-01 4.33964668e-02 8.72956656e-04
+  1.35612537e-02]
+ [0.00000000e+00 1.06505407e-01 8.47224590e-01 3.72147362e-02
+  9.05526706e-03]
+ [0.00000000e+00 1.25272022e-02 3.23039077e-01 5.96139654e-01
+  6.82940676e-02]
+ [0.00000000e+00 1.29504210e-01 1.09602454e-01 5.13496312e-02
+  7.09543704e-01]]
+2025-10-15 15:24:32,370 | INFO | lofF1 is 88.7342, clfF1 is 74.4081, oaF1 is 78.7059, sub class F1 score is [95.8395 73.9513 62.3038 72.7236]
+2025-10-15 15:24:32,370 | INFO | ---------starting train set evaluation-----------
+2025-10-15 15:24:32,371 | INFO | Train buffer size: 1513.
+2025-10-15 15:24:38,101 | INFO | [TrainBuf] locF1 is 88.4496, clfF1 is 85.6341, oaF1 is 86.4787, sub class F1 score is [97.6698 85.6687 78.6808 82.7175]
+2025-10-15 15:25:05,873 | INFO | iter is 20350 / 25000 [skipped  631] | loc. loss = 0.1654571891, classif. loss = 0.1689960361
+2025-10-15 15:25:36,158 | INFO | iter is 20400 / 25000 [skipped  633] | loc. loss = 0.2411182225, classif. loss = 0.5031747222
+2025-10-15 15:26:06,393 | INFO | iter is 20450 / 25000 [skipped  635] | loc. loss = 0.1330278814, classif. loss = 0.3620173335
+2025-10-15 15:26:37,864 | INFO | iter is 20500 / 25000 [skipped  635] | loc. loss = 0.2718622386, classif. loss = 0.7033493519
+2025-10-15 15:27:08,783 | INFO | iter is 20550 / 25000 [skipped  636] | loc. loss = 0.1559747010, classif. loss = 0.0370355509
+2025-10-15 15:27:39,650 | INFO | iter is 20600 / 25000 [skipped  637] | loc. loss = 0.0988495871, classif. loss = 2.1190059185
+2025-10-15 15:28:10,532 | INFO | iter is 20650 / 25000 [skipped  638] | loc. loss = 0.0679078400, classif. loss = 1.9043450356
+2025-10-15 15:28:42,042 | INFO | iter is 20700 / 25000 [skipped  638] | loc. loss = 0.2003981769, classif. loss = 0.1099819392
+2025-10-15 15:29:11,150 | INFO | iter is 20750 / 25000 [skipped  642] | loc. loss = 0.1405465156, classif. loss = 0.5810064077
+2025-10-15 15:29:40,818 | INFO | iter is 20800 / 25000 [skipped  645] | loc. loss = 0.1951749176, classif. loss = 0.3402528167
+2025-10-15 15:30:12,391 | INFO | iter is 20850 / 25000 [skipped  645] | loc. loss = 0.1316327155, classif. loss = 0.2270807922
+2025-10-15 15:30:42,680 | INFO | iter is 20900 / 25000 [skipped  647] | loc. loss = 0.0979201719, classif. loss = 0.2326971292
+2025-10-15 15:31:13,019 | INFO | iter is 20950 / 25000 [skipped  649] | loc. loss = 0.2416750789, classif. loss = 0.3799478412
+2025-10-15 15:31:42,094 | INFO | iter is 21000 / 25000 [skipped  653] | loc. loss = 0.1416836083, classif. loss = 0.3445206881
+2025-10-15 15:32:12,404 | INFO | iter is 21050 / 25000 [skipped  655] | loc. loss = 0.1655757129, classif. loss = 0.5867131352
+2025-10-15 15:32:43,933 | INFO | iter is 21100 / 25000 [skipped  655] | loc. loss = 0.2050175965, classif. loss = 0.4592771232
+2025-10-15 15:33:14,890 | INFO | iter is 21150 / 25000 [skipped  656] | loc. loss = 0.2868510783, classif. loss = 0.3506369293
+2025-10-15 15:33:45,813 | INFO | iter is 21200 / 25000 [skipped  657] | loc. loss = 0.1069105193, classif. loss = 0.2869458497
+2025-10-15 15:34:16,807 | INFO | iter is 21250 / 25000 [skipped  658] | loc. loss = 0.1462233365, classif. loss = 0.4408104718
+2025-10-15 15:34:46,485 | INFO | iter is 21300 / 25000 [skipped  661] | loc. loss = 0.1132339761, classif. loss = 0.7320095897
+2025-10-15 15:35:17,466 | INFO | iter is 21350 / 25000 [skipped  662] | loc. loss = 0.1205568537, classif. loss = 0.3491905928
+2025-10-15 15:35:47,174 | INFO | iter is 21400 / 25000 [skipped  665] | loc. loss = 0.0932165086, classif. loss = 0.3682649434
+2025-10-15 15:36:16,270 | INFO | iter is 21450 / 25000 [skipped  669] | loc. loss = 0.1001364440, classif. loss = 0.3231859207
+2025-10-15 15:36:44,745 | INFO | iter is 21500 / 25000 [skipped  674] | loc. loss = 0.1634752750, classif. loss = 0.5451258421
+2025-10-15 15:37:14,530 | INFO | iter is 21550 / 25000 [skipped  677] | loc. loss = 0.1591284275, classif. loss = 0.1078094989
+2025-10-15 15:37:44,259 | INFO | iter is 21600 / 25000 [skipped  680] | loc. loss = 0.1573693454, classif. loss = 0.3006236851
+2025-10-15 15:38:15,269 | INFO | iter is 21650 / 25000 [skipped  681] | loc. loss = 0.1114558429, classif. loss = 0.5549613833
+2025-10-15 15:38:46,863 | INFO | iter is 21700 / 25000 [skipped  681] | loc. loss = 0.0855954960, classif. loss = 0.0132574122
+2025-10-15 15:39:17,883 | INFO | iter is 21750 / 25000 [skipped  682] | loc. loss = 0.0844889954, classif. loss = 0.8382818699
+2025-10-15 15:39:48,839 | INFO | iter is 21800 / 25000 [skipped  683] | loc. loss = 0.0929834396, classif. loss = 0.1547862440
+2025-10-15 15:40:19,794 | INFO | iter is 21850 / 25000 [skipped  684] | loc. loss = 0.1146139354, classif. loss = 0.4061890841
+2025-10-15 15:40:30,543 | INFO | ---------starting evaluation-----------
+2025-10-15 15:40:31,906 | INFO | validation:    0/ 531 (2025-10-15_15-40-31)
+2025-10-15 15:40:44,681 | INFO | validation:  100/ 531 (2025-10-15_15-40-44)
+2025-10-15 15:40:57,420 | INFO | validation:  200/ 531 (2025-10-15_15-40-57)
+2025-10-15 15:41:10,186 | INFO | validation:  300/ 531 (2025-10-15_15-41-10)
+2025-10-15 15:41:22,921 | INFO | validation:  400/ 531 (2025-10-15_15-41-22)
+2025-10-15 15:41:35,641 | INFO | validation:  500/ 531 (2025-10-15_15-41-35)
+2025-10-15 15:41:39,987 | INFO | Confusion Matrix of Localization:
+[[136712703    311449]
+ [   224571   1949741]]
+2025-10-15 15:41:39,987 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99772705 0.00227295]
+ [0.10328371 0.89671629]]
+2025-10-15 15:41:39,987 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1669647   70880    1698   16167]
+ [      0   24042  202609    6163    7709]
+ [      0     751   20592   23453    8049]
+ [      0   20933    5803    3052   92764]]
+2025-10-15 15:41:39,988 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.94953059 0.04030956 0.00096565 0.0091942 ]
+ [0.         0.09995718 0.84236851 0.02562333 0.03205099]
+ [0.         0.01421137 0.3896679  0.44380736 0.15231337]
+ [0.         0.17080913 0.04735133 0.02490371 0.75693583]]
+2025-10-15 15:41:39,988 | INFO | lofF1 is 87.9152, clfF1 is 71.8675, oaF1 is 76.6818, sub class F1 score is [96.129  74.9838 53.7845 75.0393]
+2025-10-15 15:41:39,988 | INFO | ---------starting train set evaluation-----------
+2025-10-15 15:41:39,988 | INFO | Train buffer size: 1508.
+2025-10-15 15:41:45,667 | INFO | [TrainBuf] locF1 is 88.4051, clfF1 is 85.2295, oaF1 is 86.1822, sub class F1 score is [97.612  84.5525 76.4066 84.9428]
+2025-10-15 15:42:05,197 | INFO | iter is 21900 / 25000 [skipped  686] | loc. loss = 0.1738126129, classif. loss = 0.1458692551
+2025-10-15 15:42:36,704 | INFO | iter is 21950 / 25000 [skipped  686] | loc. loss = 0.0405259952, classif. loss = 1.0553842783
+2025-10-15 15:43:07,567 | INFO | iter is 22000 / 25000 [skipped  687] | loc. loss = 0.0749346316, classif. loss = 0.0565145425
+2025-10-15 15:43:37,240 | INFO | iter is 22050 / 25000 [skipped  690] | loc. loss = 0.1362039298, classif. loss = 0.2171072811
+2025-10-15 15:44:07,474 | INFO | iter is 22100 / 25000 [skipped  692] | loc. loss = 0.1259611249, classif. loss = 1.2051844597
+2025-10-15 15:44:38,329 | INFO | iter is 22150 / 25000 [skipped  693] | loc. loss = 0.1359905452, classif. loss = 0.0167314410
+2025-10-15 15:45:09,811 | INFO | iter is 22200 / 25000 [skipped  693] | loc. loss = 0.0882920548, classif. loss = 0.6054326892
+2025-10-15 15:45:40,719 | INFO | iter is 22250 / 25000 [skipped  694] | loc. loss = 0.1482916772, classif. loss = 0.3332919180
+2025-10-15 15:46:11,589 | INFO | iter is 22300 / 25000 [skipped  695] | loc. loss = 0.0707279071, classif. loss = 0.0049437606
+2025-10-15 15:46:40,659 | INFO | iter is 22350 / 25000 [skipped  699] | loc. loss = 0.1978944987, classif. loss = 0.0709638670
+2025-10-15 15:47:11,535 | INFO | iter is 22400 / 25000 [skipped  700] | loc. loss = 0.0892143995, classif. loss = 0.5578022003
+2025-10-15 15:47:41,244 | INFO | iter is 22450 / 25000 [skipped  703] | loc. loss = 0.2049822509, classif. loss = 0.0102359038
+2025-10-15 15:48:11,517 | INFO | iter is 22500 / 25000 [skipped  705] | loc. loss = 0.1143063828, classif. loss = 0.0985834450
+2025-10-15 15:48:41,797 | INFO | iter is 22550 / 25000 [skipped  707] | loc. loss = 0.1672019213, classif. loss = 0.4681662321
+2025-10-15 15:49:12,686 | INFO | iter is 22600 / 25000 [skipped  708] | loc. loss = 0.1057633609, classif. loss = 0.4037786126
+2025-10-15 15:49:43,637 | INFO | iter is 22650 / 25000 [skipped  709] | loc. loss = 0.1345923692, classif. loss = 0.6014512777
+2025-10-15 15:50:13,926 | INFO | iter is 22700 / 25000 [skipped  711] | loc. loss = 0.1115469560, classif. loss = 0.1626869738
+2025-10-15 15:50:44,876 | INFO | iter is 22750 / 25000 [skipped  712] | loc. loss = 0.1762309819, classif. loss = 0.1223604158
+2025-10-15 15:51:15,180 | INFO | iter is 22800 / 25000 [skipped  714] | loc. loss = 0.1801321357, classif. loss = 0.3459342718
+2025-10-15 15:51:45,547 | INFO | iter is 22850 / 25000 [skipped  716] | loc. loss = 0.1027559415, classif. loss = 0.0162960626
+2025-10-15 15:52:15,846 | INFO | iter is 22900 / 25000 [skipped  718] | loc. loss = 0.1024766266, classif. loss = 0.1635549217
+2025-10-15 15:52:46,152 | INFO | iter is 22950 / 25000 [skipped  720] | loc. loss = 0.1124294847, classif. loss = 0.0494559295
+2025-10-15 15:53:15,310 | INFO | iter is 23000 / 25000 [skipped  724] | loc. loss = 0.0832681507, classif. loss = 0.3458586335
+2025-10-15 15:53:46,244 | INFO | iter is 23050 / 25000 [skipped  725] | loc. loss = 0.2079878151, classif. loss = 0.0161307622
+2025-10-15 15:54:16,614 | INFO | iter is 23100 / 25000 [skipped  727] | loc. loss = 0.1831630766, classif. loss = 0.5813660026
+2025-10-15 15:54:47,547 | INFO | iter is 23150 / 25000 [skipped  728] | loc. loss = 0.1496870667, classif. loss = 0.9861865044
+2025-10-15 15:55:17,857 | INFO | iter is 23200 / 25000 [skipped  730] | loc. loss = 0.1794742942, classif. loss = 0.4072790444
+2025-10-15 15:55:48,197 | INFO | iter is 23250 / 25000 [skipped  732] | loc. loss = 0.0527298711, classif. loss = 0.0345247611
+2025-10-15 15:56:19,202 | INFO | iter is 23300 / 25000 [skipped  733] | loc. loss = 0.1499853283, classif. loss = 0.5941643119
+2025-10-15 15:56:50,755 | INFO | iter is 23350 / 25000 [skipped  733] | loc. loss = 0.0875746086, classif. loss = 0.0648193955
+2025-10-15 15:57:22,380 | INFO | iter is 23400 / 25000 [skipped  733] | loc. loss = 0.0951090828, classif. loss = 0.3659816980
+2025-10-15 15:57:40,076 | INFO | ---------starting evaluation-----------
+2025-10-15 15:57:41,431 | INFO | validation:    0/ 531 (2025-10-15_15-57-41)
+2025-10-15 15:57:54,213 | INFO | validation:  100/ 531 (2025-10-15_15-57-54)
+2025-10-15 15:58:06,959 | INFO | validation:  200/ 531 (2025-10-15_15-58-06)
+2025-10-15 15:58:19,720 | INFO | validation:  300/ 531 (2025-10-15_15-58-19)
+2025-10-15 15:58:32,451 | INFO | validation:  400/ 531 (2025-10-15_15-58-32)
+2025-10-15 15:58:45,206 | INFO | validation:  500/ 531 (2025-10-15_15-58-45)
+2025-10-15 15:58:49,559 | INFO | Confusion Matrix of Localization:
+[[136764109    260043]
+ [   221094   1953218]]
+2025-10-15 15:58:49,560 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99810221 0.00189779]
+ [0.10168458 0.89831542]]
+2025-10-15 15:58:49,560 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1674643   65653    2693   15403]
+ [      0   25046  195186   15283    5008]
+ [      0     690   16224   31335    4596]
+ [      0   19898    5999    4114   92541]]
+2025-10-15 15:58:49,560 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.95237183 0.03733695 0.00153151 0.00875971]
+ [0.         0.10413141 0.81150659 0.0635407  0.02082129]
+ [0.         0.01305705 0.30701107 0.59296054 0.08697133]
+ [0.         0.16236373 0.04895065 0.03356942 0.7551162 ]]
+2025-10-15 15:58:49,560 | INFO | lofF1 is 89.0341, clfF1 is 74.4484, oaF1 is 78.8241, sub class F1 score is [96.2807 74.5575 58.9724 77.0854]
+2025-10-15 15:58:49,561 | INFO | ---------starting train set evaluation-----------
+2025-10-15 15:58:49,561 | INFO | Train buffer size: 1512.
+2025-10-15 15:58:55,265 | INFO | [TrainBuf] locF1 is 88.9097, clfF1 is 86.8822, oaF1 is 87.4905, sub class F1 score is [97.8622 86.0706 81.7299 83.5626]
+2025-10-15 15:59:07,257 | INFO | iter is 23450 / 25000 [skipped  736] | loc. loss = 0.0605743453, classif. loss = 0.0064254310
+2025-10-15 15:59:37,517 | INFO | iter is 23500 / 25000 [skipped  738] | loc. loss = 0.0743023381, classif. loss = 0.9530739784
+2025-10-15 16:00:08,359 | INFO | iter is 23550 / 25000 [skipped  739] | loc. loss = 0.2396876067, classif. loss = 0.0004828203
+2025-10-15 16:00:36,809 | INFO | iter is 23600 / 25000 [skipped  744] | loc. loss = 0.2101665437, classif. loss = 0.2661840916
+2025-10-15 16:01:07,675 | INFO | iter is 23650 / 25000 [skipped  745] | loc. loss = 0.1649408937, classif. loss = 0.2357109785
+2025-10-15 16:01:38,600 | INFO | iter is 23700 / 25000 [skipped  746] | loc. loss = 0.0744793713, classif. loss = 0.0073651690
+2025-10-15 16:02:08,872 | INFO | iter is 23750 / 25000 [skipped  748] | loc. loss = 0.0822451711, classif. loss = 0.5315368176
+2025-10-15 16:02:40,349 | INFO | iter is 23800 / 25000 [skipped  748] | loc. loss = 0.1177651584, classif. loss = 0.1576533169
+2025-10-15 16:03:10,604 | INFO | iter is 23850 / 25000 [skipped  750] | loc. loss = 0.0990620404, classif. loss = 0.2273150980
+2025-10-15 16:03:41,510 | INFO | iter is 23900 / 25000 [skipped  751] | loc. loss = 0.0895830989, classif. loss = 0.0658577904
+2025-10-15 16:04:12,383 | INFO | iter is 23950 / 25000 [skipped  752] | loc. loss = 0.0758594424, classif. loss = 0.6259621382
+2025-10-15 16:04:42,713 | INFO | iter is 24000 / 25000 [skipped  754] | loc. loss = 0.1020141840, classif. loss = 0.4228720665
+2025-10-15 16:05:13,611 | INFO | iter is 24050 / 25000 [skipped  755] | loc. loss = 0.1757525802, classif. loss = 0.1866627932
+2025-10-15 16:05:44,574 | INFO | iter is 24100 / 25000 [skipped  756] | loc. loss = 0.1044624746, classif. loss = 0.0768175945
+2025-10-15 16:06:16,107 | INFO | iter is 24150 / 25000 [skipped  756] | loc. loss = 0.1183933988, classif. loss = 0.1323702633
+2025-10-15 16:06:47,019 | INFO | iter is 24200 / 25000 [skipped  757] | loc. loss = 0.1401666403, classif. loss = 0.0065080938
+2025-10-15 16:07:17,946 | INFO | iter is 24250 / 25000 [skipped  758] | loc. loss = 0.0458990410, classif. loss = 0.0068679024
+2025-10-15 16:07:48,938 | INFO | iter is 24300 / 25000 [skipped  759] | loc. loss = 0.1813540459, classif. loss = 0.3405538201
+2025-10-15 16:08:18,648 | INFO | iter is 24350 / 25000 [skipped  762] | loc. loss = 0.1109300852, classif. loss = 0.4594546556
+2025-10-15 16:08:50,259 | INFO | iter is 24400 / 25000 [skipped  762] | loc. loss = 0.1305872351, classif. loss = 0.0045280224
+2025-10-15 16:09:21,244 | INFO | iter is 24450 / 25000 [skipped  763] | loc. loss = 0.0939921290, classif. loss = 0.4196578860
+2025-10-15 16:09:51,194 | INFO | iter is 24500 / 25000 [skipped  766] | loc. loss = 0.1841824800, classif. loss = 0.0051055942
+2025-10-15 16:10:22,421 | INFO | iter is 24550 / 25000 [skipped  767] | loc. loss = 0.0765046030, classif. loss = 0.1259832382
+2025-10-15 16:10:53,401 | INFO | iter is 24600 / 25000 [skipped  768] | loc. loss = 0.1603469402, classif. loss = 0.3053025305
+2025-10-15 16:11:22,770 | INFO | iter is 24650 / 25000 [skipped  772] | loc. loss = 0.0953244418, classif. loss = 0.0104362611
+2025-10-15 16:11:52,804 | INFO | iter is 24700 / 25000 [skipped  775] | loc. loss = 0.0975896791, classif. loss = 0.2666082680
+2025-10-15 16:12:23,292 | INFO | iter is 24750 / 25000 [skipped  777] | loc. loss = 0.1374402940, classif. loss = 0.4339884520
+2025-10-15 16:12:53,869 | INFO | iter is 24800 / 25000 [skipped  779] | loc. loss = 0.0638955012, classif. loss = 0.0084607378
+2025-10-15 16:13:23,690 | INFO | iter is 24850 / 25000 [skipped  782] | loc. loss = 0.1618226469, classif. loss = 0.4958741665
+2025-10-15 16:13:55,422 | INFO | iter is 24900 / 25000 [skipped  782] | loc. loss = 0.1716386825, classif. loss = 0.2145140767
+2025-10-15 16:14:25,818 | INFO | iter is 24950 / 25000 [skipped  784] | loc. loss = 0.1940741092, classif. loss = 0.6603174210
+2025-10-15 16:14:51,094 | INFO | ---------starting evaluation-----------
+2025-10-15 16:14:52,464 | INFO | validation:    0/ 531 (2025-10-15_16-14-52)
+2025-10-15 16:15:05,265 | INFO | validation:  100/ 531 (2025-10-15_16-15-05)
+2025-10-15 16:15:18,010 | INFO | validation:  200/ 531 (2025-10-15_16-15-18)
+2025-10-15 16:15:30,764 | INFO | validation:  300/ 531 (2025-10-15_16-15-30)
+2025-10-15 16:15:43,522 | INFO | validation:  400/ 531 (2025-10-15_16-15-43)
+2025-10-15 16:15:56,272 | INFO | validation:  500/ 531 (2025-10-15_16-15-56)
+2025-10-15 16:16:00,767 | INFO | Confusion Matrix of Localization:
+[[136745281    278871]
+ [   222258   1952054]]
+2025-10-15 16:16:00,767 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.9979648  0.0020352 ]
+ [0.10221992 0.89778008]]
+2025-10-15 16:16:00,767 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1715536   28458    2690   11708]
+ [      0   32672  184220   13140   10491]
+ [      0     662   16760   29624    5799]
+ [      0   27183    2654    3819   88896]]
+2025-10-15 16:16:00,767 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.97562773 0.0161841  0.00152981 0.00665836]
+ [0.         0.13583732 0.76591428 0.05463095 0.04361745]
+ [0.         0.0125272  0.31715394 0.56058284 0.10973602]
+ [0.         0.22180789 0.02165611 0.03116228 0.72537372]]
+2025-10-15 16:16:00,767 | INFO | lofF1 is 88.6242, clfF1 is 74.3050, oaF1 is 78.6008, sub class F1 score is [97.0753 77.9577 58.0191 74.2514]
+2025-10-15 16:16:00,768 | INFO | ---------starting train set evaluation-----------
+2025-10-15 16:16:00,768 | INFO | Train buffer size: 1511.
+2025-10-15 16:16:06,868 | INFO | [TrainBuf] locF1 is 88.9771, clfF1 is 86.4365, oaF1 is 87.1986, sub class F1 score is [97.8427 87.1589 79.6273 83.1637]
+2025-10-15 16:16:12,018 | INFO | iter is 25000 / 25000 [skipped  786] | loc. loss = 0.1721668839, classif. loss = 0.7721560001
+2025-10-15 16:16:12,018 | INFO | -----------Training is completed-----------
+2025-10-15 16:16:12,282 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step25000_last.pth
+2025-10-15 16:16:12,282 | INFO | !! Total Skipped: 786 (3.14%)
+2025-10-15 16:16:12,284 | INFO | ---------starting evaluation-----------
+2025-10-15 16:16:13,597 | INFO | validation:    0/ 531 (2025-10-15_16-16-13)
+2025-10-15 16:16:26,734 | INFO | validation:  100/ 531 (2025-10-15_16-16-26)
+2025-10-15 16:16:39,570 | INFO | validation:  200/ 531 (2025-10-15_16-16-39)
+2025-10-15 16:16:52,388 | INFO | validation:  300/ 531 (2025-10-15_16-16-52)
+2025-10-15 16:17:05,212 | INFO | validation:  400/ 531 (2025-10-15_16-17-05)
+2025-10-15 16:17:18,000 | INFO | validation:  500/ 531 (2025-10-15_16-17-18)
+2025-10-15 16:17:22,385 | INFO | Confusion Matrix of Localization:
+[[136808584    215568]
+ [   289756   1884556]]
+2025-10-15 16:17:22,385 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99842679 0.00157321]
+ [0.1332633  0.8667367 ]]
+2025-10-15 16:17:22,385 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1714094   30387    1800   12111]
+ [      0   32518  193812    5513    8680]
+ [      0     662   23048   23800    5335]
+ [      0   29444    3923    3496   85689]]
+2025-10-15 16:17:22,386 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.97480767 0.01728113 0.00102366 0.00688754]
+ [0.         0.13519705 0.80579404 0.02292088 0.03608802]
+ [0.         0.0125272  0.43614344 0.45037373 0.10095562]
+ [0.         0.2402572  0.0320109  0.02852667 0.69920524]]
+2025-10-15 16:17:22,386 | INFO | lofF1 is 88.1780, clfF1 is 72.6681, oaF1 is 77.3210, sub class F1 score is [96.9754 78.8346 54.4286 73.1238]
+2025-10-15 16:17:22,386 | INFO | loc_f1_score=88.178, harmonic_mean_f1=72.6681, oaf1=77.321, damage_f1_score=array([96.9754, 78.8346, 54.4286, 73.1238])
+2025-10-15 16:17:22,411 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step3124.pth
+2025-10-15 16:17:22,434 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step15620.pth
+2025-10-15 16:17:22,456 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step1562.pth
+2025-10-15 16:17:22,479 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step4686.pth
+2025-10-15 16:17:22,503 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step7810.pth
+2025-10-15 16:17:22,526 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step14058.pth
+2025-10-15 16:17:22,526 | INFO | Best model kept: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-15_11-40-16_MambaBDA_Base_PakistanFloodingWithValid_AGBD/model_step18744_best.pth
+2025-10-15 16:17:22,526 | INFO | ---------starting train set evaluation-----------
+2025-10-15 16:17:22,526 | INFO | Train buffer size: 8.
+2025-10-15 16:17:22,558 | INFO | [TrainBuf] locF1 is 93.0954, clfF1 is 82.4635, oaF1 is 85.6531, sub class F1 score is [98.5179 96.3362 64.1176 80.7806]
+2025-10-15 16:17:22,559 | INFO | Validation Results:
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  1562: (84.2919, 58.8556, 66.4865, array([93.8719, 65.698 , 36.9194, 66.6537]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  1562: (71.111, 54.6897, 59.6161, array([93.9267, 56.7963, 35.2526, 60.5331]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  3124: (85.0469, 67.1855, 72.5439, array([96.6539, 71.619 , 47.0584, 71.5434]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  3124: (83.5617, 68.0665, 72.7151, array([96.1203, 68.2883, 50.3744, 72.1122]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  4686: (87.1482, 67.2884, 73.2464, array([96.7087, 75.4955, 46.0659, 70.6642]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  4686: (85.1136, 74.6711, 77.8038, array([96.3116, 70.94  , 63.4086, 75.0854]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  6248: (87.257, 59.4347, 67.7814, array([97.0426, 77.0839, 33.0306, 72.7371]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  6248: (86.2387, 75.5761, 78.7749, array([96.791 , 73.6217, 62.3473, 77.0827]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  7810: (86.9935, 71.5347, 76.1724, array([96.4434, 74.9268, 52.8404, 75.3191]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  7810: (86.9946, 78.0546, 80.7366, array([96.7685, 77.7068, 65.8093, 77.8337]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step  9372: (87.1153, 70.5927, 75.5494, array([95.9375, 76.1188, 52.8805, 70.4636]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step  9372: (86.8718, 79.6976, 81.8499, array([96.7285, 77.5518, 70.9287, 77.7711]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step 10934: (87.1332, 56.3259, 65.5681, array([95.9275, 72.7384, 30.1184, 73.3106]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step 10934: (87.3001, 79.2202, 81.6442, array([96.993 , 80.3886, 66.1375, 79.2232]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step 12496: (86.2836, 71.0751, 75.6376, array([97.0572, 78.3747, 50.5529, 74.4333]))
+2025-10-15 16:17:22,560 | INFO | [TRAIN] Step 12496: (87.2949, 81.7259, 83.3966, array([97.2959, 79.7267, 74.1878, 79.0887]))
+
+2025-10-15 16:17:22,560 | INFO | [TEST ] Step 14058: (87.8848, 72.1563, 76.8748, array([96.4115, 76.4187, 53.0709, 76.1353]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 14058: (87.9528, 82.3306, 84.0173, array([97.3318, 81.6786, 72.8378, 81.0491]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 15620: (87.8817, 72.8879, 77.3861, array([97.2141, 78.5654, 53.2764, 76.3714]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 15620: (88.0051, 82.5746, 84.2037, array([97.5374, 80.825 , 73.4019, 82.0174]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 17182: (88.4776, 68.3023, 74.3549, array([95.7441, 78.1383, 48.4715, 68.0727]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 17182: (88.5075, 84.2705, 85.5416, array([97.7584, 84.3568, 76.1092, 81.6762]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 18744: (88.2378, 76.3526, 79.9182, array([96.6075, 77.1855, 62.717 , 76.1214]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 18744: (88.238, 83.6869, 85.0522, array([97.9075, 84.7563, 73.4919, 82.1152]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 20306: (88.7342, 74.4081, 78.7059, array([95.8395, 73.9513, 62.3038, 72.7236]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 20306: (88.4496, 85.6341, 86.4787, array([97.6698, 85.6687, 78.6808, 82.7175]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 21868: (87.9152, 71.8675, 76.6818, array([96.129 , 74.9838, 53.7845, 75.0393]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 21868: (88.4051, 85.2295, 86.1822, array([97.612 , 84.5525, 76.4066, 84.9428]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 23430: (89.0341, 74.4484, 78.8241, array([96.2807, 74.5575, 58.9724, 77.0854]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 23430: (88.9097, 86.8822, 87.4905, array([97.8622, 86.0706, 81.7299, 83.5626]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step 24992: (88.6242, 74.305, 78.6008, array([97.0753, 77.9577, 58.0191, 74.2514]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step 24992: (88.9771, 86.4365, 87.1986, array([97.8427, 87.1589, 79.6273, 83.1637]))
+
+2025-10-15 16:17:22,561 | INFO | [TEST ] Step    -1: (88.178, 72.6681, 77.321, array([96.9754, 78.8346, 54.4286, 73.1238]))
+2025-10-15 16:17:22,561 | INFO | [TRAIN] Step    -1: (93.0954, 82.4635, 85.6531, array([98.5179, 96.3362, 64.1176, 80.7806]))
+
+2025-10-15 16:17:22,561 | INFO | The accuracy of the best round is: [88.2378, 76.3526, 79.9182, array([96.6075, 77.1855, 62.717 , 76.1214])]
+2025-10-15 16:17:22,584 | INFO | MAIN - DONE.
+2025-10-15 16:17:22,584 | INFO | MAIN - EXIT.
