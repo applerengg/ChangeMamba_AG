@@ -4,9 +4,10 @@ import torch.nn.functional as F
 from classification.models.vmamba import VSSM, LayerNorm2d, VSSBlock, Permute
 
 from changedetection.models.attn_gate import AttentionGate2d
+from changedetection.models.temporal_attn_gate import TemporalAttentionGate
 
 class ChangeDecoder(nn.Module):
-    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, enable_attention_gate = False, **kwargs):
+    def __init__(self, encoder_dims, channel_first, norm_layer, ssm_act_layer, mlp_act_layer, enable_attention_gate=False, enable_temporal_attention_gate=False, **kwargs):
         super(ChangeDecoder, self).__init__()
 
         # Define the VSS Block for Spatio-temporal relationship modelling
@@ -157,6 +158,14 @@ class ChangeDecoder(nn.Module):
             self.ag2 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate p2 with p3
             self.ag1 = AttentionGate2d(in_ch_x=128, in_ch_g=128, inter_ch=64)  # gate p1 with p2
 
+        # Temporal attention gates (before fusion)
+        self.enable_temporal_attention_gate = enable_temporal_attention_gate
+        if self.enable_temporal_attention_gate:
+            # Apply at encoder feature level (before st_blocks)
+            self.temp_attn_3 = TemporalAttentionGate(encoder_dims[-2], reduction=8)
+            self.temp_attn_2 = TemporalAttentionGate(encoder_dims[-3], reduction=8)
+            self.temp_attn_1 = TemporalAttentionGate(encoder_dims[-4], reduction=8)
+
     
     def _upsample_add(self, x, y):
         _, _, H, W = y.size()
@@ -191,6 +200,9 @@ class ChangeDecoder(nn.Module):
         '''
             Stage II
         '''
+        if self.enable_temporal_attention_gate:
+            pre_feat_3 = self.temp_attn_3(pre_feat_3, post_feat_3)
+
         p31 = self.st_block_31(torch.cat([pre_feat_3, post_feat_3], dim=1))
         B, C, H, W = pre_feat_3.size()
         # Create an empty tensor of the correct shape (B, C, H, 2*W)
@@ -214,6 +226,9 @@ class ChangeDecoder(nn.Module):
         '''
             Stage III
         '''
+        if self.enable_temporal_attention_gate:
+            pre_feat_2 = self.temp_attn_2(pre_feat_2, post_feat_2)
+
         p21 = self.st_block_21(torch.cat([pre_feat_2, post_feat_2], dim=1))
         B, C, H, W = pre_feat_2.size()
         # Create an empty tensor of the correct shape (B, C, H, 2*W)
@@ -237,6 +252,9 @@ class ChangeDecoder(nn.Module):
         '''
             Stage IV
         '''
+        if self.enable_temporal_attention_gate:
+            pre_feat_1 = self.temp_attn_1(pre_feat_1, post_feat_1)
+
         p11 = self.st_block_11(torch.cat([pre_feat_1, post_feat_1], dim=1))
         B, C, H, W = pre_feat_1.size()
         # Create an empty tensor of the correct shape (B, C, H, 2*W)

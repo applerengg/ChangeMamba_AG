@@ -9,6 +9,7 @@ from dataclasses import dataclass
 class AttentionGateArgs:
     enable_building_ag: bool
     enable_damage_ag: bool
+    enable_temporal_damage_ag: bool = False
 
 class AttentionGate2d(nn.Module):
     """

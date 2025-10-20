@@ -142,7 +142,7 @@ class Trainer(object):
             alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
         logging.info(f" > ALIGNMENT params: {alignment_args = }")
 
-        attn_gate_args = AttentionGateArgs(enable_building_ag = args.enable_attn_gate_building, enable_damage_ag=args.enable_attn_gate_damage)
+        attn_gate_args = AttentionGateArgs(enable_building_ag = args.enable_attn_gate_building, enable_damage_ag=args.enable_attn_gate_damage, enable_temporal_damage_ag=args.enable_temporal_attn_gate_damage)
         logging.info(f" > ATTENTION GATE params: {attn_gate_args = }")
 
         self.deep_model = ChangeMambaBDA(
@@ -231,6 +231,51 @@ class Trainer(object):
             logging.info(f" > FOCAL LOSS params: {alpha = }, {gamma = }")
             self.focal_loss_func = FocalLossCE(gamma=gamma, alpha=alpha, ignore_index=255)
 
+        # log parameter count
+        self.log_model_params()
+
+
+    def log_model_params(self):
+        from changedetection.models.attn_gate import AttentionGate2d
+        from changedetection.models.alignment_module import AlignmentHead
+        from changedetection.models.temporal_attn_gate import TemporalAttentionGate
+
+        total_params = sum(p.numel() for p in self.deep_model.parameters())
+        total_trainable_params = sum(p.numel() for p in self.deep_model.parameters() if p.requires_grad)
+        logging.info(f"=" * 80)
+        logging.info(f"Model Parameters: Total={total_params:,}({total_params/1e6:<.2f}M), Trainable={total_trainable_params:,}({total_trainable_params/1e6:<.2f}M)")
+
+        logging.info(f"Breakdown by component:")
+        logging.info(f"  {'Component':<30} {'Params':>15} {'%':>7} {'Trainable':>15}")
+        logging.info(f"-" * 80)
+        for name, module in self.deep_model.named_children():
+            module_total = sum(p.numel() for p in module.parameters())
+            module_trainable = sum(p.numel() for p in module.parameters() if p.requires_grad)
+            pct = (module_total / total_params) * 100 if total_params > 0 else 0
+            logging.info(f"  {name:<30} {module_total:>15,} {pct:>6.2f}% {module_trainable:>15,}")
+        
+        logging.info(f"-" * 80)
+        logging.info(f"Breakdown by module type:")
+        attn_gate_params = sum(
+            sum(p.numel() for p in m.parameters()) 
+            for m in self.deep_model.modules() if isinstance(m, AttentionGate2d)
+        )
+        temporal_gate_params = sum(
+            sum(p.numel() for p in m.parameters()) 
+            for m in self.deep_model.modules() if isinstance(m, TemporalAttentionGate)
+        )
+        alignment_params = sum(
+            sum(p.numel() for p in m.parameters()) 
+            for m in self.deep_model.modules() if isinstance(m, AlignmentHead)
+        )
+        if attn_gate_params > 0:
+            logging.info(f"  Attention Gates:        {attn_gate_params:>15,} ({attn_gate_params/total_params*100:>6.2f}%)")
+        if temporal_gate_params > 0:
+            logging.info(f"  Temporal Attn Gates:    {temporal_gate_params:>15,} ({temporal_gate_params/total_params*100:>6.2f}%)")
+        if alignment_params > 0:
+            logging.info(f"  Alignment Modules:      {alignment_params:>15,} ({alignment_params/total_params*100:>6.2f}%)")
+        logging.info(f"=" * 80)
+
 
     def training(self):
         print('---------starting training-----------')
@@ -239,6 +284,10 @@ class Trainer(object):
         best_kc = 0.0
         best_round = []
         best_model_path = ""
+
+        last_loc_losses = []
+        last_clf_losses = []
+        LOG_INTERVAL = 100
 
         torch.cuda.empty_cache()
         elem_num = len(self.train_data_loader)
@@ -301,8 +350,16 @@ class Trainer(object):
 
             self.optim.step()
 
-            if (itera + 1) % 50 == 0:
-                log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {ce_loss_loc + lovasz_loss_loc :<.10f}, classif. loss = {ce_loss_clf + lovasz_loss_clf :<.10f}'
+            last_loc_losses.append(ce_loss_loc.item() + lovasz_loss_loc.item())
+            last_clf_losses.append(ce_loss_clf.item() + lovasz_loss_clf.item())
+            if (itera + 1) % LOG_INTERVAL == 0:
+                loc_loss_avg = np.mean(last_loc_losses)
+                clf_loss_avg = np.mean(last_clf_losses)
+                loc_loss_std = np.std(last_loc_losses)
+                clf_loss_std = np.std(last_clf_losses)
+                last_loc_losses.clear()
+                last_clf_losses.clear()
+                log = f'iter is {itera + 1} / {elem_num} [skipped {skipped_count:>4}] | loc. loss = {loc_loss_avg :<.4f} ±{loc_loss_std:<.4f}, classif. loss = {clf_loss_avg :<.4f} ±{clf_loss_std:<.4f}'
                 print(log)
                 logging.log(logging.INFO, log)
 
@@ -352,6 +409,17 @@ class Trainer(object):
                             logging.info(f"  {gate_name}: {stats}")
                     except Exception as exc:
                         logging.error(f"BUILDING ATTENTION GATE ANALYSIS - ERRROR: {exc}", exc_info=True, stack_info=True)
+                if self.args.enable_temporal_attn_gate_damage:
+                    try:
+                        gate_stats_temp_damage = {}
+                        gate_stats_temp_damage['temp_ag3'] = self.deep_model.decoder_damage.temp_attn_3.get_attention_stats()
+                        gate_stats_temp_damage['temp_ag2'] = self.deep_model.decoder_damage.temp_attn_2.get_attention_stats()
+                        gate_stats_temp_damage['temp_ag1'] = self.deep_model.decoder_damage.temp_attn_1.get_attention_stats()
+                        logging.info(f"Damage Head - TEMPORAL Attention Gate Statistics @ step {itera+1}:")
+                        for gate_name, stats in gate_stats_temp_damage.items():
+                            logging.info(f"  {gate_name}: {stats}")
+                    except Exception as exc:
+                        logging.error(f"DAMAGE TEMPORAL ATTENTION GATE ANALYSIS - ERRROR: {exc}", exc_info=True, stack_info=True)
                 ### === ATTENTION GATE ANALYSIS END === ###
 
 
@@ -564,6 +632,7 @@ def main():
     parser.add_argument('--deterministic', type=bool, action=argparse.BooleanOptionalAction, default=False, help="(can't be used for now (2025.09.29, torch==2.5.0) because of non-deterministic functions (e.g. F.cross_entropy))")
     parser.add_argument('--validations', type=int, default=8)
     parser.add_argument('--measure_train_scores', type=bool, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--enable_temporal_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
 
     args = parser.parse_args()
 
@@ -586,7 +655,8 @@ def main():
     logging.log(logging.INFO, f"MAIN - START")
     logging.info(f" > FOCAL LOSS set to {args.focal_loss}")
     logging.info(f" > ALINGNMENT set to {args.enable_alignment}")
-    logging.info(f" > ATTENTION GATE set to -> Building: {args.enable_attn_gate_building}, Damage: {args.enable_attn_gate_damage}")
+    logging.info(f" > ATTENTION GATE set to -> Building: {args.enable_attn_gate_building}, Damage : {args.enable_attn_gate_damage}")
+    logging.info(f" > TEMPORAL ATTENTION GATE set to -> {args.enable_temporal_attn_gate_damage}")
 
     with open(args.train_data_list_path, "r") as f:
         # data_name_list = f.read()

@@ -1,0 +1,167 @@
+2025-10-17 16:22:22,590 | INFO | MAIN - START
+2025-10-17 16:22:22,590 | INFO |  > ALINGNMENT set to False
+2025-10-17 16:22:22,590 | INFO |  > ATTENTION GATE set to -> Building: False, Damage: False
+2025-10-17 16:22:22,590 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "xBDWithValid",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test/test_list3.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_16-22-21",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-06_20-14-57_MambaBDA_Base_xBD/model_step50000_last.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_tr2025-10-06_20-14-57_MambaBDA_Base_xBD_on_xBDWithValid.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": true
+}
+2025-10-17 16:22:22,592 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-17 16:22:22,592 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-10-17 16:22:22,592 | INFO | ChangeMambaBDA class
+2025-10-17 16:22:27,210 | INFO | inference:    0/ 933 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-10-17 16:22:32,501 | INFO | inference:   10/ 933 | Current F1_overall: 62.992% (Clsf: 54.717%, Loc: 82.302%) [cumulative]
+2025-10-17 16:22:37,557 | INFO | inference:   20/ 933 | Current F1_overall: 68.552% (Clsf: 62.325%, Loc: 83.081%) [cumulative]
+2025-10-17 16:22:42,580 | INFO | inference:   30/ 933 | Current F1_overall: 78.496% (Clsf: 75.736%, Loc: 84.935%) [cumulative]
+2025-10-17 16:22:43,039 | INFO |  > No building in midwest-flooding_00000090, skipping attention visualization.
+2025-10-17 16:22:47,652 | INFO | inference:   40/ 933 | Current F1_overall: 75.159% (Clsf: 71.047%, Loc: 84.754%) [cumulative]
+2025-10-17 16:22:52,662 | INFO | inference:   50/ 933 | Current F1_overall: 75.293% (Clsf: 71.083%, Loc: 85.116%) [cumulative]
+2025-10-17 16:22:57,696 | INFO | inference:   60/ 933 | Current F1_overall: 74.413% (Clsf: 69.888%, Loc: 84.972%) [cumulative]
+2025-10-17 16:23:02,764 | INFO | inference:   70/ 933 | Current F1_overall: 75.420% (Clsf: 71.436%, Loc: 84.716%) [cumulative]
+2025-10-17 16:23:07,785 | INFO | inference:   80/ 933 | Current F1_overall: 76.992% (Clsf: 73.121%, Loc: 86.026%) [cumulative]
+2025-10-17 16:23:12,855 | INFO | inference:   90/ 933 | Current F1_overall: 76.060% (Clsf: 71.771%, Loc: 86.065%) [cumulative]
+2025-10-17 16:23:17,899 | INFO | inference:  100/ 933 | Current F1_overall: 77.104% (Clsf: 73.178%, Loc: 86.264%) [cumulative]
+2025-10-17 16:23:22,963 | INFO | inference:  110/ 933 | Current F1_overall: 76.313% (Clsf: 72.153%, Loc: 86.017%) [cumulative]
+2025-10-17 16:23:27,968 | INFO | inference:  120/ 933 | Current F1_overall: 77.626% (Clsf: 74.076%, Loc: 85.909%) [cumulative]
+2025-10-17 16:23:33,021 | INFO | inference:  130/ 933 | Current F1_overall: 77.288% (Clsf: 73.539%, Loc: 86.035%) [cumulative]
+2025-10-17 16:23:38,091 | INFO | inference:  140/ 933 | Current F1_overall: 79.105% (Clsf: 76.215%, Loc: 85.851%) [cumulative]
+2025-10-17 16:23:43,103 | INFO | inference:  150/ 933 | Current F1_overall: 79.866% (Clsf: 77.267%, Loc: 85.929%) [cumulative]
+2025-10-17 16:23:43,565 | INFO |  > No building in socal-fire_00000201, skipping attention visualization.
+2025-10-17 16:23:48,184 | INFO | inference:  160/ 933 | Current F1_overall: 79.880% (Clsf: 77.215%, Loc: 86.099%) [cumulative]
+2025-10-17 16:23:53,187 | INFO | inference:  170/ 933 | Current F1_overall: 80.256% (Clsf: 77.712%, Loc: 86.192%) [cumulative]
+2025-10-17 16:23:58,222 | INFO | inference:  180/ 933 | Current F1_overall: 80.042% (Clsf: 77.346%, Loc: 86.332%) [cumulative]
+2025-10-17 16:24:03,224 | INFO | inference:  190/ 933 | Current F1_overall: 81.203% (Clsf: 79.026%, Loc: 86.281%) [cumulative]
+2025-10-17 16:24:08,262 | INFO | inference:  200/ 933 | Current F1_overall: 80.613% (Clsf: 78.195%, Loc: 86.257%) [cumulative]
+2025-10-17 16:24:13,337 | INFO | inference:  210/ 933 | Current F1_overall: 80.548% (Clsf: 78.056%, Loc: 86.363%) [cumulative]
+2025-10-17 16:24:13,811 | INFO |  > No building in socal-fire_00000721, skipping attention visualization.
+2025-10-17 16:24:18,370 | INFO | inference:  220/ 933 | Current F1_overall: 80.134% (Clsf: 77.523%, Loc: 86.225%) [cumulative]
+2025-10-17 16:24:23,435 | INFO | inference:  230/ 933 | Current F1_overall: 80.211% (Clsf: 77.664%, Loc: 86.151%) [cumulative]
+2025-10-17 16:24:28,462 | INFO | inference:  240/ 933 | Current F1_overall: 80.358% (Clsf: 77.940%, Loc: 86.001%) [cumulative]
+2025-10-17 16:24:33,474 | INFO | inference:  250/ 933 | Current F1_overall: 80.359% (Clsf: 77.948%, Loc: 85.983%) [cumulative]
+2025-10-17 16:24:38,551 | INFO | inference:  260/ 933 | Current F1_overall: 79.807% (Clsf: 77.123%, Loc: 86.068%) [cumulative]
+2025-10-17 16:24:43,564 | INFO | inference:  270/ 933 | Current F1_overall: 79.798% (Clsf: 77.150%, Loc: 85.975%) [cumulative]
+2025-10-17 16:24:48,582 | INFO | inference:  280/ 933 | Current F1_overall: 79.755% (Clsf: 77.061%, Loc: 86.041%) [cumulative]
+2025-10-17 16:24:53,601 | INFO | inference:  290/ 933 | Current F1_overall: 79.423% (Clsf: 76.685%, Loc: 85.812%) [cumulative]
+2025-10-17 16:24:58,605 | INFO | inference:  300/ 933 | Current F1_overall: 79.455% (Clsf: 76.765%, Loc: 85.732%) [cumulative]
+2025-10-17 16:25:03,613 | INFO | inference:  310/ 933 | Current F1_overall: 78.806% (Clsf: 75.908%, Loc: 85.570%) [cumulative]
+2025-10-17 16:25:08,627 | INFO | inference:  320/ 933 | Current F1_overall: 78.751% (Clsf: 75.821%, Loc: 85.586%) [cumulative]
+2025-10-17 16:25:13,693 | INFO | inference:  330/ 933 | Current F1_overall: 78.806% (Clsf: 75.926%, Loc: 85.527%) [cumulative]
+2025-10-17 16:25:18,715 | INFO | inference:  340/ 933 | Current F1_overall: 78.978% (Clsf: 76.152%, Loc: 85.572%) [cumulative]
+2025-10-17 16:25:23,735 | INFO | inference:  350/ 933 | Current F1_overall: 78.953% (Clsf: 76.089%, Loc: 85.636%) [cumulative]
+2025-10-17 16:25:28,809 | INFO | inference:  360/ 933 | Current F1_overall: 78.843% (Clsf: 75.951%, Loc: 85.590%) [cumulative]
+2025-10-17 16:25:33,820 | INFO | inference:  370/ 933 | Current F1_overall: 78.482% (Clsf: 75.465%, Loc: 85.520%) [cumulative]
+2025-10-17 16:25:38,880 | INFO | inference:  380/ 933 | Current F1_overall: 79.307% (Clsf: 76.733%, Loc: 85.315%) [cumulative]
+2025-10-17 16:25:43,910 | INFO | inference:  390/ 933 | Current F1_overall: 78.998% (Clsf: 76.303%, Loc: 85.285%) [cumulative]
+2025-10-17 16:25:48,977 | INFO | inference:  400/ 933 | Current F1_overall: 78.917% (Clsf: 76.181%, Loc: 85.300%) [cumulative]
+2025-10-17 16:25:54,003 | INFO | inference:  410/ 933 | Current F1_overall: 79.272% (Clsf: 76.653%, Loc: 85.383%) [cumulative]
+2025-10-17 16:25:54,464 | INFO |  > No building in socal-fire_00000646, skipping attention visualization.
+2025-10-17 16:25:59,044 | INFO | inference:  420/ 933 | Current F1_overall: 79.207% (Clsf: 76.541%, Loc: 85.430%) [cumulative]
+2025-10-17 16:26:04,118 | INFO | inference:  430/ 933 | Current F1_overall: 79.169% (Clsf: 76.439%, Loc: 85.537%) [cumulative]
+2025-10-17 16:26:09,154 | INFO | inference:  440/ 933 | Current F1_overall: 79.058% (Clsf: 76.303%, Loc: 85.486%) [cumulative]
+2025-10-17 16:26:14,213 | INFO | inference:  450/ 933 | Current F1_overall: 78.600% (Clsf: 75.649%, Loc: 85.486%) [cumulative]
+2025-10-17 16:26:19,233 | INFO | inference:  460/ 933 | Current F1_overall: 78.077% (Clsf: 74.900%, Loc: 85.490%) [cumulative]
+2025-10-17 16:26:24,303 | INFO | inference:  470/ 933 | Current F1_overall: 77.326% (Clsf: 73.817%, Loc: 85.515%) [cumulative]
+2025-10-17 16:26:29,327 | INFO | inference:  480/ 933 | Current F1_overall: 77.777% (Clsf: 74.495%, Loc: 85.435%) [cumulative]
+2025-10-17 16:26:29,790 | INFO |  > No building in socal-fire_00000390, skipping attention visualization.
+2025-10-17 16:26:34,317 | INFO | inference:  490/ 933 | Current F1_overall: 77.802% (Clsf: 74.537%, Loc: 85.420%) [cumulative]
+2025-10-17 16:26:39,357 | INFO | inference:  500/ 933 | Current F1_overall: 77.801% (Clsf: 74.545%, Loc: 85.399%) [cumulative]
+2025-10-17 16:26:44,393 | INFO | inference:  510/ 933 | Current F1_overall: 77.653% (Clsf: 74.359%, Loc: 85.339%) [cumulative]
+2025-10-17 16:26:44,853 | INFO |  > No building in socal-fire_00000638, skipping attention visualization.
+2025-10-17 16:26:49,437 | INFO | inference:  520/ 933 | Current F1_overall: 77.646% (Clsf: 74.331%, Loc: 85.382%) [cumulative]
+2025-10-17 16:26:54,425 | INFO | inference:  530/ 933 | Current F1_overall: 77.660% (Clsf: 74.355%, Loc: 85.373%) [cumulative]
+2025-10-17 16:26:54,880 | INFO |  > No building in socal-fire_00000329, skipping attention visualization.
+2025-10-17 16:26:59,446 | INFO | inference:  540/ 933 | Current F1_overall: 77.615% (Clsf: 74.293%, Loc: 85.365%) [cumulative]
+2025-10-17 16:27:04,493 | INFO | inference:  550/ 933 | Current F1_overall: 78.073% (Clsf: 74.934%, Loc: 85.396%) [cumulative]
+2025-10-17 16:27:04,950 | INFO |  > No building in hurricane-harvey_00000254, skipping attention visualization.
+2025-10-17 16:27:09,511 | INFO | inference:  560/ 933 | Current F1_overall: 78.069% (Clsf: 74.943%, Loc: 85.363%) [cumulative]
+2025-10-17 16:27:14,500 | INFO | inference:  570/ 933 | Current F1_overall: 78.455% (Clsf: 75.461%, Loc: 85.440%) [cumulative]
+2025-10-17 16:27:19,561 | INFO | inference:  580/ 933 | Current F1_overall: 78.456% (Clsf: 75.496%, Loc: 85.363%) [cumulative]
+2025-10-17 16:27:24,566 | INFO | inference:  590/ 933 | Current F1_overall: 78.405% (Clsf: 75.413%, Loc: 85.384%) [cumulative]
+2025-10-17 16:27:29,577 | INFO | inference:  600/ 933 | Current F1_overall: 78.199% (Clsf: 75.136%, Loc: 85.344%) [cumulative]
+2025-10-17 16:27:34,595 | INFO | inference:  610/ 933 | Current F1_overall: 78.904% (Clsf: 76.177%, Loc: 85.268%) [cumulative]
+2025-10-17 16:27:39,615 | INFO | inference:  620/ 933 | Current F1_overall: 78.815% (Clsf: 76.046%, Loc: 85.276%) [cumulative]
+2025-10-17 16:27:44,690 | INFO | inference:  630/ 933 | Current F1_overall: 78.747% (Clsf: 75.939%, Loc: 85.301%) [cumulative]
+2025-10-17 16:27:45,144 | INFO |  > No building in hurricane-harvey_00000186, skipping attention visualization.
+2025-10-17 16:27:49,706 | INFO | inference:  640/ 933 | Current F1_overall: 78.895% (Clsf: 76.149%, Loc: 85.304%) [cumulative]
+2025-10-17 16:27:54,764 | INFO | inference:  650/ 933 | Current F1_overall: 78.902% (Clsf: 76.158%, Loc: 85.304%) [cumulative]
+2025-10-17 16:27:59,768 | INFO | inference:  660/ 933 | Current F1_overall: 78.900% (Clsf: 76.163%, Loc: 85.285%) [cumulative]
+2025-10-17 16:28:04,769 | INFO | inference:  670/ 933 | Current F1_overall: 78.964% (Clsf: 76.256%, Loc: 85.280%) [cumulative]
+2025-10-17 16:28:09,801 | INFO | inference:  680/ 933 | Current F1_overall: 78.981% (Clsf: 76.285%, Loc: 85.271%) [cumulative]
+2025-10-17 16:28:10,262 | INFO |  > No building in socal-fire_00000518, skipping attention visualization.
+2025-10-17 16:28:14,805 | INFO | inference:  690/ 933 | Current F1_overall: 78.986% (Clsf: 76.304%, Loc: 85.244%) [cumulative]
+2025-10-17 16:28:19,862 | INFO | inference:  700/ 933 | Current F1_overall: 78.874% (Clsf: 76.156%, Loc: 85.215%) [cumulative]
+2025-10-17 16:28:24,877 | INFO | inference:  710/ 933 | Current F1_overall: 78.871% (Clsf: 76.158%, Loc: 85.199%) [cumulative]
+2025-10-17 16:28:29,891 | INFO | inference:  720/ 933 | Current F1_overall: 79.024% (Clsf: 76.364%, Loc: 85.230%) [cumulative]
+2025-10-17 16:28:34,904 | INFO | inference:  730/ 933 | Current F1_overall: 78.931% (Clsf: 76.245%, Loc: 85.198%) [cumulative]
+2025-10-17 16:28:39,931 | INFO | inference:  740/ 933 | Current F1_overall: 78.960% (Clsf: 76.283%, Loc: 85.207%) [cumulative]
+2025-10-17 16:28:40,390 | INFO |  > No building in socal-fire_00001091, skipping attention visualization.
+2025-10-17 16:28:44,947 | INFO | inference:  750/ 933 | Current F1_overall: 78.954% (Clsf: 76.259%, Loc: 85.242%) [cumulative]
+2025-10-17 16:28:49,982 | INFO | inference:  760/ 933 | Current F1_overall: 78.738% (Clsf: 75.964%, Loc: 85.211%) [cumulative]
+2025-10-17 16:28:54,987 | INFO | inference:  770/ 933 | Current F1_overall: 78.698% (Clsf: 75.919%, Loc: 85.184%) [cumulative]
+2025-10-17 16:29:00,020 | INFO | inference:  780/ 933 | Current F1_overall: 78.670% (Clsf: 75.874%, Loc: 85.194%) [cumulative]
+2025-10-17 16:29:00,477 | INFO |  > No building in socal-fire_00000085, skipping attention visualization.
+2025-10-17 16:29:05,047 | INFO | inference:  790/ 933 | Current F1_overall: 79.373% (Clsf: 76.886%, Loc: 85.175%) [cumulative]
+2025-10-17 16:29:10,060 | INFO | inference:  800/ 933 | Current F1_overall: 79.317% (Clsf: 76.792%, Loc: 85.208%) [cumulative]
+2025-10-17 16:29:10,543 | INFO |  > No building in socal-fire_00001299, skipping attention visualization.
+2025-10-17 16:29:15,068 | INFO | inference:  810/ 933 | Current F1_overall: 79.254% (Clsf: 76.705%, Loc: 85.203%) [cumulative]
+2025-10-17 16:29:15,539 | INFO |  > No building in socal-fire_00001024, skipping attention visualization.
+2025-10-17 16:29:20,100 | INFO | inference:  820/ 933 | Current F1_overall: 79.212% (Clsf: 76.642%, Loc: 85.209%) [cumulative]
+2025-10-17 16:29:25,179 | INFO | inference:  830/ 933 | Current F1_overall: 79.094% (Clsf: 76.475%, Loc: 85.204%) [cumulative]
+2025-10-17 16:29:30,198 | INFO | inference:  840/ 933 | Current F1_overall: 79.127% (Clsf: 76.493%, Loc: 85.273%) [cumulative]
+2025-10-17 16:29:35,210 | INFO | inference:  850/ 933 | Current F1_overall: 78.770% (Clsf: 75.969%, Loc: 85.305%) [cumulative]
+2025-10-17 16:29:40,289 | INFO | inference:  860/ 933 | Current F1_overall: 78.780% (Clsf: 76.000%, Loc: 85.265%) [cumulative]
+2025-10-17 16:29:45,291 | INFO | inference:  870/ 933 | Current F1_overall: 78.797% (Clsf: 76.021%, Loc: 85.275%) [cumulative]
+2025-10-17 16:29:50,332 | INFO | inference:  880/ 933 | Current F1_overall: 78.834% (Clsf: 76.069%, Loc: 85.288%) [cumulative]
+2025-10-17 16:29:55,346 | INFO | inference:  890/ 933 | Current F1_overall: 78.889% (Clsf: 76.136%, Loc: 85.314%) [cumulative]
+2025-10-17 16:30:00,353 | INFO | inference:  900/ 933 | Current F1_overall: 79.017% (Clsf: 76.334%, Loc: 85.278%) [cumulative]
+2025-10-17 16:30:00,837 | INFO |  > No building in socal-fire_00000439, skipping attention visualization.
+2025-10-17 16:30:05,371 | INFO | inference:  910/ 933 | Current F1_overall: 78.887% (Clsf: 76.183%, Loc: 85.197%) [cumulative]
+2025-10-17 16:30:10,389 | INFO | inference:  920/ 933 | Current F1_overall: 78.902% (Clsf: 76.180%, Loc: 85.254%) [cumulative]
+2025-10-17 16:30:15,443 | INFO | inference:  930/ 933 | Current F1_overall: 78.846% (Clsf: 76.118%, Loc: 85.210%) [cumulative]
+2025-10-17 16:30:16,940 | INFO | Confusion Matrix of Localization:
+[[910621225   9738624]
+ [  7718189  50243370]]
+2025-10-17 16:30:16,940 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98941868 0.01058132]
+ [0.13316048 0.86683952]]
+2025-10-17 16:30:16,940 | INFO | Confusion Matrix of Classification:
+[[       0        0        0        0        0]
+ [       0 42012001  1294824   442996   108920]
+ [       0  1293028  2723239   658942    66762]
+ [       0   499007   671297  4212073   146553]
+ [       0   113118    32927   315068  2608177]]
+2025-10-17 16:30:16,940 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.95789346 0.0295226  0.01010052 0.00248343]
+ [0.         0.27267733 0.5742842  0.13895952 0.01407896]
+ [0.         0.09025381 0.12141536 0.76182426 0.02650658]
+ [0.         0.03685478 0.01072789 0.10265175 0.84976558]]
+2025-10-17 16:30:16,940 | INFO | lofF1 is 85.1990, clfF1 is 76.0885, oaF1 is 78.8217, sub class F1 score is [95.7256 57.5479 75.4986 86.9435]
+2025-10-17 16:30:16,943 | INFO | MAIN - DONE.
+2025-10-17 16:30:16,943 | INFO | MAIN - EXIT.

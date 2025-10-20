@@ -1,0 +1,172 @@
+2025-10-17 18:25:45,693 | INFO | MAIN - START
+2025-10-17 18:25:45,693 | INFO |  > ALINGNMENT set to False
+2025-10-17 18:25:45,693 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: True
+2025-10-17 18:25:45,693 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "PakistanFloodingWithValid",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/pakistan_flooding/pakistan-flooding/test_list_v2.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-17_11-49-45_MambaBDA_Base_PakistanFloodingWithValid_FT_AGBD/model_step25000_last_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_PakistanFloodingFinetuned/infer_tr2025-10-17_11-49-45_MambaBDA_Base_PakistanFloodingWithValid_FT_AGBD_on_PakistanFloodingWithValid.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": true,
+    "save_attention_images": true
+}
+2025-10-17 18:25:45,695 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-17 18:25:45,695 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=True, enable_temporal_damage_ag=False)
+2025-10-17 18:25:45,695 | INFO | ChangeMambaBDA class
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_damage.ag3 (id(m)=134226150536096)
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_damage.ag2 (id(m)=134226150536384)
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_damage.ag1 (id(m)=134226150536816)
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_building.ag3 (id(m)=134225788899856)
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_building.ag2 (id(m)=134225788900144)
+2025-10-17 18:25:55,659 | INFO | [Hook registered on] decoder_building.ag1 (id(m)=134225788900576)
+2025-10-17 18:25:55,735 | INFO | inference:    0/ 531 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-10-17 18:25:56,636 | INFO |  > No building in PAKISTAN-FLOODING_006146, skipping attention visualization.
+2025-10-17 18:26:00,142 | INFO | inference:   10/ 531 | Current F1_overall: 21.687% (Clsf: 0.000%, Loc: 72.290%) [cumulative]
+2025-10-17 18:26:00,526 | INFO |  > No building in PAKISTAN-FLOODING_013475, skipping attention visualization.
+2025-10-17 18:26:04,046 | INFO | inference:   20/ 531 | Current F1_overall: 81.711% (Clsf: 84.454%, Loc: 75.311%) [cumulative]
+2025-10-17 18:26:05,753 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_006184_attentions.png
+2025-10-17 18:26:08,822 | INFO | inference:   30/ 531 | Current F1_overall: 58.724% (Clsf: 48.970%, Loc: 81.485%) [cumulative]
+2025-10-17 18:26:09,203 | INFO |  > No building in PAKISTAN-FLOODING_016720, skipping attention visualization.
+2025-10-17 18:26:12,707 | INFO | inference:   40/ 531 | Current F1_overall: 66.487% (Clsf: 59.738%, Loc: 82.235%) [cumulative]
+2025-10-17 18:26:13,087 | INFO |  > No building in PAKISTAN-FLOODING_001930, skipping attention visualization.
+2025-10-17 18:26:16,619 | INFO | inference:   50/ 531 | Current F1_overall: 66.672% (Clsf: 59.216%, Loc: 84.071%) [cumulative]
+2025-10-17 18:26:17,004 | INFO |  > No building in PAKISTAN-FLOODING_003083, skipping attention visualization.
+2025-10-17 18:26:20,526 | INFO | inference:   60/ 531 | Current F1_overall: 74.611% (Clsf: 69.804%, Loc: 85.825%) [cumulative]
+2025-10-17 18:26:20,926 | INFO |  > No building in PAKISTAN-FLOODING_009491, skipping attention visualization.
+2025-10-17 18:26:24,183 | INFO | inference:   70/ 531 | Current F1_overall: 77.233% (Clsf: 74.113%, Loc: 84.513%) [cumulative]
+2025-10-17 18:26:25,860 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_016945_attentions.png
+2025-10-17 18:26:29,373 | INFO | inference:   80/ 531 | Current F1_overall: 78.626% (Clsf: 76.304%, Loc: 84.043%) [cumulative]
+2025-10-17 18:26:29,776 | INFO |  > No building in PAKISTAN-FLOODING_010103, skipping attention visualization.
+2025-10-17 18:26:33,301 | INFO | inference:   90/ 531 | Current F1_overall: 77.778% (Clsf: 75.037%, Loc: 84.173%) [cumulative]
+2025-10-17 18:26:34,916 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_006904_attentions.png
+2025-10-17 18:26:38,427 | INFO | inference:  100/ 531 | Current F1_overall: 76.100% (Clsf: 72.812%, Loc: 83.774%) [cumulative]
+2025-10-17 18:26:40,128 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_001621_attentions.png
+2025-10-17 18:26:43,241 | INFO | inference:  110/ 531 | Current F1_overall: 76.593% (Clsf: 73.571%, Loc: 83.646%) [cumulative]
+2025-10-17 18:26:43,645 | INFO |  > No building in PAKISTAN-FLOODING_008189, skipping attention visualization.
+2025-10-17 18:26:47,125 | INFO | inference:  120/ 531 | Current F1_overall: 76.019% (Clsf: 72.716%, Loc: 83.725%) [cumulative]
+2025-10-17 18:26:48,686 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_003506_attentions.png
+2025-10-17 18:26:52,179 | INFO | inference:  130/ 531 | Current F1_overall: 76.391% (Clsf: 73.438%, Loc: 83.283%) [cumulative]
+2025-10-17 18:26:53,843 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_011885_attentions.png
+2025-10-17 18:26:57,040 | INFO | inference:  140/ 531 | Current F1_overall: 76.595% (Clsf: 73.420%, Loc: 84.004%) [cumulative]
+2025-10-17 18:26:58,530 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_002039_attentions.png
+2025-10-17 18:27:02,079 | INFO | inference:  150/ 531 | Current F1_overall: 77.408% (Clsf: 74.347%, Loc: 84.552%) [cumulative]
+2025-10-17 18:27:02,471 | INFO |  > No building in PAKISTAN-FLOODING_014128, skipping attention visualization.
+2025-10-17 18:27:06,006 | INFO | inference:  160/ 531 | Current F1_overall: 77.310% (Clsf: 74.435%, Loc: 84.016%) [cumulative]
+2025-10-17 18:27:07,636 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_003484_attentions.png
+2025-10-17 18:27:11,157 | INFO | inference:  170/ 531 | Current F1_overall: 77.305% (Clsf: 74.177%, Loc: 84.604%) [cumulative]
+2025-10-17 18:27:11,525 | INFO |  > No building in PAKISTAN-FLOODING_002019, skipping attention visualization.
+2025-10-17 18:27:14,553 | INFO | inference:  180/ 531 | Current F1_overall: 77.890% (Clsf: 74.984%, Loc: 84.670%) [cumulative]
+2025-10-17 18:27:14,959 | INFO |  > No building in PAKISTAN-FLOODING_015375, skipping attention visualization.
+2025-10-17 18:27:18,471 | INFO | inference:  190/ 531 | Current F1_overall: 77.209% (Clsf: 74.043%, Loc: 84.598%) [cumulative]
+2025-10-17 18:27:20,081 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_009397_attentions.png
+2025-10-17 18:27:23,672 | INFO | inference:  200/ 531 | Current F1_overall: 76.163% (Clsf: 72.239%, Loc: 85.320%) [cumulative]
+2025-10-17 18:27:25,372 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_002327_attentions.png
+2025-10-17 18:27:28,808 | INFO | inference:  210/ 531 | Current F1_overall: 76.172% (Clsf: 72.300%, Loc: 85.205%) [cumulative]
+2025-10-17 18:27:29,088 | INFO |  > No building in PAKISTAN-FLOODING_001105, skipping attention visualization.
+2025-10-17 18:27:32,253 | INFO | inference:  220/ 531 | Current F1_overall: 76.359% (Clsf: 72.546%, Loc: 85.257%) [cumulative]
+2025-10-17 18:27:32,638 | INFO |  > No building in PAKISTAN-FLOODING_006171, skipping attention visualization.
+2025-10-17 18:27:36,134 | INFO | inference:  230/ 531 | Current F1_overall: 75.766% (Clsf: 71.653%, Loc: 85.365%) [cumulative]
+2025-10-17 18:27:37,676 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_004276_attentions.png
+2025-10-17 18:27:41,212 | INFO | inference:  240/ 531 | Current F1_overall: 76.358% (Clsf: 72.482%, Loc: 85.402%) [cumulative]
+2025-10-17 18:27:41,599 | INFO |  > No building in PAKISTAN-FLOODING_017420, skipping attention visualization.
+2025-10-17 18:27:45,051 | INFO | inference:  250/ 531 | Current F1_overall: 76.314% (Clsf: 72.415%, Loc: 85.410%) [cumulative]
+2025-10-17 18:27:46,679 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_003734_attentions.png
+2025-10-17 18:27:50,081 | INFO | inference:  260/ 531 | Current F1_overall: 76.827% (Clsf: 73.166%, Loc: 85.368%) [cumulative]
+2025-10-17 18:27:50,403 | INFO |  > No building in PAKISTAN-FLOODING_011988, skipping attention visualization.
+2025-10-17 18:27:53,960 | INFO | inference:  270/ 531 | Current F1_overall: 76.968% (Clsf: 73.374%, Loc: 85.354%) [cumulative]
+2025-10-17 18:27:55,581 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_010280_attentions.png
+2025-10-17 18:27:59,083 | INFO | inference:  280/ 531 | Current F1_overall: 76.465% (Clsf: 72.700%, Loc: 85.250%) [cumulative]
+2025-10-17 18:27:59,447 | INFO |  > No building in PAKISTAN-FLOODING_004322, skipping attention visualization.
+2025-10-17 18:28:02,725 | INFO | inference:  290/ 531 | Current F1_overall: 76.301% (Clsf: 72.501%, Loc: 85.167%) [cumulative]
+2025-10-17 18:28:03,009 | INFO |  > No building in PAKISTAN-FLOODING_018012, skipping attention visualization.
+2025-10-17 18:28:06,303 | INFO | inference:  300/ 531 | Current F1_overall: 75.961% (Clsf: 71.998%, Loc: 85.208%) [cumulative]
+2025-10-17 18:28:07,942 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_005993_attentions.png
+2025-10-17 18:28:11,497 | INFO | inference:  310/ 531 | Current F1_overall: 75.777% (Clsf: 71.691%, Loc: 85.313%) [cumulative]
+2025-10-17 18:28:11,880 | INFO |  > No building in PAKISTAN-FLOODING_007425, skipping attention visualization.
+2025-10-17 18:28:15,373 | INFO | inference:  320/ 531 | Current F1_overall: 75.589% (Clsf: 71.489%, Loc: 85.155%) [cumulative]
+2025-10-17 18:28:16,868 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_006036_attentions.png
+2025-10-17 18:28:19,904 | INFO | inference:  330/ 531 | Current F1_overall: 75.648% (Clsf: 71.593%, Loc: 85.109%) [cumulative]
+2025-10-17 18:28:21,442 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_013311_attentions.png
+2025-10-17 18:28:25,002 | INFO | inference:  340/ 531 | Current F1_overall: 75.943% (Clsf: 71.902%, Loc: 85.372%) [cumulative]
+2025-10-17 18:28:25,398 | INFO |  > No building in PAKISTAN-FLOODING_016978, skipping attention visualization.
+2025-10-17 18:28:28,947 | INFO | inference:  350/ 531 | Current F1_overall: 75.990% (Clsf: 71.966%, Loc: 85.379%) [cumulative]
+2025-10-17 18:28:30,619 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_014807_attentions.png
+2025-10-17 18:28:34,188 | INFO | inference:  360/ 531 | Current F1_overall: 75.888% (Clsf: 71.847%, Loc: 85.316%) [cumulative]
+2025-10-17 18:28:34,582 | INFO |  > No building in PAKISTAN-FLOODING_013450, skipping attention visualization.
+2025-10-17 18:28:37,574 | INFO | inference:  370/ 531 | Current F1_overall: 75.185% (Clsf: 70.821%, Loc: 85.369%) [cumulative]
+2025-10-17 18:28:39,111 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_017953_attentions.png
+2025-10-17 18:28:42,649 | INFO | inference:  380/ 531 | Current F1_overall: 75.323% (Clsf: 71.050%, Loc: 85.293%) [cumulative]
+2025-10-17 18:28:44,210 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_001359_attentions.png
+2025-10-17 18:28:47,716 | INFO | inference:  390/ 531 | Current F1_overall: 75.480% (Clsf: 71.283%, Loc: 85.274%) [cumulative]
+2025-10-17 18:28:48,073 | INFO |  > No building in PAKISTAN-FLOODING_014663, skipping attention visualization.
+2025-10-17 18:28:51,485 | INFO | inference:  400/ 531 | Current F1_overall: 75.946% (Clsf: 71.952%, Loc: 85.266%) [cumulative]
+2025-10-17 18:28:51,779 | INFO |  > No building in PAKISTAN-FLOODING_018197, skipping attention visualization.
+2025-10-17 18:28:55,009 | INFO | inference:  410/ 531 | Current F1_overall: 75.700% (Clsf: 71.628%, Loc: 85.202%) [cumulative]
+2025-10-17 18:28:55,386 | INFO |  > No building in PAKISTAN-FLOODING_005172, skipping attention visualization.
+2025-10-17 18:28:58,907 | INFO | inference:  420/ 531 | Current F1_overall: 75.530% (Clsf: 71.413%, Loc: 85.137%) [cumulative]
+2025-10-17 18:28:59,279 | INFO |  > No building in PAKISTAN-FLOODING_014391, skipping attention visualization.
+2025-10-17 18:29:02,817 | INFO | inference:  430/ 531 | Current F1_overall: 75.618% (Clsf: 71.529%, Loc: 85.161%) [cumulative]
+2025-10-17 18:29:04,371 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_004488_attentions.png
+2025-10-17 18:29:07,942 | INFO | inference:  440/ 531 | Current F1_overall: 75.726% (Clsf: 71.729%, Loc: 85.051%) [cumulative]
+2025-10-17 18:29:09,615 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_015574_attentions.png
+2025-10-17 18:29:13,170 | INFO | inference:  450/ 531 | Current F1_overall: 75.790% (Clsf: 71.860%, Loc: 84.959%) [cumulative]
+2025-10-17 18:29:13,560 | INFO |  > No building in PAKISTAN-FLOODING_016338, skipping attention visualization.
+2025-10-17 18:29:17,060 | INFO | inference:  460/ 531 | Current F1_overall: 75.667% (Clsf: 71.678%, Loc: 84.973%) [cumulative]
+2025-10-17 18:29:18,608 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_004486_attentions.png
+2025-10-17 18:29:22,148 | INFO | inference:  470/ 531 | Current F1_overall: 75.529% (Clsf: 71.571%, Loc: 84.766%) [cumulative]
+2025-10-17 18:29:22,538 | INFO |  > No building in PAKISTAN-FLOODING_006495, skipping attention visualization.
+2025-10-17 18:29:25,597 | INFO | inference:  480/ 531 | Current F1_overall: 75.465% (Clsf: 71.544%, Loc: 84.616%) [cumulative]
+2025-10-17 18:29:25,871 | INFO |  > No building in PAKISTAN-FLOODING_012259, skipping attention visualization.
+2025-10-17 18:29:29,393 | INFO | inference:  490/ 531 | Current F1_overall: 75.508% (Clsf: 71.710%, Loc: 84.368%) [cumulative]
+2025-10-17 18:29:30,977 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_010609_attentions.png
+2025-10-17 18:29:34,519 | INFO | inference:  500/ 531 | Current F1_overall: 75.152% (Clsf: 71.347%, Loc: 84.031%) [cumulative]
+2025-10-17 18:29:34,905 | INFO |  > No building in PAKISTAN-FLOODING_006734, skipping attention visualization.
+2025-10-17 18:29:38,441 | INFO | inference:  510/ 531 | Current F1_overall: 74.446% (Clsf: 70.407%, Loc: 83.869%) [cumulative]
+2025-10-17 18:29:38,813 | INFO |  > No building in PAKISTAN-FLOODING_008602, skipping attention visualization.
+2025-10-17 18:29:42,003 | INFO | inference:  520/ 531 | Current F1_overall: 74.461% (Clsf: 70.435%, Loc: 83.856%) [cumulative]
+2025-10-17 18:29:43,573 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-17_18-25-44/PakistanFloodingWithValid/MambaBDA_Base/attention_map/PAKISTAN-FLOODING_016876_attentions.png
+2025-10-17 18:29:47,079 | INFO | inference:  530/ 531 | Current F1_overall: 74.403% (Clsf: 70.373%, Loc: 83.807%) [cumulative]
+2025-10-17 18:29:47,394 | INFO |  > No building in PAKISTAN-FLOODING_012765, skipping attention visualization.
+2025-10-17 18:29:47,415 | INFO | Confusion Matrix of Localization:
+[[136638394    334960]
+ [   378607   1846503]]
+2025-10-17 18:29:47,416 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99755456 0.00244544]
+ [0.17015204 0.82984796]]
+2025-10-17 18:29:47,416 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 1672799   84749       0   19444]
+ [      0   24352  149735   12011   11257]
+ [      0    3988   17355   45475   20903]
+ [      0   33330    7624    7155  114933]]
+2025-10-17 18:29:47,416 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.94136552 0.04769239 0.         0.01094209]
+ [0.         0.12339186 0.75870893 0.06085987 0.05703935]
+ [0.         0.04546232 0.19784316 0.51840494 0.23828958]
+ [0.         0.20442585 0.04676096 0.0438844  0.70492879]]
+2025-10-17 18:29:47,416 | INFO | lofF1 is 83.8068, clfF1 is 70.3728, oaF1 is 74.4030, sub class F1 score is [95.2765 65.5556 59.6934 69.7453]
+2025-10-17 18:29:47,418 | INFO | MAIN - DONE.
+2025-10-17 18:29:47,418 | INFO | MAIN - EXIT.

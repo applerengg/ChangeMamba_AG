@@ -1,0 +1,249 @@
+2025-10-18 11:46:30,536 | INFO | MAIN - START
+2025-10-18 11:46:30,536 | INFO |  > ALINGNMENT set to False
+2025-10-18 11:46:30,536 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: False
+2025-10-18 11:46:30,536 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "xBDWithValid",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/xBD_complete_png/test/test_list3.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-18_00-34-59_MambaBDA_Base_xBDWithValid_AGB/model_step37500_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_xBDPretrained/infer_tr2025-10-18_00-34-59_MambaBDA_Base_xBDWithValid_AGB_on_xBDWithValid.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": true
+}
+2025-10-18 11:46:30,538 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-18 11:46:30,538 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-10-18 11:46:30,538 | INFO | ChangeMambaBDA class
+2025-10-18 11:46:32,070 | INFO | [Hook registered on] decoder_building.ag3 (id(m)=138739793595936)
+2025-10-18 11:46:32,071 | INFO | [Hook registered on] decoder_building.ag2 (id(m)=138739793596224)
+2025-10-18 11:46:32,071 | INFO | [Hook registered on] decoder_building.ag1 (id(m)=138739793596656)
+2025-10-18 11:46:32,256 | INFO | inference:    0/ 933 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-10-18 11:46:34,522 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000327_attentions.png
+2025-10-18 11:46:39,217 | INFO | inference:   10/ 933 | Current F1_overall: 61.671% (Clsf: 52.827%, Loc: 82.307%) [cumulative]
+2025-10-18 11:46:41,190 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000946_attentions.png
+2025-10-18 11:46:45,811 | INFO | inference:   20/ 933 | Current F1_overall: 66.523% (Clsf: 59.383%, Loc: 83.181%) [cumulative]
+2025-10-18 11:46:47,754 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000753_attentions.png
+2025-10-18 11:46:52,395 | INFO | inference:   30/ 933 | Current F1_overall: 76.014% (Clsf: 72.068%, Loc: 85.220%) [cumulative]
+2025-10-18 11:46:52,851 | INFO |  > No building in midwest-flooding_00000090, skipping attention visualization.
+2025-10-18 11:46:57,489 | INFO | inference:   40/ 933 | Current F1_overall: 74.010% (Clsf: 69.269%, Loc: 85.072%) [cumulative]
+2025-10-18 11:46:59,386 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000431_attentions.png
+2025-10-18 11:47:04,028 | INFO | inference:   50/ 933 | Current F1_overall: 78.096% (Clsf: 74.811%, Loc: 85.761%) [cumulative]
+2025-10-18 11:47:05,973 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000207_attentions.png
+2025-10-18 11:47:10,592 | INFO | inference:   60/ 933 | Current F1_overall: 78.527% (Clsf: 75.544%, Loc: 85.487%) [cumulative]
+2025-10-18 11:47:12,548 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000441_attentions.png
+2025-10-18 11:47:17,105 | INFO | inference:   70/ 933 | Current F1_overall: 78.944% (Clsf: 76.381%, Loc: 84.925%) [cumulative]
+2025-10-18 11:47:18,984 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000397_attentions.png
+2025-10-18 11:47:23,553 | INFO | inference:   80/ 933 | Current F1_overall: 78.324% (Clsf: 74.952%, Loc: 86.190%) [cumulative]
+2025-10-18 11:47:25,438 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/palu-tsunami_00000147_attentions.png
+2025-10-18 11:47:30,030 | INFO | inference:   90/ 933 | Current F1_overall: 76.693% (Clsf: 72.717%, Loc: 85.971%) [cumulative]
+2025-10-18 11:47:32,110 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000182_attentions.png
+2025-10-18 11:47:36,673 | INFO | inference:  100/ 933 | Current F1_overall: 77.530% (Clsf: 73.836%, Loc: 86.150%) [cumulative]
+2025-10-18 11:47:38,599 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/midwest-flooding_00000354_attentions.png
+2025-10-18 11:47:43,192 | INFO | inference:  110/ 933 | Current F1_overall: 76.747% (Clsf: 72.826%, Loc: 85.895%) [cumulative]
+2025-10-18 11:47:45,125 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000378_attentions.png
+2025-10-18 11:47:49,695 | INFO | inference:  120/ 933 | Current F1_overall: 77.379% (Clsf: 73.800%, Loc: 85.729%) [cumulative]
+2025-10-18 11:47:51,616 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000507_attentions.png
+2025-10-18 11:47:56,303 | INFO | inference:  130/ 933 | Current F1_overall: 76.797% (Clsf: 72.909%, Loc: 85.867%) [cumulative]
+2025-10-18 11:47:58,294 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000468_attentions.png
+2025-10-18 11:48:02,909 | INFO | inference:  140/ 933 | Current F1_overall: 78.679% (Clsf: 75.644%, Loc: 85.761%) [cumulative]
+2025-10-18 11:48:04,753 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000831_attentions.png
+2025-10-18 11:48:09,311 | INFO | inference:  150/ 933 | Current F1_overall: 79.171% (Clsf: 76.315%, Loc: 85.835%) [cumulative]
+2025-10-18 11:48:09,769 | INFO |  > No building in socal-fire_00000201, skipping attention visualization.
+2025-10-18 11:48:14,339 | INFO | inference:  160/ 933 | Current F1_overall: 79.184% (Clsf: 76.246%, Loc: 86.037%) [cumulative]
+2025-10-18 11:48:16,245 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000637_attentions.png
+2025-10-18 11:48:20,836 | INFO | inference:  170/ 933 | Current F1_overall: 79.256% (Clsf: 76.315%, Loc: 86.119%) [cumulative]
+2025-10-18 11:48:22,881 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000168_attentions.png
+2025-10-18 11:48:27,414 | INFO | inference:  180/ 933 | Current F1_overall: 79.546% (Clsf: 76.664%, Loc: 86.269%) [cumulative]
+2025-10-18 11:48:29,317 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000170_attentions.png
+2025-10-18 11:48:33,868 | INFO | inference:  190/ 933 | Current F1_overall: 80.341% (Clsf: 77.863%, Loc: 86.123%) [cumulative]
+2025-10-18 11:48:35,860 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000068_attentions.png
+2025-10-18 11:48:40,497 | INFO | inference:  200/ 933 | Current F1_overall: 80.016% (Clsf: 77.386%, Loc: 86.153%) [cumulative]
+2025-10-18 11:48:42,438 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000229_attentions.png
+2025-10-18 11:48:47,101 | INFO | inference:  210/ 933 | Current F1_overall: 79.953% (Clsf: 77.230%, Loc: 86.307%) [cumulative]
+2025-10-18 11:48:47,570 | INFO |  > No building in socal-fire_00000721, skipping attention visualization.
+2025-10-18 11:48:52,221 | INFO | inference:  220/ 933 | Current F1_overall: 79.614% (Clsf: 76.820%, Loc: 86.132%) [cumulative]
+2025-10-18 11:48:54,214 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/midwest-flooding_00000333_attentions.png
+2025-10-18 11:48:58,788 | INFO | inference:  230/ 933 | Current F1_overall: 79.689% (Clsf: 76.960%, Loc: 86.057%) [cumulative]
+2025-10-18 11:49:00,662 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000378_attentions.png
+2025-10-18 11:49:05,241 | INFO | inference:  240/ 933 | Current F1_overall: 80.415% (Clsf: 78.058%, Loc: 85.913%) [cumulative]
+2025-10-18 11:49:07,117 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000208_attentions.png
+2025-10-18 11:49:11,662 | INFO | inference:  250/ 933 | Current F1_overall: 80.434% (Clsf: 78.090%, Loc: 85.902%) [cumulative]
+2025-10-18 11:49:13,577 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000381_attentions.png
+2025-10-18 11:49:18,154 | INFO | inference:  260/ 933 | Current F1_overall: 79.630% (Clsf: 76.901%, Loc: 85.998%) [cumulative]
+2025-10-18 11:49:20,125 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000415_attentions.png
+2025-10-18 11:49:24,706 | INFO | inference:  270/ 933 | Current F1_overall: 79.637% (Clsf: 76.944%, Loc: 85.921%) [cumulative]
+2025-10-18 11:49:26,594 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000187_attentions.png
+2025-10-18 11:49:31,170 | INFO | inference:  280/ 933 | Current F1_overall: 79.678% (Clsf: 76.963%, Loc: 86.011%) [cumulative]
+2025-10-18 11:49:33,090 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000526_attentions.png
+2025-10-18 11:49:37,731 | INFO | inference:  290/ 933 | Current F1_overall: 79.499% (Clsf: 76.802%, Loc: 85.792%) [cumulative]
+2025-10-18 11:49:39,729 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000133_attentions.png
+2025-10-18 11:49:44,353 | INFO | inference:  300/ 933 | Current F1_overall: 79.451% (Clsf: 76.779%, Loc: 85.687%) [cumulative]
+2025-10-18 11:49:46,215 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000378_attentions.png
+2025-10-18 11:49:50,782 | INFO | inference:  310/ 933 | Current F1_overall: 78.860% (Clsf: 76.001%, Loc: 85.529%) [cumulative]
+2025-10-18 11:49:52,667 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000963_attentions.png
+2025-10-18 11:49:57,258 | INFO | inference:  320/ 933 | Current F1_overall: 78.823% (Clsf: 75.920%, Loc: 85.596%) [cumulative]
+2025-10-18 11:49:59,173 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000431_attentions.png
+2025-10-18 11:50:03,884 | INFO | inference:  330/ 933 | Current F1_overall: 78.872% (Clsf: 76.019%, Loc: 85.528%) [cumulative]
+2025-10-18 11:50:05,866 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000000_attentions.png
+2025-10-18 11:50:10,422 | INFO | inference:  340/ 933 | Current F1_overall: 79.011% (Clsf: 76.194%, Loc: 85.585%) [cumulative]
+2025-10-18 11:50:12,357 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000001_attentions.png
+2025-10-18 11:50:16,930 | INFO | inference:  350/ 933 | Current F1_overall: 78.906% (Clsf: 76.020%, Loc: 85.642%) [cumulative]
+2025-10-18 11:50:18,816 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000331_attentions.png
+2025-10-18 11:50:23,396 | INFO | inference:  360/ 933 | Current F1_overall: 78.842% (Clsf: 75.951%, Loc: 85.589%) [cumulative]
+2025-10-18 11:50:25,286 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000057_attentions.png
+2025-10-18 11:50:29,935 | INFO | inference:  370/ 933 | Current F1_overall: 78.427% (Clsf: 75.368%, Loc: 85.564%) [cumulative]
+2025-10-18 11:50:31,941 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000307_attentions.png
+2025-10-18 11:50:36,534 | INFO | inference:  380/ 933 | Current F1_overall: 79.360% (Clsf: 76.780%, Loc: 85.381%) [cumulative]
+2025-10-18 11:50:38,370 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/midwest-flooding_00000315_attentions.png
+2025-10-18 11:50:42,963 | INFO | inference:  390/ 933 | Current F1_overall: 79.128% (Clsf: 76.459%, Loc: 85.356%) [cumulative]
+2025-10-18 11:50:44,821 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-matthew_00000010_attentions.png
+2025-10-18 11:50:49,412 | INFO | inference:  400/ 933 | Current F1_overall: 79.076% (Clsf: 76.386%, Loc: 85.352%) [cumulative]
+2025-10-18 11:50:51,354 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-matthew_00000076_attentions.png
+2025-10-18 11:50:55,945 | INFO | inference:  410/ 933 | Current F1_overall: 79.450% (Clsf: 76.884%, Loc: 85.438%) [cumulative]
+2025-10-18 11:50:56,418 | INFO |  > No building in socal-fire_00000646, skipping attention visualization.
+2025-10-18 11:51:00,998 | INFO | inference:  420/ 933 | Current F1_overall: 79.415% (Clsf: 76.812%, Loc: 85.488%) [cumulative]
+2025-10-18 11:51:02,987 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000238_attentions.png
+2025-10-18 11:51:07,553 | INFO | inference:  430/ 933 | Current F1_overall: 79.353% (Clsf: 76.689%, Loc: 85.568%) [cumulative]
+2025-10-18 11:51:09,433 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000116_attentions.png
+2025-10-18 11:51:14,016 | INFO | inference:  440/ 933 | Current F1_overall: 79.248% (Clsf: 76.565%, Loc: 85.509%) [cumulative]
+2025-10-18 11:51:15,900 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/palu-tsunami_00000037_attentions.png
+2025-10-18 11:51:20,510 | INFO | inference:  450/ 933 | Current F1_overall: 78.804% (Clsf: 75.933%, Loc: 85.505%) [cumulative]
+2025-10-18 11:51:22,499 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/midwest-flooding_00000440_attentions.png
+2025-10-18 11:51:27,061 | INFO | inference:  460/ 933 | Current F1_overall: 77.842% (Clsf: 74.556%, Loc: 85.509%) [cumulative]
+2025-10-18 11:51:28,800 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000082_attentions.png
+2025-10-18 11:51:33,374 | INFO | inference:  470/ 933 | Current F1_overall: 77.149% (Clsf: 73.571%, Loc: 85.496%) [cumulative]
+2025-10-18 11:51:35,144 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000400_attentions.png
+2025-10-18 11:51:39,742 | INFO | inference:  480/ 933 | Current F1_overall: 77.568% (Clsf: 74.201%, Loc: 85.423%) [cumulative]
+2025-10-18 11:51:40,201 | INFO |  > No building in socal-fire_00000390, skipping attention visualization.
+2025-10-18 11:51:44,772 | INFO | inference:  490/ 933 | Current F1_overall: 77.598% (Clsf: 74.251%, Loc: 85.410%) [cumulative]
+2025-10-18 11:51:46,674 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001096_attentions.png
+2025-10-18 11:51:51,264 | INFO | inference:  500/ 933 | Current F1_overall: 77.564% (Clsf: 74.210%, Loc: 85.389%) [cumulative]
+2025-10-18 11:51:53,198 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/mexico-earthquake_00000005_attentions.png
+2025-10-18 11:51:57,787 | INFO | inference:  510/ 933 | Current F1_overall: 77.392% (Clsf: 73.984%, Loc: 85.344%) [cumulative]
+2025-10-18 11:51:58,243 | INFO |  > No building in socal-fire_00000638, skipping attention visualization.
+2025-10-18 11:52:02,848 | INFO | inference:  520/ 933 | Current F1_overall: 77.162% (Clsf: 73.629%, Loc: 85.407%) [cumulative]
+2025-10-18 11:52:04,701 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001400_attentions.png
+2025-10-18 11:52:09,280 | INFO | inference:  530/ 933 | Current F1_overall: 77.178% (Clsf: 73.656%, Loc: 85.396%) [cumulative]
+2025-10-18 11:52:09,742 | INFO |  > No building in socal-fire_00000329, skipping attention visualization.
+2025-10-18 11:52:14,374 | INFO | inference:  540/ 933 | Current F1_overall: 77.092% (Clsf: 73.540%, Loc: 85.382%) [cumulative]
+2025-10-18 11:52:16,270 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000038_attentions.png
+2025-10-18 11:52:20,887 | INFO | inference:  550/ 933 | Current F1_overall: 77.510% (Clsf: 74.124%, Loc: 85.411%) [cumulative]
+2025-10-18 11:52:21,350 | INFO |  > No building in hurricane-harvey_00000254, skipping attention visualization.
+2025-10-18 11:52:25,959 | INFO | inference:  560/ 933 | Current F1_overall: 77.533% (Clsf: 74.160%, Loc: 85.404%) [cumulative]
+2025-10-18 11:52:27,908 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000223_attentions.png
+2025-10-18 11:52:32,493 | INFO | inference:  570/ 933 | Current F1_overall: 77.963% (Clsf: 74.738%, Loc: 85.486%) [cumulative]
+2025-10-18 11:52:34,429 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001188_attentions.png
+2025-10-18 11:52:39,006 | INFO | inference:  580/ 933 | Current F1_overall: 77.972% (Clsf: 74.787%, Loc: 85.404%) [cumulative]
+2025-10-18 11:52:40,927 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000684_attentions.png
+2025-10-18 11:52:45,544 | INFO | inference:  590/ 933 | Current F1_overall: 77.918% (Clsf: 74.698%, Loc: 85.432%) [cumulative]
+2025-10-18 11:52:47,437 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000250_attentions.png
+2025-10-18 11:52:52,099 | INFO | inference:  600/ 933 | Current F1_overall: 77.732% (Clsf: 74.452%, Loc: 85.386%) [cumulative]
+2025-10-18 11:52:54,060 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/palu-tsunami_00000117_attentions.png
+2025-10-18 11:52:58,626 | INFO | inference:  610/ 933 | Current F1_overall: 78.323% (Clsf: 75.354%, Loc: 85.250%) [cumulative]
+2025-10-18 11:53:00,504 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000275_attentions.png
+2025-10-18 11:53:05,106 | INFO | inference:  620/ 933 | Current F1_overall: 78.218% (Clsf: 75.200%, Loc: 85.259%) [cumulative]
+2025-10-18 11:53:06,999 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-michael_00000019_attentions.png
+2025-10-18 11:53:11,639 | INFO | inference:  630/ 933 | Current F1_overall: 78.196% (Clsf: 75.158%, Loc: 85.284%) [cumulative]
+2025-10-18 11:53:12,136 | INFO |  > No building in hurricane-harvey_00000186, skipping attention visualization.
+2025-10-18 11:53:16,745 | INFO | inference:  640/ 933 | Current F1_overall: 78.324% (Clsf: 75.361%, Loc: 85.238%) [cumulative]
+2025-10-18 11:53:18,655 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001114_attentions.png
+2025-10-18 11:53:23,319 | INFO | inference:  650/ 933 | Current F1_overall: 78.341% (Clsf: 75.381%, Loc: 85.247%) [cumulative]
+2025-10-18 11:53:25,324 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000117_attentions.png
+2025-10-18 11:53:29,881 | INFO | inference:  660/ 933 | Current F1_overall: 78.359% (Clsf: 75.410%, Loc: 85.239%) [cumulative]
+2025-10-18 11:53:31,773 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000197_attentions.png
+2025-10-18 11:53:36,339 | INFO | inference:  670/ 933 | Current F1_overall: 78.435% (Clsf: 75.521%, Loc: 85.234%) [cumulative]
+2025-10-18 11:53:38,197 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000148_attentions.png
+2025-10-18 11:53:42,801 | INFO | inference:  680/ 933 | Current F1_overall: 78.449% (Clsf: 75.544%, Loc: 85.227%) [cumulative]
+2025-10-18 11:53:43,258 | INFO |  > No building in socal-fire_00000518, skipping attention visualization.
+2025-10-18 11:53:47,835 | INFO | inference:  690/ 933 | Current F1_overall: 78.446% (Clsf: 75.551%, Loc: 85.202%) [cumulative]
+2025-10-18 11:53:49,709 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/mexico-earthquake_00000169_attentions.png
+2025-10-18 11:53:54,310 | INFO | inference:  700/ 933 | Current F1_overall: 78.343% (Clsf: 75.415%, Loc: 85.176%) [cumulative]
+2025-10-18 11:53:56,166 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000498_attentions.png
+2025-10-18 11:54:00,755 | INFO | inference:  710/ 933 | Current F1_overall: 78.337% (Clsf: 75.417%, Loc: 85.151%) [cumulative]
+2025-10-18 11:54:02,679 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000498_attentions.png
+2025-10-18 11:54:07,257 | INFO | inference:  720/ 933 | Current F1_overall: 78.479% (Clsf: 75.604%, Loc: 85.186%) [cumulative]
+2025-10-18 11:54:09,194 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000298_attentions.png
+2025-10-18 11:54:13,868 | INFO | inference:  730/ 933 | Current F1_overall: 78.339% (Clsf: 75.417%, Loc: 85.157%) [cumulative]
+2025-10-18 11:54:15,813 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000120_attentions.png
+2025-10-18 11:54:20,380 | INFO | inference:  740/ 933 | Current F1_overall: 78.354% (Clsf: 75.433%, Loc: 85.167%) [cumulative]
+2025-10-18 11:54:20,837 | INFO |  > No building in socal-fire_00001091, skipping attention visualization.
+2025-10-18 11:54:25,436 | INFO | inference:  750/ 933 | Current F1_overall: 78.343% (Clsf: 75.407%, Loc: 85.193%) [cumulative]
+2025-10-18 11:54:27,260 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000202_attentions.png
+2025-10-18 11:54:31,826 | INFO | inference:  760/ 933 | Current F1_overall: 78.194% (Clsf: 75.209%, Loc: 85.162%) [cumulative]
+2025-10-18 11:54:33,631 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001099_attentions.png
+2025-10-18 11:54:38,264 | INFO | inference:  770/ 933 | Current F1_overall: 78.138% (Clsf: 75.144%, Loc: 85.123%) [cumulative]
+2025-10-18 11:54:40,163 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000265_attentions.png
+2025-10-18 11:54:44,808 | INFO | inference:  780/ 933 | Current F1_overall: 78.114% (Clsf: 75.103%, Loc: 85.138%) [cumulative]
+2025-10-18 11:54:45,299 | INFO |  > No building in socal-fire_00000085, skipping attention visualization.
+2025-10-18 11:54:49,909 | INFO | inference:  790/ 933 | Current F1_overall: 78.860% (Clsf: 76.177%, Loc: 85.121%) [cumulative]
+2025-10-18 11:54:51,852 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/midwest-flooding_00000420_attentions.png
+2025-10-18 11:54:56,408 | INFO | inference:  800/ 933 | Current F1_overall: 78.805% (Clsf: 76.088%, Loc: 85.146%) [cumulative]
+2025-10-18 11:54:56,900 | INFO |  > No building in socal-fire_00001299, skipping attention visualization.
+2025-10-18 11:55:01,455 | INFO | inference:  810/ 933 | Current F1_overall: 78.754% (Clsf: 76.010%, Loc: 85.155%) [cumulative]
+2025-10-18 11:55:01,929 | INFO |  > No building in socal-fire_00001024, skipping attention visualization.
+2025-10-18 11:55:06,505 | INFO | inference:  820/ 933 | Current F1_overall: 78.703% (Clsf: 75.933%, Loc: 85.166%) [cumulative]
+2025-10-18 11:55:08,468 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00001074_attentions.png
+2025-10-18 11:55:13,034 | INFO | inference:  830/ 933 | Current F1_overall: 78.589% (Clsf: 75.769%, Loc: 85.169%) [cumulative]
+2025-10-18 11:55:14,885 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000141_attentions.png
+2025-10-18 11:55:19,467 | INFO | inference:  840/ 933 | Current F1_overall: 78.619% (Clsf: 75.788%, Loc: 85.225%) [cumulative]
+2025-10-18 11:55:21,451 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000012_attentions.png
+2025-10-18 11:55:26,027 | INFO | inference:  850/ 933 | Current F1_overall: 78.269% (Clsf: 75.279%, Loc: 85.246%) [cumulative]
+2025-10-18 11:55:27,870 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/socal-fire_00000426_attentions.png
+2025-10-18 11:55:32,504 | INFO | inference:  860/ 933 | Current F1_overall: 78.278% (Clsf: 75.306%, Loc: 85.213%) [cumulative]
+2025-10-18 11:55:34,363 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000176_attentions.png
+2025-10-18 11:55:38,937 | INFO | inference:  870/ 933 | Current F1_overall: 78.283% (Clsf: 75.310%, Loc: 85.220%) [cumulative]
+2025-10-18 11:55:40,848 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-matthew_00000011_attentions.png
+2025-10-18 11:55:45,476 | INFO | inference:  880/ 933 | Current F1_overall: 78.332% (Clsf: 75.375%, Loc: 85.234%) [cumulative]
+2025-10-18 11:55:47,488 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-harvey_00000377_attentions.png
+2025-10-18 11:55:52,085 | INFO | inference:  890/ 933 | Current F1_overall: 78.407% (Clsf: 75.468%, Loc: 85.265%) [cumulative]
+2025-10-18 11:55:53,979 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000144_attentions.png
+2025-10-18 11:55:58,575 | INFO | inference:  900/ 933 | Current F1_overall: 78.558% (Clsf: 75.676%, Loc: 85.284%) [cumulative]
+2025-10-18 11:55:59,041 | INFO |  > No building in socal-fire_00000439, skipping attention visualization.
+2025-10-18 11:56:03,654 | INFO | inference:  910/ 933 | Current F1_overall: 78.419% (Clsf: 75.513%, Loc: 85.199%) [cumulative]
+2025-10-18 11:56:05,384 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/santa-rosa-wildfire_00000100_attentions.png
+2025-10-18 11:56:09,972 | INFO | inference:  920/ 933 | Current F1_overall: 78.435% (Clsf: 75.512%, Loc: 85.255%) [cumulative]
+2025-10-18 11:56:11,910 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/hurricane-florence_00000364_attentions.png
+2025-10-18 11:56:16,556 | INFO | inference:  930/ 933 | Current F1_overall: 78.356% (Clsf: 75.408%, Loc: 85.235%) [cumulative]
+2025-10-18 11:56:18,517 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-18_11-46-29/xBDWithValid/MambaBDA_Base/attention_map/mexico-earthquake_00000095_attentions.png
+2025-10-18 11:56:19,613 | INFO | Confusion Matrix of Localization:
+[[911985389   8374460]
+ [  8731197  49230362]]
+2025-10-18 11:56:19,613 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99090089 0.00909911]
+ [0.15063772 0.84936228]]
+2025-10-18 11:56:19,614 | INFO | Confusion Matrix of Classification:
+[[       0        0        0        0        0]
+ [       0 41067085  2055403   615893   120360]
+ [       0  1028429  3041020   601504    71018]
+ [       0   403006   795486  4141960   188478]
+ [       0    99077    32921   287724  2649568]]
+2025-10-18 11:56:19,614 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.93634893 0.04686416 0.01404265 0.00274426]
+ [0.         0.21687796 0.64129873 0.12684683 0.01497647]
+ [0.         0.07289041 0.14387703 0.74914314 0.03408942]
+ [0.         0.0322801  0.01072593 0.09374285 0.86325111]]
+2025-10-18 11:56:19,614 | INFO | lofF1 is 85.1984, clfF1 is 75.3799, oaF1 is 78.3255, sub class F1 score is [95.0007 57.0184 74.1223 86.8894]
+2025-10-18 11:56:19,616 | INFO | MAIN - DONE.
+2025-10-18 11:56:19,616 | INFO | MAIN - EXIT.

@@ -69,6 +69,7 @@ class ChangeMambaBDA(nn.Module):
             ssm_act_layer=ssm_act_layer,
             mlp_act_layer=mlp_act_layer,
             enable_attention_gate=attn_gate_args.enable_damage_ag,
+            enable_temporal_attention_gate=attn_gate_args.enable_temporal_damage_ag,
             **clean_kwargs
         )
 

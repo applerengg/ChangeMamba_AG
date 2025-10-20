@@ -100,7 +100,7 @@ def denormalize_img(t: torch.Tensor, mean: list[float], std: list[float]) -> np.
     return arr
 
 
-def save_all_attn_maps(pre_mask, post_mask, attn_maps: dict[str, torch.Tensor], out_path: str):
+def save_all_attn_maps(pre_img: np.ndarray, post_img: np.ndarray, pre_mask, post_mask, attn_maps: dict[str, torch.Tensor], out_path: str):
     """
     img: [H,W,3] uint8
     mask: [H,W] numpy int
@@ -129,19 +129,23 @@ def save_all_attn_maps(pre_mask, post_mask, attn_maps: dict[str, torch.Tensor], 
     elif post_mask is not None:
         H, W = post_mask.shape
 
-    fig, axs = plt.subplots(2, 4, figsize=(16, 8))
+    fig, axs = plt.subplots(2, 5, figsize=(20, 8))
 
     def get_heatmap(attn_tensor: torch.Tensor) -> np.ndarray:
         heat = F.interpolate(attn_tensor, size=(H, W), mode="bilinear", align_corners=False)[0, 0].cpu().numpy()
         heat = (heat - heat.min()) / (heat.max() - heat.min() + 1e-8)
         return heat
     
-    def display_heatmaps(attn_maps: dict, row_idx: int, mask: torch.Tensor, mask_title: str):
-        # Column 0: GT mask
-        axs[row_idx, 0].imshow(mask, cmap="gray")
-        axs[row_idx, 0].set_title(mask_title, fontsize=10)
+    def display_heatmaps(attn_maps: dict, row_idx: int, img: np.ndarray, mask: torch.Tensor, mask_title: str):
+        # Column 0: Image
+        axs[row_idx, 0].imshow(img)
+        axs[row_idx, 0].set_title("Input Image", fontsize=10)
         axs[row_idx, 0].axis("off")
-        for col_idx, (name, attn_tensor) in enumerate(attn_maps.items(), start=1):
+        # Column 1: GT mask
+        axs[row_idx, 1].imshow(mask, cmap="gray")
+        axs[row_idx, 1].set_title(mask_title, fontsize=10)
+        axs[row_idx, 1].axis("off")
+        for col_idx, (name, attn_tensor) in enumerate(attn_maps.items(), start=2):
             heat = get_heatmap(attn_tensor)
             axs[row_idx, col_idx].imshow(mask, cmap="gray")
             axs[row_idx, col_idx].imshow(heat, cmap="jet", alpha=0.6)
@@ -149,10 +153,10 @@ def save_all_attn_maps(pre_mask, post_mask, attn_maps: dict[str, torch.Tensor], 
             axs[row_idx, col_idx].axis("off")
 
     if pre_mask is not None:
-        display_heatmaps(building_maps, row_idx=0, mask=pre_mask, mask_title="Building GT")
+        display_heatmaps(building_maps, row_idx=0, img=pre_img, mask=pre_mask, mask_title="Building GT")
 
     if post_mask is not None:
-        display_heatmaps(damage_maps, row_idx=1, mask=post_mask, mask_title="Damage GT")
+        display_heatmaps(damage_maps, row_idx=1, img=post_img, mask=post_mask, mask_title="Damage GT")
 
     plt.tight_layout()
     plt.savefig(f"{out_path}", dpi=150)
@@ -222,12 +226,15 @@ class Trainer(object):
         self.change_map_T2_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'damage_classification_map')
         self.attention_map_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'attention_map')
 
-        if not os.path.exists(self.building_map_T1_saved_path):
-            os.makedirs(self.building_map_T1_saved_path)
-        if not os.path.exists(self.change_map_T2_saved_path):
-            os.makedirs(self.change_map_T2_saved_path)
-        if not os.path.exists(self.attention_map_saved_path):
-            os.makedirs(self.attention_map_saved_path)
+        if self.args.save_output_images:
+            if not os.path.exists(self.building_map_T1_saved_path):
+                os.makedirs(self.building_map_T1_saved_path)
+            if not os.path.exists(self.change_map_T2_saved_path):
+                os.makedirs(self.change_map_T2_saved_path)
+
+        if self.args.save_attention_images:
+            if not os.path.exists(self.attention_map_saved_path):
+                os.makedirs(self.attention_map_saved_path)
 
 
         if args.resume is not None:
@@ -282,23 +289,28 @@ class Trainer(object):
 
                 output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
 
-                # --- visualize first AG map for this sample ---
-                building_available = labels_loc.max().item() != 0
-                if not building_available:
-                    logging.info(f" > No building in {names[0]}, skipping attention visualization.")
-                if self.args.save_attention_images and len(attn_maps) > 0 and building_available:
-                    # img = denormalize_img(pre_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                    pre_mask = None
-                    post_mask = None
-                    # save_all_attn_maps(img, mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_all.png"))
-                    if self.args.enable_attn_gate_building:
-                        pre_mask = labels_loc[0].detach().cpu().numpy()
-                    if self.args.enable_attn_gate_damage:
-                        post_mask = labels_clf[0].detach().cpu().numpy()
-                        post_mask[post_mask == 255] = 0
-                    save_all_attn_maps(pre_mask, post_mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_attentions.png"))
-                    # if itera > 10:
-                    #     break  # DEBUG (quick results, only visualize first n samples)
+                # --- visualize AG map for this sample ---
+                if itera % 10 == 0 and self.args.save_attention_images:
+                    building_available = labels_loc.max().item() != 0
+                    if not building_available:
+                        logging.info(f" > No building in {names[0]}, skipping attention visualization.")
+                        pass
+                    elif len(attn_maps) > 0:
+                        pre_img = None
+                        post_img = None
+                        pre_mask = None
+                        post_mask = None
+                        # save_all_attn_maps(img, mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_all.png"))
+                        if self.args.enable_attn_gate_building:
+                            pre_mask = labels_loc[0].detach().cpu().numpy()
+                            pre_img = denormalize_img(pre_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                        if self.args.enable_attn_gate_damage:
+                            post_mask = labels_clf[0].detach().cpu().numpy()
+                            post_mask[post_mask == 255] = 0
+                            post_img = denormalize_img(post_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                        save_all_attn_maps(pre_img, post_img, pre_mask, post_mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_attentions.png"))
+                        # if itera > 10:
+                        #     break  # DEBUG (quick results, only visualize first n samples)
 
                 output_loc = output_loc.data.cpu().numpy()
                 output_loc = np.argmax(output_loc, axis=1)
