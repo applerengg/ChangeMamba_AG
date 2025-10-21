@@ -290,7 +290,7 @@ class Trainer(object):
                 output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
 
                 # --- visualize AG map for this sample ---
-                if itera % 10 == 0 and self.args.save_attention_images:
+                if itera % 10 == 0 and self.args.save_attention_images and (self.args.enable_attn_gate_building or self.args.enable_attn_gate_damage):
                     building_available = labels_loc.max().item() != 0
                     if not building_available:
                         logging.info(f" > No building in {names[0]}, skipping attention visualization.")
@@ -326,7 +326,7 @@ class Trainer(object):
                 labels_clf_eval = labels_clf[labels_loc > 0]
                 self.total_evaluator_clf.add_batch(labels_clf_eval, output_clf_eval)
 
-                if self.args.save_output_images:
+                if itera % 10 == 0 and self.args.save_output_images:
                     image_name = names[0] + '.png'
 
                     output_loc = np.squeeze(output_loc)
@@ -338,8 +338,9 @@ class Trainer(object):
                     imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
                     imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
 
-        for h in handles:
-            h.remove()
+        if self.args.save_attention_images:
+            for h in handles:
+                h.remove()
 
         loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
         damage_f1_score: np.ndarray = self.total_evaluator_clf.Damage_F1_socore()

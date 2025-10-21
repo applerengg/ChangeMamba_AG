@@ -332,26 +332,31 @@ class Trainer(object):
 
             self.optim.zero_grad()
 
+            ### ----- BUILDING (localization) LOSS ----- ###
             ce_loss_loc = F.cross_entropy(output_loc, labels_loc, ignore_index=255)
             lovasz_loss_loc = L.lovasz_softmax(F.softmax(output_loc, dim=1), labels_loc, ignore=255)
+            final_loss_loc = ce_loss_loc + 0.5 * lovasz_loss_loc
 
+            ### ----- DAMAGE (classification) LOSS ----- ###
             if self.args.focal_loss:
                 # hybrid CE and FOCAL combination
                 ce_plain = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
                 ce_focal = self.focal_loss_func(output_clf, labels_clf)
                 ce_loss_clf = 0.5 * ce_plain + 0.5 * ce_focal
+                # ce_loss_clf = ce_focal
             else:
                 ce_loss_clf = F.cross_entropy(output_clf, labels_clf, ignore_index=255)
             lovasz_loss_clf = L.lovasz_softmax(F.softmax(output_clf, dim=1), labels_clf, ignore=255)
+            final_loss_clf = ce_loss_clf + 0.75 * lovasz_loss_clf
 
-            final_loss = ce_loss_loc + ce_loss_clf + (0.5 * lovasz_loss_loc + 0.75 * lovasz_loss_clf)
+            final_loss = final_loss_loc + final_loss_clf
 
             final_loss.backward()
 
             self.optim.step()
 
-            last_loc_losses.append(ce_loss_loc.item() + lovasz_loss_loc.item())
-            last_clf_losses.append(ce_loss_clf.item() + lovasz_loss_clf.item())
+            last_loc_losses.append(final_loss_loc.item())
+            last_clf_losses.append(final_loss_clf.item())
             if (itera + 1) % LOG_INTERVAL == 0:
                 loc_loss_avg = np.mean(last_loc_losses)
                 clf_loss_avg = np.mean(last_clf_losses)
