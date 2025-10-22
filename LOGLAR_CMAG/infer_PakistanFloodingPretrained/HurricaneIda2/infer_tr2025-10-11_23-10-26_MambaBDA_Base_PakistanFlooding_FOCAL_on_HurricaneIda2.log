@@ -1,0 +1,67 @@
+2025-10-22 01:23:19,308 | INFO | MAIN - START
+2025-10-22 01:23:19,308 | INFO |  > ALINGNMENT set to False
+2025-10-22 01:23:19,308 | INFO |  > ATTENTION GATE set to -> Building: False, Damage: False
+2025-10-22 01:23:19,308 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "HurricaneIda2",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida2/PRJ-3563",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida2/PRJ-3563/all_list.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-10-22_01-23-17_infer_tr2025-10-11_23-10-26_MambaBDA_Base_PakistanFlooding_FOCAL_on_HurricaneIda2",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-11_23-10-26_MambaBDA_Base_PakistanFlooding_FOCAL/model_step17182_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_PakistanFloodingPretrained/HurricaneIda2/infer_tr2025-10-11_23-10-26_MambaBDA_Base_PakistanFlooding_FOCAL_on_HurricaneIda2.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": false
+}
+2025-10-22 01:23:19,311 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-22 01:23:19,311 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-10-22 01:23:19,311 | INFO | ChangeMambaBDA class
+2025-10-22 01:23:24,400 | INFO | inference:    0/  87 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-10-22 01:23:29,862 | INFO | inference:   10/  87 | Current F1_overall: 8.210% (Clsf: 4.056%, Loc: 17.901%) [cumulative]
+2025-10-22 01:23:35,005 | INFO | inference:   20/  87 | Current F1_overall: 9.838% (Clsf: 6.480%, Loc: 17.674%) [cumulative]
+2025-10-22 01:23:40,172 | INFO | inference:   30/  87 | Current F1_overall: 10.090% (Clsf: 6.903%, Loc: 17.524%) [cumulative]
+2025-10-22 01:23:45,320 | INFO | inference:   40/  87 | Current F1_overall: 9.437% (Clsf: 6.449%, Loc: 16.410%) [cumulative]
+2025-10-22 01:23:50,466 | INFO | inference:   50/  87 | Current F1_overall: 12.232% (Clsf: 9.831%, Loc: 17.835%) [cumulative]
+2025-10-22 01:23:55,621 | INFO | inference:   60/  87 | Current F1_overall: 11.784% (Clsf: 9.122%, Loc: 17.996%) [cumulative]
+2025-10-22 01:24:00,753 | INFO | inference:   70/  87 | Current F1_overall: 11.223% (Clsf: 8.631%, Loc: 17.270%) [cumulative]
+2025-10-22 01:24:05,921 | INFO | inference:   80/  87 | Current F1_overall: 11.405% (Clsf: 9.029%, Loc: 16.948%) [cumulative]
+2025-10-22 01:24:09,519 | INFO | Confusion Matrix of Localization:
+[[73175220  1379283]
+ [14980642  1690967]]
+2025-10-22 01:24:09,519 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98149967 0.01850033]
+ [0.89857206 0.10142794]]
+2025-10-22 01:24:09,519 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 9779802  390633  228747  480069]
+ [      0 3478534  238305  247209  250680]
+ [      0 1113753   93544  239331   78118]
+ [      0   34060     745    3329   14750]]
+2025-10-22 01:24:09,519 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.89894075 0.03590624 0.02102599 0.04412703]
+ [0.         0.82532823 0.05654102 0.05865361 0.05947715]
+ [0.         0.7304515  0.06135055 0.1569645  0.05123345]
+ [0.         0.64405113 0.01408744 0.0629491  0.27891234]]
+2025-10-22 01:24:09,519 | INFO | lofF1 is 17.1308, clfF1 is 8.6858, oaF1 is 11.2193, sub class F1 score is [77.3553  9.652  21.3368  3.3657]
+2025-10-22 01:24:09,522 | INFO | MAIN - DONE.
+2025-10-22 01:24:09,522 | INFO | MAIN - EXIT.
