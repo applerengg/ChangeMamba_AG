@@ -1,0 +1,73 @@
+2025-10-22 18:03:31,148 | INFO | MAIN - START
+2025-10-22 18:03:31,148 | INFO |  > FOCAL LOSS set to False
+2025-10-22 18:03:31,148 | INFO |  > ALINGNMENT set to False
+2025-10-22 18:03:31,148 | INFO |  > ATTENTION GATE set to -> Building: False, Damage : False
+2025-10-22 18:03:31,148 | INFO |  > TEMPORAL ATTENTION GATE set to -> False
+2025-10-22 18:03:31,148 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/pretrained_weight/vssm_base_0229_ckpt_epoch_237.pth",
+    "dataset": "EarthquakeTurkey",
+    "type": "train",
+    "train_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "train_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/train_list.txt",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/test_list.txt",
+    "shuffle": true,
+    "batch_size": 8,
+    "crop_size": 256,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 100000,
+    "model_type": "MambaBDA_Base",
+    "model_param_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-22_18-03-29_MambaBDA_Base_EarthquakeTurkey",
+    "resume": null,
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_EarthquakeTurkey/train_2025-10-22_18-03-29_MambaBDA_Base_EarthquakeTurkey.log",
+    "extension": "png",
+    "focal_loss": false,
+    "enable_alignment": false,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "deterministic": false,
+    "validations": 8,
+    "measure_train_scores": true,
+    "enable_temporal_attn_gate_damage": false
+}
+2025-10-22 18:03:31,148 | INFO | Starting in RANDOM mode / not deterministic.
+2025-10-22 18:03:31,151 | INFO |  > TRAIN EVALUATION params: TRAIN_BUF_MAXLEN = 8000
+2025-10-22 18:03:31,151 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-10-22 18:03:31,151 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-10-22 18:03:31,151 | INFO | ChangeMambaBDA class
+2025-10-22 18:03:34,993 | INFO | ================================================================================
+2025-10-22 18:03:34,993 | INFO | Model Parameters: Total=94,717,575(94.72M), Trainable=94,717,575(94.72M)
+2025-10-22 18:03:34,993 | INFO | Breakdown by component:
+2025-10-22 18:03:34,993 | INFO |   Component                               Params       %       Trainable
+2025-10-22 18:03:34,993 | INFO | --------------------------------------------------------------------------------
+2025-10-22 18:03:34,993 | INFO |   encoder                             87,534,592  92.42%      87,534,592
+2025-10-22 18:03:34,994 | INFO |   decoder_damage                       4,865,024   5.14%       4,865,024
+2025-10-22 18:03:34,994 | INFO |   decoder_building                     2,317,056   2.45%       2,317,056
+2025-10-22 18:03:34,994 | INFO |   main_clf                                   645   0.00%             645
+2025-10-22 18:03:34,994 | INFO |   aux_clf                                    258   0.00%             258
+2025-10-22 18:03:34,994 | INFO | --------------------------------------------------------------------------------
+2025-10-22 18:03:34,994 | INFO | Breakdown by module type:
+2025-10-22 18:03:34,995 | INFO | ================================================================================
+2025-10-22 18:03:34,995 | INFO | ---------starting training-----------
+2025-10-22 18:03:35,050 | INFO | VAL_STEP=1562, (number_of_validations = 8)
+2025-10-22 18:04:37,672 | INFO | iter is 100 / 12500 [skipped    0] | loc. loss = 0.3317 ±0.1576, classif. loss = 0.6604 ±0.6150
+2025-10-22 18:05:39,677 | INFO | iter is 200 / 12500 [skipped    0] | loc. loss = 0.2325 ±0.0620, classif. loss = 0.5541 ±0.4441
+2025-10-22 18:06:41,775 | INFO | iter is 300 / 12500 [skipped    0] | loc. loss = 0.1944 ±0.0459, classif. loss = 0.5260 ±0.4759
+2025-10-22 18:07:43,966 | INFO | iter is 400 / 12500 [skipped    0] | loc. loss = 0.1828 ±0.0514, classif. loss = 0.4459 ±0.3745
+2025-10-22 18:08:46,145 | INFO | iter is 500 / 12500 [skipped    0] | loc. loss = 0.1662 ±0.0409, classif. loss = 0.4729 ±0.4387
+2025-10-22 18:09:48,413 | INFO | iter is 600 / 12500 [skipped    0] | loc. loss = 0.1619 ±0.0475, classif. loss = 0.4443 ±0.3189
+2025-10-22 18:10:50,645 | INFO | iter is 700 / 12500 [skipped    0] | loc. loss = 0.1509 ±0.0394, classif. loss = 0.4124 ±0.3092
+2025-10-22 18:11:52,939 | INFO | iter is 800 / 12500 [skipped    0] | loc. loss = 0.1441 ±0.0405, classif. loss = 0.4604 ±0.4023
+2025-10-22 18:12:55,198 | INFO | iter is 900 / 12500 [skipped    0] | loc. loss = 0.1407 ±0.0335, classif. loss = 0.3795 ±0.2729
+2025-10-22 18:13:57,664 | INFO | iter is 1000 / 12500 [skipped    0] | loc. loss = 0.1398 ±0.0345, classif. loss = 0.3436 ±0.2661
+2025-10-22 18:14:59,962 | INFO | iter is 1100 / 12500 [skipped    0] | loc. loss = 0.1298 ±0.0317, classif. loss = 0.3670 ±0.3473
+2025-10-22 18:16:02,401 | INFO | iter is 1200 / 12500 [skipped    0] | loc. loss = 0.1343 ±0.0361, classif. loss = 0.3680 ±0.2950
+2025-10-22 18:17:04,826 | INFO | iter is 1300 / 12500 [skipped    0] | loc. loss = 0.1267 ±0.0287, classif. loss = 0.3358 ±0.3879
+2025-10-22 18:18:07,287 | INFO | iter is 1400 / 12500 [skipped    0] | loc. loss = 0.1209 ±0.0309, classif. loss = 0.3397 ±0.2688
