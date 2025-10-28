@@ -1,0 +1,493 @@
+2025-10-23 10:39:15,501 | INFO | MAIN - START
+2025-10-23 10:39:15,501 | INFO |  > FOCAL LOSS set to True
+2025-10-23 10:39:15,501 | INFO |  > ALINGNMENT set to True
+2025-10-23 10:39:15,501 | INFO |  > ATTENTION GATE set to -> Building: True, Damage : False
+2025-10-23 10:39:15,501 | INFO |  > TEMPORAL ATTENTION GATE set to -> False
+2025-10-23 10:39:15,501 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/pretrained_weight/vssm_base_0229_ckpt_epoch_237.pth",
+    "dataset": "EarthquakeTurkey",
+    "type": "train",
+    "train_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "train_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/train_list.txt",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/test_list.txt",
+    "shuffle": true,
+    "batch_size": 8,
+    "crop_size": 256,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 40000,
+    "model_type": "MambaBDA_Base",
+    "model_param_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB",
+    "resume": null,
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/train_EarthquakeTurkey/train_2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB.log",
+    "extension": "png",
+    "focal_loss": true,
+    "enable_alignment": true,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": false,
+    "deterministic": false,
+    "validations": 10,
+    "measure_train_scores": true,
+    "enable_temporal_attn_gate_damage": false
+}
+2025-10-23 10:39:15,501 | INFO | Starting in RANDOM mode / not deterministic.
+2025-10-23 10:39:15,504 | INFO |  > TRAIN EVALUATION params: TRAIN_BUF_MAXLEN = 8000
+2025-10-23 10:39:15,504 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(1, 2), mid_ch=64)
+2025-10-23 10:39:15,504 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-10-23 10:39:15,504 | INFO | ChangeMambaBDA class
+2025-10-23 10:39:16,729 | INFO | Attention Gate params: 27, Base params: 806
+2025-10-23 10:39:16,729 | INFO |  > FOCAL LOSS params: alpha = [0.6, 1.6, 1.1, 1.1], gamma = 1.5
+2025-10-23 10:39:16,730 | INFO | ================================================================================
+2025-10-23 10:39:16,730 | INFO | Model Parameters: Total=95,728,910(95.73M), Trainable=95,728,910(95.73M)
+2025-10-23 10:39:16,730 | INFO | Breakdown by component:
+2025-10-23 10:39:16,730 | INFO |   Component                               Params       %       Trainable
+2025-10-23 10:39:16,730 | INFO | --------------------------------------------------------------------------------
+2025-10-23 10:39:16,731 | INFO |   encoder                             87,534,592  91.44%      87,534,592
+2025-10-23 10:39:16,732 | INFO |   decoder_damage                       4,865,024   5.08%       4,865,024
+2025-10-23 10:39:16,732 | INFO |   decoder_building                     2,367,363   2.47%       2,367,363
+2025-10-23 10:39:16,732 | INFO |   main_clf                                   645   0.00%             645
+2025-10-23 10:39:16,732 | INFO |   aux_clf                                    258   0.00%             258
+2025-10-23 10:39:16,732 | INFO |   align_heads                            961,028   1.00%         961,028
+2025-10-23 10:39:16,732 | INFO | --------------------------------------------------------------------------------
+2025-10-23 10:39:16,732 | INFO | Breakdown by module type:
+2025-10-23 10:39:16,733 | INFO |   Attention Gates:                 50,307 (  0.05%)
+2025-10-23 10:39:16,733 | INFO |   Alignment Modules:              961,028 (  1.00%)
+2025-10-23 10:39:16,733 | INFO | ================================================================================
+2025-10-23 10:39:16,733 | INFO | ---------starting training-----------
+2025-10-23 10:39:16,798 | INFO | VAL_STEP=500, (number_of_validations = 10)
+2025-10-23 10:40:20,499 | INFO | iter is 100 / 5000 [skipped    0] | loc. loss = 0.3338 ±0.1123, classif. loss = 0.6370 ±0.6314
+2025-10-23 10:41:23,417 | INFO | iter is 200 / 5000 [skipped    0] | loc. loss = 0.2282 ±0.0578, classif. loss = 0.5235 ±0.4266
+2025-10-23 10:42:26,345 | INFO | iter is 300 / 5000 [skipped    0] | loc. loss = 0.1936 ±0.0534, classif. loss = 0.4512 ±0.4080
+2025-10-23 10:43:29,378 | INFO | iter is 400 / 5000 [skipped    0] | loc. loss = 0.1865 ±0.0434, classif. loss = 0.4370 ±0.3060
+2025-10-23 10:44:32,484 | INFO | iter is 500 / 5000 [skipped    0] | loc. loss = 0.1638 ±0.0446, classif. loss = 0.4020 ±0.3330
+2025-10-23 10:44:32,486 | INFO | ---------starting evaluation-----------
+2025-10-23 10:44:33,133 | INFO | validation:    0/ 189 (2025-10-23_10-44-33)
+2025-10-23 10:44:45,920 | INFO | validation:  100/ 189 (2025-10-23_10-44-45)
+2025-10-23 10:44:57,350 | INFO | Confusion Matrix of Localization:
+[[43746747   638099]
+ [  722007  4438363]]
+2025-10-23 10:44:57,350 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98562349 0.01437651]
+ [0.1399138  0.8600862 ]]
+2025-10-23 10:44:57,350 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4972160     257   33508    1936]
+ [      0   43799     847    5657     330]
+ [      0   27523     309   18080       0]
+ [      0   29612       0   24172    2180]]
+2025-10-23 10:44:57,350 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.92871008e-01 5.13193158e-05 6.69108028e-03
+  3.86592200e-04]
+ [0.00000000e+00 8.65028736e-01 1.67282207e-02 1.11725554e-01
+  6.51748859e-03]
+ [0.00000000e+00 5.99472905e-01 6.73026660e-03 3.93796829e-01
+  0.00000000e+00]
+ [0.00000000e+00 5.29125867e-01 0.00000000e+00 4.31920520e-01
+  3.89536130e-02]]
+2025-10-23 10:44:57,350 | INFO | lofF1 is 86.7136, clfF1 is 8.1443, oaF1 is 31.7151, sub class F1 score is [98.6446  3.2548 28.3989  7.2173]
+2025-10-23 10:44:57,616 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step500.pth
+2025-10-23 10:44:57,617 | INFO | ---------starting train set evaluation-----------
+2025-10-23 10:44:57,617 | INFO | Train buffer size: 500.
+2025-10-23 10:44:59,718 | INFO | [TrainBuf] locF1 is 80.5590, clfF1 is 22.1394, oaF1 is 39.6653, sub class F1 score is [97.3342 11.076  27.4974 22.8586]
+2025-10-23 10:44:59,726 | INFO | Building Head - Attention Gate Statistics @ step 500:
+2025-10-23 10:44:59,726 | INFO |   ag3: {'mean': 0.4397597014904022, 'std': 0.19817055761814117, 'active_ratio': 0.296875}
+2025-10-23 10:44:59,726 | INFO |   ag2: {'mean': 0.9069138169288635, 'std': 0.04248104989528656, 'active_ratio': 1.0}
+2025-10-23 10:44:59,726 | INFO |   ag1: {'mean': 0.8605971336364746, 'std': 0.07736723870038986, 'active_ratio': 0.999755859375}
+2025-10-23 10:46:02,785 | INFO | iter is 600 / 5000 [skipped    0] | loc. loss = 0.1689 ±0.0402, classif. loss = 0.4608 ±0.3442
+2025-10-23 10:47:05,770 | INFO | iter is 700 / 5000 [skipped    0] | loc. loss = 0.1485 ±0.0376, classif. loss = 0.4604 ±0.4773
+2025-10-23 10:48:08,818 | INFO | iter is 800 / 5000 [skipped    0] | loc. loss = 0.1502 ±0.0345, classif. loss = 0.3625 ±0.2799
+2025-10-23 10:49:11,836 | INFO | iter is 900 / 5000 [skipped    0] | loc. loss = 0.1400 ±0.0374, classif. loss = 0.4054 ±0.2957
+2025-10-23 10:50:14,930 | INFO | iter is 1000 / 5000 [skipped    0] | loc. loss = 0.1345 ±0.0352, classif. loss = 0.3617 ±0.2903
+2025-10-23 10:50:14,932 | INFO | ---------starting evaluation-----------
+2025-10-23 10:50:15,644 | INFO | validation:    0/ 189 (2025-10-23_10-50-15)
+2025-10-23 10:50:28,425 | INFO | validation:  100/ 189 (2025-10-23_10-50-28)
+2025-10-23 10:50:39,913 | INFO | Confusion Matrix of Localization:
+[[43806481   578365]
+ [  577959  4582411]]
+2025-10-23 10:50:39,914 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98696931 0.01303069]
+ [0.11199953 0.88800047]]
+2025-10-23 10:50:39,914 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [     40 4962022   26609    3698   15492]
+ [      0   36190    7719    3592    3132]
+ [      0   32174    9185    2208    2345]
+ [      0    9699    2205   11654   32406]]
+2025-10-23 10:50:39,914 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [7.98744214e-06 9.90846591e-01 5.31344620e-03 7.38439026e-04
+  3.09353634e-03]
+ [0.00000000e+00 7.14751249e-01 1.52449983e-01 7.09418759e-02
+  6.18568918e-02]
+ [0.00000000e+00 7.00775396e-01 2.00056630e-01 4.80920021e-02
+  5.10759714e-02]
+ [0.00000000e+00 1.73307841e-01 3.94003288e-02 2.08241012e-01
+  5.79050818e-01]]
+2025-10-23 10:50:39,914 | INFO | lofF1 is 88.7966, clfF1 is 16.5788, oaF1 is 38.2441, sub class F1 score is [98.7669 16.0227  6.5848 59.2762]
+2025-10-23 10:50:40,177 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step1000.pth
+2025-10-23 10:50:40,177 | INFO | ---------starting train set evaluation-----------
+2025-10-23 10:50:40,177 | INFO | Train buffer size: 500.
+2025-10-23 10:50:42,275 | INFO | [TrainBuf] locF1 is 87.8070, clfF1 is 52.7667, oaF1 is 63.2788, sub class F1 score is [97.951  35.4198 52.1673 54.9623]
+2025-10-23 10:50:42,280 | INFO | Building Head - Attention Gate Statistics @ step 1000:
+2025-10-23 10:50:42,280 | INFO |   ag3: {'mean': 0.3531613349914551, 'std': 0.2349446713924408, 'active_ratio': 0.212890625}
+2025-10-23 10:50:42,280 | INFO |   ag2: {'mean': 0.9216422438621521, 'std': 0.041458260267972946, 'active_ratio': 1.0}
+2025-10-23 10:50:42,280 | INFO |   ag1: {'mean': 0.6809557676315308, 'std': 0.19154703617095947, 'active_ratio': 0.804931640625}
+2025-10-23 10:51:45,358 | INFO | iter is 1100 / 5000 [skipped    0] | loc. loss = 0.1375 ±0.0382, classif. loss = 0.3675 ±0.2804
+2025-10-23 10:52:48,397 | INFO | iter is 1200 / 5000 [skipped    0] | loc. loss = 0.1320 ±0.0359, classif. loss = 0.3393 ±0.2490
+2025-10-23 10:53:51,494 | INFO | iter is 1300 / 5000 [skipped    0] | loc. loss = 0.1305 ±0.0324, classif. loss = 0.3338 ±0.2364
+2025-10-23 10:54:54,620 | INFO | iter is 1400 / 5000 [skipped    0] | loc. loss = 0.1223 ±0.0335, classif. loss = 0.2849 ±0.2452
+2025-10-23 10:55:57,679 | INFO | iter is 1500 / 5000 [skipped    0] | loc. loss = 0.1255 ±0.0341, classif. loss = 0.3480 ±0.2509
+2025-10-23 10:55:57,680 | INFO | ---------starting evaluation-----------
+2025-10-23 10:55:58,410 | INFO | validation:    0/ 189 (2025-10-23_10-55-58)
+2025-10-23 10:56:11,279 | INFO | validation:  100/ 189 (2025-10-23_10-56-11)
+2025-10-23 10:56:22,844 | INFO | Confusion Matrix of Localization:
+[[43720935   663911]
+ [  425579  4734791]]
+2025-10-23 10:56:22,845 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98504194 0.01495806]
+ [0.08247064 0.91752936]]
+2025-10-23 10:56:22,845 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      3 4964930   17820    6163   18945]
+ [      0   30909   10062    4670    4992]
+ [      0   25952    6343    7874    5743]
+ [      0    5925    2712    6760   40567]]
+2025-10-23 10:56:22,845 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [5.99058161e-07 9.91427278e-01 3.55840547e-03 1.23066515e-03
+  3.78305229e-03]
+ [0.00000000e+00 6.10451682e-01 1.98724152e-01 9.22323386e-02
+  9.85918275e-02]
+ [0.00000000e+00 5.65255271e-01 1.38155602e-01 1.71502004e-01
+  1.25087123e-01]
+ [0.00000000e+00 1.05871632e-01 4.84597241e-02 1.20791938e-01
+  7.24876706e-01]]
+2025-10-23 10:56:22,845 | INFO | lofF1 is 89.6820, clfF1 is 34.9335, oaF1 is 51.3580, sub class F1 score is [98.9466 22.9805 22.0625 64.2844]
+2025-10-23 10:56:23,111 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step1500.pth
+2025-10-23 10:56:23,111 | INFO | ---------starting train set evaluation-----------
+2025-10-23 10:56:23,111 | INFO | Train buffer size: 500.
+2025-10-23 10:56:25,213 | INFO | [TrainBuf] locF1 is 89.7955, clfF1 is 65.1774, oaF1 is 72.5628, sub class F1 score is [98.6401 55.9724 59.6116 60.2703]
+2025-10-23 10:56:25,218 | INFO | Building Head - Attention Gate Statistics @ step 1500:
+2025-10-23 10:56:25,219 | INFO |   ag3: {'mean': 0.29746097326278687, 'std': 0.212222158908844, 'active_ratio': 0.142578125}
+2025-10-23 10:56:25,219 | INFO |   ag2: {'mean': 0.9300901889801025, 'std': 0.04159746691584587, 'active_ratio': 1.0}
+2025-10-23 10:56:25,219 | INFO |   ag1: {'mean': 0.45421332120895386, 'std': 0.2695353627204895, 'active_ratio': 0.41082763671875}
+2025-10-23 10:57:28,295 | INFO | iter is 1600 / 5000 [skipped    0] | loc. loss = 0.1202 ±0.0323, classif. loss = 0.2881 ±0.2146
+2025-10-23 10:58:31,377 | INFO | iter is 1700 / 5000 [skipped    0] | loc. loss = 0.1221 ±0.0327, classif. loss = 0.3414 ±0.2407
+2025-10-23 10:59:34,452 | INFO | iter is 1800 / 5000 [skipped    0] | loc. loss = 0.1159 ±0.0281, classif. loss = 0.2775 ±0.2582
+2025-10-23 11:00:37,524 | INFO | iter is 1900 / 5000 [skipped    0] | loc. loss = 0.1164 ±0.0325, classif. loss = 0.2609 ±0.2108
+2025-10-23 11:01:40,621 | INFO | iter is 2000 / 5000 [skipped    0] | loc. loss = 0.1172 ±0.0302, classif. loss = 0.3242 ±0.2314
+2025-10-23 11:01:40,622 | INFO | ---------starting evaluation-----------
+2025-10-23 11:01:41,349 | INFO | validation:    0/ 189 (2025-10-23_11-01-41)
+2025-10-23 11:01:54,190 | INFO | validation:  100/ 189 (2025-10-23_11-01-54)
+2025-10-23 11:02:05,738 | INFO | Confusion Matrix of Localization:
+[[43851030   533816]
+ [  449984  4710386]]
+2025-10-23 11:02:05,738 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98797301 0.01202699]
+ [0.08719995 0.91280005]]
+2025-10-23 11:02:05,739 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4952687   37063   10834    7277]
+ [      0   24184   18201    8172      76]
+ [      0   33007    1460   10455     990]
+ [      0    7952    5143   25891   16978]]
+2025-10-23 11:02:05,739 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.98898252 0.00740096 0.0021634  0.00145312]
+ [0.         0.47763316 0.35946912 0.16139672 0.001501  ]
+ [0.         0.7189188  0.03179997 0.22771824 0.02156299]
+ [0.         0.14209134 0.09189836 0.4626367  0.3033736 ]]
+2025-10-23 11:02:05,739 | INFO | lofF1 is 90.5445, clfF1 is 35.2755, oaF1 is 51.8562, sub class F1 score is [98.7999 32.3573 20.649  41.774 ]
+2025-10-23 11:02:06,001 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step2000.pth
+2025-10-23 11:02:06,001 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:02:06,001 | INFO | Train buffer size: 500.
+2025-10-23 11:02:08,086 | INFO | [TrainBuf] locF1 is 90.5913, clfF1 is 72.8296, oaF1 is 78.1581, sub class F1 score is [98.7224 63.7761 69.5212 67.8916]
+2025-10-23 11:02:08,092 | INFO | Building Head - Attention Gate Statistics @ step 2000:
+2025-10-23 11:02:08,092 | INFO |   ag3: {'mean': 0.29558616876602173, 'std': 0.17110350728034973, 'active_ratio': 0.1396484375}
+2025-10-23 11:02:08,092 | INFO |   ag2: {'mean': 0.8929253816604614, 'std': 0.06631066650152206, 'active_ratio': 1.0}
+2025-10-23 11:02:08,092 | INFO |   ag1: {'mean': 0.2570341229438782, 'std': 0.235709086060524, 'active_ratio': 0.1612548828125}
+2025-10-23 11:03:11,189 | INFO | iter is 2100 / 5000 [skipped    0] | loc. loss = 0.1167 ±0.0329, classif. loss = 0.2592 ±0.2271
+2025-10-23 11:04:14,280 | INFO | iter is 2200 / 5000 [skipped    0] | loc. loss = 0.1146 ±0.0335, classif. loss = 0.2794 ±0.2088
+2025-10-23 11:05:17,330 | INFO | iter is 2300 / 5000 [skipped    0] | loc. loss = 0.1124 ±0.0290, classif. loss = 0.2739 ±0.2270
+2025-10-23 11:06:20,437 | INFO | iter is 2400 / 5000 [skipped    0] | loc. loss = 0.1111 ±0.0289, classif. loss = 0.2830 ±0.2307
+2025-10-23 11:07:23,533 | INFO | iter is 2500 / 5000 [skipped    0] | loc. loss = 0.1106 ±0.0315, classif. loss = 0.2542 ±0.2039
+2025-10-23 11:07:23,535 | INFO | ---------starting evaluation-----------
+2025-10-23 11:07:24,272 | INFO | validation:    0/ 189 (2025-10-23_11-07-24)
+2025-10-23 11:07:37,148 | INFO | validation:  100/ 189 (2025-10-23_11-07-37)
+2025-10-23 11:07:48,735 | INFO | Confusion Matrix of Localization:
+[[43832946   551900]
+ [  423358  4737012]]
+2025-10-23 11:07:48,735 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98756558 0.01243442]
+ [0.08204024 0.91795976]]
+2025-10-23 11:07:48,735 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4946927   41965    4720   14249]
+ [      0   29631   17355    1813    1834]
+ [      0   33818    1492    4402    6200]
+ [      0    7227    1972     340   46425]]
+2025-10-23 11:07:48,735 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.87832330e-01 8.37982524e-03 9.42518173e-04
+  2.84532658e-03]
+ [0.00000000e+00 5.85211226e-01 3.42760650e-01 3.58066873e-02
+  3.62214366e-02]
+ [0.00000000e+00 7.36583028e-01 3.24969507e-02 9.58790730e-02
+  1.35040948e-01]
+ [0.00000000e+00 1.29136588e-01 3.52369380e-02 6.07533414e-03
+  8.29551140e-01]]
+2025-10-23 11:07:48,735 | INFO | lofF1 is 90.6667, clfF1 is 33.0056, oaF1 is 50.3039, sub class F1 score is [98.6872 30.6039 15.3951 74.4754]
+2025-10-23 11:07:48,736 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:07:48,736 | INFO | Train buffer size: 500.
+2025-10-23 11:07:50,839 | INFO | [TrainBuf] locF1 is 91.0700, clfF1 is 77.0814, oaF1 is 81.2780, sub class F1 score is [99.0092 64.0217 75.3069 77.5527]
+2025-10-23 11:07:50,845 | INFO | Building Head - Attention Gate Statistics @ step 2500:
+2025-10-23 11:07:50,845 | INFO |   ag3: {'mean': 0.34636813402175903, 'std': 0.1956462860107422, 'active_ratio': 0.1953125}
+2025-10-23 11:07:50,845 | INFO |   ag2: {'mean': 0.8061144351959229, 'std': 0.11003901809453964, 'active_ratio': 0.98828125}
+2025-10-23 11:07:50,845 | INFO |   ag1: {'mean': 0.16093356907367706, 'std': 0.19373086094856262, 'active_ratio': 0.07171630859375}
+2025-10-23 11:08:53,953 | INFO | iter is 2600 / 5000 [skipped    0] | loc. loss = 0.1097 ±0.0312, classif. loss = 0.2628 ±0.2108
+2025-10-23 11:09:57,014 | INFO | iter is 2700 / 5000 [skipped    0] | loc. loss = 0.1147 ±0.0342, classif. loss = 0.2838 ±0.2740
+2025-10-23 11:11:00,123 | INFO | iter is 2800 / 5000 [skipped    0] | loc. loss = 0.1076 ±0.0273, classif. loss = 0.2620 ±0.1781
+2025-10-23 11:12:03,171 | INFO | iter is 2900 / 5000 [skipped    0] | loc. loss = 0.1066 ±0.0256, classif. loss = 0.2299 ±0.1948
+2025-10-23 11:13:06,271 | INFO | iter is 3000 / 5000 [skipped    0] | loc. loss = 0.1102 ±0.0283, classif. loss = 0.2550 ±0.2001
+2025-10-23 11:13:06,273 | INFO | ---------starting evaluation-----------
+2025-10-23 11:13:07,018 | INFO | validation:    0/ 189 (2025-10-23_11-13-07)
+2025-10-23 11:13:19,903 | INFO | validation:  100/ 189 (2025-10-23_11-13-19)
+2025-10-23 11:13:31,471 | INFO | Confusion Matrix of Localization:
+[[44014772   370074]
+ [  580110  4580260]]
+2025-10-23 11:13:31,472 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99166215 0.00833785]
+ [0.11241636 0.88758364]]
+2025-10-23 11:13:31,472 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [    329 4946397   32186    1621   27328]
+ [      0   29922   13781      10    6920]
+ [      0   31240    1210    4404    9058]
+ [      0    6210    2241       0   47513]]
+2025-10-23 11:13:31,472 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [6.56967116e-05 9.87726496e-01 6.42709532e-03 3.23691093e-04
+  5.45702047e-03]
+ [0.00000000e+00 5.90958466e-01 2.72174274e-01 1.97499654e-04
+  1.36669761e-01]
+ [0.00000000e+00 6.80432131e-01 2.63547656e-02 9.59226346e-02
+  1.97290469e-01]
+ [0.00000000e+00 1.10964191e-01 4.00435995e-02 0.00000000e+00
+  8.48992209e-01]]
+2025-10-23 11:13:31,472 | INFO | lofF1 is 90.6022, clfF1 is 33.0977, oaF1 is 50.3491, sub class F1 score is [98.7144 27.5479 16.9557 64.7391]
+2025-10-23 11:13:31,473 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:13:31,473 | INFO | Train buffer size: 500.
+2025-10-23 11:13:33,561 | INFO | [TrainBuf] locF1 is 91.3418, clfF1 is 78.0506, oaF1 is 82.0379, sub class F1 score is [98.9322 75.1765 76.8191 67.4706]
+2025-10-23 11:13:33,567 | INFO | Building Head - Attention Gate Statistics @ step 3000:
+2025-10-23 11:13:33,567 | INFO |   ag3: {'mean': 0.21831244230270386, 'std': 0.17750823497772217, 'active_ratio': 0.1142578125}
+2025-10-23 11:13:33,567 | INFO |   ag2: {'mean': 0.7238729596138, 'std': 0.16502393782138824, 'active_ratio': 0.890869140625}
+2025-10-23 11:13:33,567 | INFO |   ag1: {'mean': 0.1918163150548935, 'std': 0.20934037864208221, 'active_ratio': 0.100830078125}
+2025-10-23 11:14:36,696 | INFO | iter is 3100 / 5000 [skipped    0] | loc. loss = 0.1074 ±0.0305, classif. loss = 0.2054 ±0.1827
+2025-10-23 11:15:39,837 | INFO | iter is 3200 / 5000 [skipped    0] | loc. loss = 0.1089 ±0.0274, classif. loss = 0.2421 ±0.1750
+2025-10-23 11:16:42,964 | INFO | iter is 3300 / 5000 [skipped    0] | loc. loss = 0.1064 ±0.0283, classif. loss = 0.1758 ±0.1802
+2025-10-23 11:17:46,144 | INFO | iter is 3400 / 5000 [skipped    0] | loc. loss = 0.1070 ±0.0270, classif. loss = 0.2819 ±0.2470
+2025-10-23 11:18:49,283 | INFO | iter is 3500 / 5000 [skipped    0] | loc. loss = 0.1003 ±0.0286, classif. loss = 0.2094 ±0.2218
+2025-10-23 11:18:49,284 | INFO | ---------starting evaluation-----------
+2025-10-23 11:18:50,027 | INFO | validation:    0/ 189 (2025-10-23_11-18-50)
+2025-10-23 11:19:02,893 | INFO | validation:  100/ 189 (2025-10-23_11-19-02)
+2025-10-23 11:19:14,475 | INFO | Confusion Matrix of Localization:
+[[43993918   390928]
+ [  544341  4616029]]
+2025-10-23 11:19:14,476 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99119231 0.00880769]
+ [0.10548488 0.89451512]]
+2025-10-23 11:19:14,476 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [    172 4928207   51134    9402   18946]
+ [      0   24846   19478    1572    4737]
+ [      0   34640     877    3922    6473]
+ [      0    5640    4378      34   45912]]
+2025-10-23 11:19:14,476 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [3.43460012e-05 9.84094207e-01 1.02107467e-02 1.87744828e-03
+  3.78325197e-03]
+ [0.00000000e+00 4.90707641e-01 3.84689827e-01 3.10469457e-02
+  9.35555863e-02]
+ [0.00000000e+00 7.54486844e-01 1.91017599e-02 8.54242899e-02
+  1.40987106e-01]
+ [0.00000000e+00 1.00779072e-01 7.82288614e-02 6.07533414e-04
+  8.20384533e-01]]
+2025-10-23 11:19:14,476 | INFO | lofF1 is 90.8012, clfF1 is 29.7258, oaF1 is 48.0484, sub class F1 score is [98.5524 30.7953 12.8924 69.5468]
+2025-10-23 11:19:14,477 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:19:14,477 | INFO | Train buffer size: 500.
+2025-10-23 11:19:16,565 | INFO | [TrainBuf] locF1 is 91.5414, clfF1 is 83.3298, oaF1 is 85.7933, sub class F1 score is [99.1848 78.4195 79.316  79.617 ]
+2025-10-23 11:19:16,570 | INFO | Building Head - Attention Gate Statistics @ step 3500:
+2025-10-23 11:19:16,571 | INFO |   ag3: {'mean': 0.33990201354026794, 'std': 0.23361769318580627, 'active_ratio': 0.291015625}
+2025-10-23 11:19:16,571 | INFO |   ag2: {'mean': 0.6817181706428528, 'std': 0.17708852887153625, 'active_ratio': 0.82470703125}
+2025-10-23 11:19:16,571 | INFO |   ag1: {'mean': 0.1361609697341919, 'std': 0.1796826720237732, 'active_ratio': 0.0555419921875}
+2025-10-23 11:20:19,750 | INFO | iter is 3600 / 5000 [skipped    0] | loc. loss = 0.1069 ±0.0281, classif. loss = 0.2149 ±0.2025
+2025-10-23 11:21:22,890 | INFO | iter is 3700 / 5000 [skipped    0] | loc. loss = 0.1011 ±0.0270, classif. loss = 0.2180 ±0.1858
+2025-10-23 11:22:26,045 | INFO | iter is 3800 / 5000 [skipped    0] | loc. loss = 0.1037 ±0.0300, classif. loss = 0.2070 ±0.1871
+2025-10-23 11:23:29,219 | INFO | iter is 3900 / 5000 [skipped    0] | loc. loss = 0.0993 ±0.0248, classif. loss = 0.2258 ±0.2085
+2025-10-23 11:24:32,385 | INFO | iter is 4000 / 5000 [skipped    0] | loc. loss = 0.1045 ±0.0255, classif. loss = 0.2676 ±0.3167
+2025-10-23 11:24:32,387 | INFO | ---------starting evaluation-----------
+2025-10-23 11:24:33,131 | INFO | validation:    0/ 189 (2025-10-23_11-24-33)
+2025-10-23 11:24:45,931 | INFO | validation:  100/ 189 (2025-10-23_11-24-45)
+2025-10-23 11:24:57,423 | INFO | Confusion Matrix of Localization:
+[[43680770   704076]
+ [  292026  4868344]]
+2025-10-23 11:24:57,423 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98413702 0.01586298]
+ [0.05659013 0.94340987]]
+2025-10-23 11:24:57,423 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [    166 4956734   15067    8539   27355]
+ [      0   26027   16732    6089    1785]
+ [      0   29037    2263   10065    4547]
+ [      0    5656    3997    6292   40019]]
+2025-10-23 11:24:57,423 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [3.31478849e-05 9.89790651e-01 3.00866977e-03 1.70511921e-03
+  5.46241200e-03]
+ [0.00000000e+00 5.14032350e-01 3.30456422e-01 1.20257540e-01
+  3.52536883e-02]
+ [0.00000000e+00 6.32449033e-01 4.92899460e-02 2.19223732e-01
+  9.90372887e-02]
+ [0.00000000e+00 1.01064970e-01 7.14209134e-02 1.12429419e-01
+  7.15084697e-01]]
+2025-10-23 11:24:57,423 | INFO | lofF1 is 90.7191, clfF1 is 43.9475, oaF1 is 57.9789, sub class F1 score is [98.8843 37.7306 26.1779 61.7244]
+2025-10-23 11:24:57,681 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step4000.pth
+2025-10-23 11:24:57,681 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:24:57,681 | INFO | Train buffer size: 500.
+2025-10-23 11:24:59,748 | INFO | [TrainBuf] locF1 is 91.8780, clfF1 is 82.8739, oaF1 is 85.5751, sub class F1 score is [99.2206 73.3541 84.2544 78.8256]
+2025-10-23 11:24:59,753 | INFO | Building Head - Attention Gate Statistics @ step 4000:
+2025-10-23 11:24:59,754 | INFO |   ag3: {'mean': 0.3994193375110626, 'std': 0.25588274002075195, 'active_ratio': 0.31640625}
+2025-10-23 11:24:59,754 | INFO |   ag2: {'mean': 0.5504859685897827, 'std': 0.22314947843551636, 'active_ratio': 0.556396484375}
+2025-10-23 11:24:59,754 | INFO |   ag1: {'mean': 0.1483682245016098, 'std': 0.20329725742340088, 'active_ratio': 0.07684326171875}
+2025-10-23 11:26:02,966 | INFO | iter is 4100 / 5000 [skipped    0] | loc. loss = 0.1069 ±0.0282, classif. loss = 0.2111 ±0.2062
+2025-10-23 11:27:06,159 | INFO | iter is 4200 / 5000 [skipped    0] | loc. loss = 0.0973 ±0.0279, classif. loss = 0.2391 ±0.1884
+2025-10-23 11:28:09,303 | INFO | iter is 4300 / 5000 [skipped    0] | loc. loss = 0.1041 ±0.0307, classif. loss = 0.2205 ±0.1814
+2025-10-23 11:29:12,489 | INFO | iter is 4400 / 5000 [skipped    0] | loc. loss = 0.0987 ±0.0278, classif. loss = 0.1940 ±0.1861
+2025-10-23 11:30:15,687 | INFO | iter is 4500 / 5000 [skipped    0] | loc. loss = 0.0994 ±0.0269, classif. loss = 0.2007 ±0.1862
+2025-10-23 11:30:15,688 | INFO | ---------starting evaluation-----------
+2025-10-23 11:30:16,433 | INFO | validation:    0/ 189 (2025-10-23_11-30-16)
+2025-10-23 11:30:29,279 | INFO | validation:  100/ 189 (2025-10-23_11-30-29)
+2025-10-23 11:30:40,837 | INFO | Confusion Matrix of Localization:
+[[43958245   426601]
+ [  460291  4700079]]
+2025-10-23 11:30:40,837 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99038859 0.00961141]
+ [0.08919729 0.91080271]]
+2025-10-23 11:30:40,837 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [    129 4977049    7646    9421   13616]
+ [      0   31269   10904    8426      34]
+ [      0   31387    2797    9257    2471]
+ [      0    9565    2729   14552   29118]]
+2025-10-23 11:30:40,837 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [2.57595009e-05 9.93847273e-01 1.52679957e-03 1.88124231e-03
+  2.71892531e-03]
+ [0.00000000e+00 6.17561669e-01 2.15353623e-01 1.66413209e-01
+  6.71498825e-04]
+ [0.00000000e+00 6.83633908e-01 6.09208921e-02 2.01624848e-01
+  5.38203520e-02]
+ [0.00000000e+00 1.70913444e-01 4.87634908e-02 2.60024301e-01
+  5.20298763e-01]]
+2025-10-23 11:30:40,837 | INFO | lofF1 is 91.3786, clfF1 is 36.6846, oaF1 is 53.0928, sub class F1 score is [98.9755 29.1906 21.1424 57.5437]
+2025-10-23 11:30:40,838 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:30:40,838 | INFO | Train buffer size: 500.
+2025-10-23 11:30:42,934 | INFO | [TrainBuf] locF1 is 92.2599, clfF1 is 86.5504, oaF1 is 88.2633, sub class F1 score is [99.2681 79.9819 86.7704 82.545 ]
+2025-10-23 11:30:42,939 | INFO | Building Head - Attention Gate Statistics @ step 4500:
+2025-10-23 11:30:42,939 | INFO |   ag3: {'mean': 0.24316461384296417, 'std': 0.1895119547843933, 'active_ratio': 0.1474609375}
+2025-10-23 11:30:42,939 | INFO |   ag2: {'mean': 0.4542822241783142, 'std': 0.22974641621112823, 'active_ratio': 0.379638671875}
+2025-10-23 11:30:42,939 | INFO |   ag1: {'mean': 0.14359483122825623, 'std': 0.1841057538986206, 'active_ratio': 0.05950927734375}
+2025-10-23 11:31:46,098 | INFO | iter is 4600 / 5000 [skipped    0] | loc. loss = 0.1010 ±0.0295, classif. loss = 0.1838 ±0.1754
+2025-10-23 11:32:49,160 | INFO | iter is 4700 / 5000 [skipped    0] | loc. loss = 0.0945 ±0.0287, classif. loss = 0.1861 ±0.1944
+2025-10-23 11:33:52,285 | INFO | iter is 4800 / 5000 [skipped    0] | loc. loss = 0.0984 ±0.0233, classif. loss = 0.1991 ±0.1606
+2025-10-23 11:34:55,392 | INFO | iter is 4900 / 5000 [skipped    0] | loc. loss = 0.0963 ±0.0245, classif. loss = 0.2351 ±0.2577
+2025-10-23 11:35:58,477 | INFO | iter is 5000 / 5000 [skipped    0] | loc. loss = 0.0974 ±0.0277, classif. loss = 0.1799 ±0.1666
+2025-10-23 11:35:58,477 | INFO | -----------Training is completed-----------
+2025-10-23 11:35:58,732 | INFO | Model saved in: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step5000_last.pth
+2025-10-23 11:35:58,732 | INFO | !! Total Skipped: 0 (0.00%)
+2025-10-23 11:35:58,733 | INFO | ---------starting evaluation-----------
+2025-10-23 11:35:59,468 | INFO | validation:    0/ 189 (2025-10-23_11-35-59)
+2025-10-23 11:36:12,350 | INFO | validation:  100/ 189 (2025-10-23_11-36-12)
+2025-10-23 11:36:23,958 | INFO | Confusion Matrix of Localization:
+[[43995366   389480]
+ [  510998  4649372]]
+2025-10-23 11:36:23,958 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99122493 0.00877507]
+ [0.09902352 0.90097648]]
+2025-10-23 11:36:23,958 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4988086    6121    4894    8760]
+ [      0   28510   14644    4314    3165]
+ [      0   30305    4840    5556    5211]
+ [      2   16283    1000    4110   34569]]
+2025-10-23 11:36:23,958 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.96051208e-01 1.22227833e-03 9.77263546e-04
+  1.74924983e-03]
+ [0.00000000e+00 5.63071515e-01 2.89218494e-01 8.52013509e-02
+  6.25086406e-02]
+ [0.00000000e+00 6.60067085e-01 1.05419063e-01 1.21014114e-01
+  1.13499739e-01]
+ [3.57372597e-05 2.90954900e-01 1.78686298e-02 7.34400686e-02
+  6.17700665e-01]]
+2025-10-23 11:36:23,958 | INFO | lofF1 is 91.1711, clfF1 is 36.2507, oaF1 is 52.7268, sub class F1 score is [99.058  37.9192 17.1518 64.2135]
+2025-10-23 11:36:23,959 | INFO | loc_f1_score=91.1711, harmonic_mean_f1=36.2507, oaf1=52.7268, damage_f1_score=array([99.058 , 37.9192, 17.1518, 64.2135])
+2025-10-23 11:36:23,982 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step2000.pth
+2025-10-23 11:36:24,004 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step1000.pth
+2025-10-23 11:36:24,026 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step500.pth
+2025-10-23 11:36:24,048 | INFO | Removed non-best model: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step1500.pth
+2025-10-23 11:36:24,048 | INFO | Best model kept: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-23_10-39-14_MambaBDA_Base_EarthquakeTurkey_FOCAL_ALIGN_AGB/model_step4000_best.pth
+2025-10-23 11:36:24,048 | INFO | ---------starting train set evaluation-----------
+2025-10-23 11:36:24,049 | INFO | Train buffer size: 500.
+2025-10-23 11:36:26,151 | INFO | [TrainBuf] locF1 is 92.4873, clfF1 is 88.5520, oaF1 is 89.7326, sub class F1 score is [99.3465 84.8069 86.6347 84.953 ]
+2025-10-23 11:36:26,156 | INFO | Validation Results:
+2025-10-23 11:36:26,156 | INFO | [TEST ] Step   500: (86.7136, 8.1443, 31.7151, array([98.6446,  3.2548, 28.3989,  7.2173]))
+2025-10-23 11:36:26,156 | INFO | [TRAIN] Step   500: (80.559, 22.1394, 39.6653, array([97.3342, 11.076 , 27.4974, 22.8586]))
+
+2025-10-23 11:36:26,156 | INFO | [TEST ] Step  1000: (88.7966, 16.5788, 38.2441, array([98.7669, 16.0227,  6.5848, 59.2762]))
+2025-10-23 11:36:26,156 | INFO | [TRAIN] Step  1000: (87.807, 52.7667, 63.2788, array([97.951 , 35.4198, 52.1673, 54.9623]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  1500: (89.682, 34.9335, 51.358, array([98.9466, 22.9805, 22.0625, 64.2844]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  1500: (89.7955, 65.1774, 72.5628, array([98.6401, 55.9724, 59.6116, 60.2703]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  2000: (90.5445, 35.2755, 51.8562, array([98.7999, 32.3573, 20.649 , 41.774 ]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  2000: (90.5913, 72.8296, 78.1581, array([98.7224, 63.7761, 69.5212, 67.8916]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  2500: (90.6667, 33.0056, 50.3039, array([98.6872, 30.6039, 15.3951, 74.4754]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  2500: (91.07, 77.0814, 81.278, array([99.0092, 64.0217, 75.3069, 77.5527]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  3000: (90.6022, 33.0977, 50.3491, array([98.7144, 27.5479, 16.9557, 64.7391]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  3000: (91.3418, 78.0506, 82.0379, array([98.9322, 75.1765, 76.8191, 67.4706]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  3500: (90.8012, 29.7258, 48.0484, array([98.5524, 30.7953, 12.8924, 69.5468]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  3500: (91.5414, 83.3298, 85.7933, array([99.1848, 78.4195, 79.316 , 79.617 ]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  4000: (90.7191, 43.9475, 57.9789, array([98.8843, 37.7306, 26.1779, 61.7244]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  4000: (91.878, 82.8739, 85.5751, array([99.2206, 73.3541, 84.2544, 78.8256]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step  4500: (91.3786, 36.6846, 53.0928, array([98.9755, 29.1906, 21.1424, 57.5437]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step  4500: (92.2599, 86.5504, 88.2633, array([99.2681, 79.9819, 86.7704, 82.545 ]))
+
+2025-10-23 11:36:26,157 | INFO | [TEST ] Step    -1: (91.1711, 36.2507, 52.7268, array([99.058 , 37.9192, 17.1518, 64.2135]))
+2025-10-23 11:36:26,157 | INFO | [TRAIN] Step    -1: (92.4873, 88.552, 89.7326, array([99.3465, 84.8069, 86.6347, 84.953 ]))
+
+2025-10-23 11:36:26,157 | INFO | The accuracy of the best round is: [90.7191, 43.9475, 57.9789, array([98.8843, 37.7306, 26.1779, 61.7244])]
+2025-10-23 11:36:26,178 | INFO | MAIN - DONE.
+2025-10-23 11:36:26,179 | INFO | MAIN - EXIT.
