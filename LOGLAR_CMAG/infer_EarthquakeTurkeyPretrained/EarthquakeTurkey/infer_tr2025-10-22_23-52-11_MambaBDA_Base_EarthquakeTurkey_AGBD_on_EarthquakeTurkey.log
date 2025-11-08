@@ -1,0 +1,224 @@
+2025-11-04 13:24:43,240 | INFO | MAIN - START
+2025-11-04 13:24:43,240 | INFO |  > ALINGNMENT set to False
+2025-11-04 13:24:43,240 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: True
+2025-11-04 13:24:43,240 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "EarthquakeTurkey",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/test_list.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-22_23-52-11_MambaBDA_Base_EarthquakeTurkey_AGBD/model_step4000_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_EarthquakeTurkeyPretrained/EarthquakeTurkey/infer_tr2025-10-22_23-52-11_MambaBDA_Base_EarthquakeTurkey_AGBD_on_EarthquakeTurkey.log",
+    "save_output_images": true,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": true,
+    "save_attention_images": true,
+    "measure_efficiency": false
+}
+2025-11-04 13:24:43,242 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-11-04 13:24:43,242 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=True, enable_temporal_damage_ag=False)
+2025-11-04 13:24:43,242 | INFO | ChangeMambaBDA class
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_damage.ag3 (id(m)=125244673195936)
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_damage.ag2 (id(m)=125244468281600)
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_damage.ag1 (id(m)=125244468282032)
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_building.ag3 (id(m)=125244468289040)
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_building.ag2 (id(m)=125244468289328)
+2025-11-04 13:24:47,577 | INFO | [Hook registered on] decoder_building.ag1 (id(m)=125244468289760)
+2025-11-04 13:24:47,665 | INFO | inference:    0/ 189 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-11-04 13:24:49,597 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002347_attentions.png
+2025-11-04 13:24:51,466 | INFO | inference:   10/ 189 | Current F1_overall: 42.682% (Clsf: 21.684%, Loc: 91.676%) [cumulative]
+2025-11-04 13:24:52,994 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_017963_attentions.png
+2025-11-04 13:24:54,860 | INFO | inference:   20/ 189 | Current F1_overall: 39.750% (Clsf: 17.540%, Loc: 91.575%) [cumulative]
+2025-11-04 13:24:56,358 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_004734_attentions.png
+2025-11-04 13:24:58,225 | INFO | inference:   30/ 189 | Current F1_overall: 39.676% (Clsf: 17.478%, Loc: 91.473%) [cumulative]
+2025-11-04 13:24:58,417 | INFO |  > No building in EARTHQUAKE-TURKEY_008498, skipping attention visualization.
+2025-11-04 13:25:00,265 | INFO | inference:   40/ 189 | Current F1_overall: 39.200% (Clsf: 16.781%, Loc: 91.512%) [cumulative]
+2025-11-04 13:25:01,770 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009588_attentions.png
+2025-11-04 13:25:03,631 | INFO | inference:   50/ 189 | Current F1_overall: 52.049% (Clsf: 35.096%, Loc: 91.605%) [cumulative]
+2025-11-04 13:25:05,129 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_017592_attentions.png
+2025-11-04 13:25:07,033 | INFO | inference:   60/ 189 | Current F1_overall: 49.240% (Clsf: 31.049%, Loc: 91.688%) [cumulative]
+2025-11-04 13:25:08,542 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_015741_attentions.png
+2025-11-04 13:25:10,428 | INFO | inference:   70/ 189 | Current F1_overall: 49.275% (Clsf: 31.199%, Loc: 91.454%) [cumulative]
+2025-11-04 13:25:11,843 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_006219_attentions.png
+2025-11-04 13:25:13,716 | INFO | inference:   80/ 189 | Current F1_overall: 54.831% (Clsf: 39.094%, Loc: 91.552%) [cumulative]
+2025-11-04 13:25:15,150 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_018035_attentions.png
+2025-11-04 13:25:17,042 | INFO | inference:   90/ 189 | Current F1_overall: 54.135% (Clsf: 38.174%, Loc: 91.379%) [cumulative]
+2025-11-04 13:25:18,232 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009122_attentions.png
+2025-11-04 13:25:20,092 | INFO | inference:  100/ 189 | Current F1_overall: 53.869% (Clsf: 37.840%, Loc: 91.269%) [cumulative]
+2025-11-04 13:25:20,283 | INFO |  > No building in EARTHQUAKE-TURKEY_011370, skipping attention visualization.
+2025-11-04 13:25:22,138 | INFO | inference:  110/ 189 | Current F1_overall: 53.367% (Clsf: 37.218%, Loc: 91.047%) [cumulative]
+2025-11-04 13:25:23,677 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_004461_attentions.png
+2025-11-04 13:25:25,563 | INFO | inference:  120/ 189 | Current F1_overall: 53.377% (Clsf: 37.195%, Loc: 91.134%) [cumulative]
+2025-11-04 13:25:26,967 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_003750_attentions.png
+2025-11-04 13:25:28,859 | INFO | inference:  130/ 189 | Current F1_overall: 58.310% (Clsf: 44.354%, Loc: 90.874%) [cumulative]
+2025-11-04 13:25:30,145 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_011514_attentions.png
+2025-11-04 13:25:32,040 | INFO | inference:  140/ 189 | Current F1_overall: 58.823% (Clsf: 45.088%, Loc: 90.871%) [cumulative]
+2025-11-04 13:25:33,439 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002310_attentions.png
+2025-11-04 13:25:35,419 | INFO | inference:  150/ 189 | Current F1_overall: 60.325% (Clsf: 47.296%, Loc: 90.727%) [cumulative]
+2025-11-04 13:25:35,613 | INFO |  > No building in EARTHQUAKE-TURKEY_009482, skipping attention visualization.
+2025-11-04 13:25:37,499 | INFO | inference:  160/ 189 | Current F1_overall: 61.165% (Clsf: 48.465%, Loc: 90.799%) [cumulative]
+2025-11-04 13:25:38,938 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002429_attentions.png
+2025-11-04 13:25:40,833 | INFO | inference:  170/ 189 | Current F1_overall: 61.173% (Clsf: 48.426%, Loc: 90.916%) [cumulative]
+2025-11-04 13:25:42,273 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_000317_attentions.png
+2025-11-04 13:25:44,159 | INFO | inference:  180/ 189 | Current F1_overall: 60.873% (Clsf: 47.971%, Loc: 90.978%) [cumulative]
+2025-11-04 13:25:45,601 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-04_13-24-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009676_attentions.png
+2025-11-04 13:25:47,281 | INFO | Confusion Matrix of Localization:
+[[43960513   424333]
+ [  492369  4668001]]
+2025-11-04 13:25:47,281 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99043969 0.00956031]
+ [0.09541351 0.90458649]]
+2025-11-04 13:25:47,281 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4952500   31280   15055    9026]
+ [      0   27603   17676    2334    3020]
+ [      0   30020     226   12007    3659]
+ [      0    8919    1192     863   44990]]
+2025-11-04 13:25:47,281 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.98894518 0.00624618 0.00300627 0.00180237]
+ [0.         0.5451583  0.34910039 0.04609642 0.0596449 ]
+ [0.         0.65385956 0.00492246 0.26152204 0.07969594]
+ [0.         0.15937031 0.02129941 0.01542063 0.80390966]]
+2025-11-04 13:25:47,281 | INFO | lofF1 is 91.0589, clfF1 is 47.9735, oaF1 is 60.8992, sub class F1 score is [98.7842 34.9995 31.5264 77.1308]
+2025-11-04 13:25:47,283 | INFO | MAIN - DONE.
+2025-11-04 13:25:47,283 | INFO | MAIN - EXIT.
+
+
+
+
+
+# FLOP & Param measurement:
+
+
+
+2025-11-06 23:01:43,018 | INFO | MAIN - START
+2025-11-06 23:01:43,019 | INFO |  > ALINGNMENT set to False
+2025-11-06 23:01:43,019 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: True
+2025-11-06 23:01:43,019 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "EarthquakeTurkey",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/test_list.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-22_23-52-11_MambaBDA_Base_EarthquakeTurkey_AGBD/model_step4000_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_EarthquakeTurkeyPretrained/EarthquakeTurkey/infer_tr2025-10-22_23-52-11_MambaBDA_Base_EarthquakeTurkey_AGBD_on_EarthquakeTurkey.log",
+    "save_output_images": true,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": true,
+    "save_attention_images": true,
+    "measure_efficiency": true
+}
+2025-11-06 23:01:43,021 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-11-06 23:01:43,021 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=True, enable_temporal_damage_ag=False)
+2025-11-06 23:01:43,021 | INFO | ChangeMambaBDA class
+2025-11-06 23:01:44,241 | INFO | measure_model_efficiency_2
+2025-11-06 23:01:44,281 | INFO | ================================================================================
+2025-11-06 23:01:44,281 | INFO | MODEL EFFICIENCY MEASUREMENTS
+2025-11-06 23:01:44,281 | INFO | ================================================================================
+2025-11-06 23:01:44,574 | INFO | THOP FLOPs: 196.14G  Parameters: 87.86M (input size: 512 x 512)
+2025-11-06 23:01:54,052 | INFO | Throughput: 11.62 images/sec
+2025-11-06 23:01:54,052 | INFO | Latency: 86.03 ms/image
+2025-11-06 23:01:54,052 | INFO |   (batch_size=1, measured over 100 iterations)
+2025-11-06 23:01:54,052 | INFO | ================================================================================
+2025-11-06 23:01:54,081 | INFO | [Hook registered on] decoder_damage.ag3 (id(m)=129251217096608)
+2025-11-06 23:01:54,081 | INFO | [Hook registered on] decoder_damage.ag2 (id(m)=129251070951680)
+2025-11-06 23:01:54,081 | INFO | [Hook registered on] decoder_damage.ag1 (id(m)=129251070952112)
+2025-11-06 23:01:54,081 | INFO | [Hook registered on] decoder_building.ag3 (id(m)=129251070959120)
+2025-11-06 23:01:54,081 | INFO | [Hook registered on] decoder_building.ag2 (id(m)=129251070959408)
+2025-11-06 23:01:54,082 | INFO | [Hook registered on] decoder_building.ag1 (id(m)=129251070959840)
+2025-11-06 23:01:54,165 | INFO | inference:    0/ 189 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-11-06 23:01:55,634 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002347_attentions.png
+2025-11-06 23:01:56,562 | INFO | inference:   10/ 189 | Current F1_overall: 42.682% (Clsf: 21.684%, Loc: 91.676%) [cumulative]
+2025-11-06 23:01:57,950 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_017963_attentions.png
+2025-11-06 23:01:58,864 | INFO | inference:   20/ 189 | Current F1_overall: 39.750% (Clsf: 17.540%, Loc: 91.575%) [cumulative]
+2025-11-06 23:02:00,164 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_004734_attentions.png
+2025-11-06 23:02:01,072 | INFO | inference:   30/ 189 | Current F1_overall: 39.676% (Clsf: 17.478%, Loc: 91.473%) [cumulative]
+2025-11-06 23:02:01,161 | INFO |  > No building in EARTHQUAKE-TURKEY_008498, skipping attention visualization.
+2025-11-06 23:02:02,068 | INFO | inference:   40/ 189 | Current F1_overall: 39.200% (Clsf: 16.781%, Loc: 91.512%) [cumulative]
+2025-11-06 23:02:03,367 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009588_attentions.png
+2025-11-06 23:02:04,280 | INFO | inference:   50/ 189 | Current F1_overall: 52.049% (Clsf: 35.096%, Loc: 91.605%) [cumulative]
+2025-11-06 23:02:05,654 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_017592_attentions.png
+2025-11-06 23:02:06,568 | INFO | inference:   60/ 189 | Current F1_overall: 49.240% (Clsf: 31.049%, Loc: 91.688%) [cumulative]
+2025-11-06 23:02:07,835 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_015741_attentions.png
+2025-11-06 23:02:08,747 | INFO | inference:   70/ 189 | Current F1_overall: 49.275% (Clsf: 31.199%, Loc: 91.454%) [cumulative]
+2025-11-06 23:02:09,997 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_006219_attentions.png
+2025-11-06 23:02:10,909 | INFO | inference:   80/ 189 | Current F1_overall: 54.831% (Clsf: 39.094%, Loc: 91.552%) [cumulative]
+2025-11-06 23:02:12,209 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_018035_attentions.png
+2025-11-06 23:02:13,123 | INFO | inference:   90/ 189 | Current F1_overall: 54.135% (Clsf: 38.174%, Loc: 91.379%) [cumulative]
+2025-11-06 23:02:14,303 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009122_attentions.png
+2025-11-06 23:02:15,211 | INFO | inference:  100/ 189 | Current F1_overall: 53.869% (Clsf: 37.840%, Loc: 91.269%) [cumulative]
+2025-11-06 23:02:15,301 | INFO |  > No building in EARTHQUAKE-TURKEY_011370, skipping attention visualization.
+2025-11-06 23:02:16,210 | INFO | inference:  110/ 189 | Current F1_overall: 53.367% (Clsf: 37.218%, Loc: 91.047%) [cumulative]
+2025-11-06 23:02:17,500 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_004461_attentions.png
+2025-11-06 23:02:18,413 | INFO | inference:  120/ 189 | Current F1_overall: 53.377% (Clsf: 37.195%, Loc: 91.134%) [cumulative]
+2025-11-06 23:02:19,672 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_003750_attentions.png
+2025-11-06 23:02:20,587 | INFO | inference:  130/ 189 | Current F1_overall: 58.310% (Clsf: 44.354%, Loc: 90.874%) [cumulative]
+2025-11-06 23:02:21,726 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_011514_attentions.png
+2025-11-06 23:02:22,637 | INFO | inference:  140/ 189 | Current F1_overall: 58.823% (Clsf: 45.088%, Loc: 90.871%) [cumulative]
+2025-11-06 23:02:24,019 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002310_attentions.png
+2025-11-06 23:02:24,930 | INFO | inference:  150/ 189 | Current F1_overall: 60.325% (Clsf: 47.296%, Loc: 90.727%) [cumulative]
+2025-11-06 23:02:25,019 | INFO |  > No building in EARTHQUAKE-TURKEY_009482, skipping attention visualization.
+2025-11-06 23:02:25,930 | INFO | inference:  160/ 189 | Current F1_overall: 61.165% (Clsf: 48.465%, Loc: 90.799%) [cumulative]
+2025-11-06 23:02:27,227 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_002429_attentions.png
+2025-11-06 23:02:28,144 | INFO | inference:  170/ 189 | Current F1_overall: 61.173% (Clsf: 48.426%, Loc: 90.916%) [cumulative]
+2025-11-06 23:02:29,452 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_000317_attentions.png
+2025-11-06 23:02:30,369 | INFO | inference:  180/ 189 | Current F1_overall: 60.873% (Clsf: 47.971%, Loc: 90.978%) [cumulative]
+2025-11-06 23:02:31,649 | INFO | Saved attention visualization: /mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-06_23-01-41/EarthquakeTurkey/MambaBDA_Base/attention_map/EARTHQUAKE-TURKEY_009676_attentions.png
+2025-11-06 23:02:32,476 | INFO | Confusion Matrix of Localization:
+[[43960513   424333]
+ [  492369  4668001]]
+2025-11-06 23:02:32,476 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99043969 0.00956031]
+ [0.09541351 0.90458649]]
+2025-11-06 23:02:32,476 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4952500   31280   15055    9026]
+ [      0   27603   17676    2334    3020]
+ [      0   30020     226   12007    3659]
+ [      0    8919    1192     863   44990]]
+2025-11-06 23:02:32,477 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.98894518 0.00624618 0.00300627 0.00180237]
+ [0.         0.5451583  0.34910039 0.04609642 0.0596449 ]
+ [0.         0.65385956 0.00492246 0.26152204 0.07969594]
+ [0.         0.15937031 0.02129941 0.01542063 0.80390966]]
+2025-11-06 23:02:32,477 | INFO | lofF1 is 91.0589, clfF1 is 47.9735, oaF1 is 60.8992, sub class F1 score is [98.7842 34.9995 31.5264 77.1308]
+2025-11-06 23:02:32,478 | INFO | MAIN - DONE.
+2025-11-06 23:02:32,478 | INFO | MAIN - EXIT.

@@ -251,6 +251,153 @@ class Trainer(object):
 
         self.deep_model.eval()
 
+        if self.args.measure_efficiency:
+            #* use measure_model_efficiency2 for more consistent results with the ChangeMamba paper
+            # logging.info("measure_model_efficiency_1")
+            # self.measure_model_efficiency()
+            logging.info("measure_model_efficiency_2")
+            self.measure_model_efficiency2()
+
+    def measure_model_efficiency(self):
+        """
+        DEPRECATED: Use measure_model_efficiency2 instead, since it is more consistent with the ChangeMamba paper.
+        """
+        logging.info("=" * 80)
+        logging.info("MODEL EFFICIENCY MEASUREMENTS")
+        logging.info("=" * 80)
+
+        self.log_model_param_count()
+
+        logging.info(" --- " * 10)
+
+        imsize = 512
+        batchsize = 1
+        try:
+            logging.info(f"FLOPs: Method 1 (imp)")
+            flops_gflops = self.measure_flops(imsize=imsize)
+            logging.info(f"FLOPs: {flops_gflops:.2f} GFLOPs (input: {imsize} x {imsize})")
+        except Exception as e:
+            logging.warning(f"FLOPs Method 1 measurement failed: {e}")
+        logging.info(" ***** " * 3)
+        try:
+            logging.info(f"FLOPs: Method 2 (analyze.get_flops)")
+            from analyze.get_flops import fvcore_flop_count, supported_ops as fvcore_supported_ops
+            # params, flops = fvcore_flop_count(self.deep_model, input_shape=(3, imsize, imsize))
+            flops_gflops = self.measure_flops(imsize=imsize, supported_ops=fvcore_supported_ops)
+            logging.info(f"FLOPs: {flops_gflops:.2f} GFLOPs (input: {imsize} x {imsize})")
+        except Exception as e:
+            logging.warning(f"FLOPs Method 2 measurement failed: {e}")
+
+        logging.info(" --- " * 10)
+
+        try:
+            throughput_dict = self.measure_throughput(imsize=imsize, batchsize=batchsize)
+            logging.info(f"Throughput: {throughput_dict['imgs_per_sec']:.2f} images/sec")
+            logging.info(f"Latency: {throughput_dict['ms_per_image']:.2f} ms/image")
+            logging.info(f"  (batch_size={throughput_dict['batch_size']}, measured over {throughput_dict['iterations']} iterations)")
+        except Exception as e:
+            logging.warning(f"Throughput measurement failed: {e}")
+        
+        logging.info("=" * 80)
+
+    def log_model_param_count(self):
+        total_params = sum(p.numel() for p in self.deep_model.parameters())
+        logging.info(f"Parameters: {total_params:,} ({total_params/1e6:.2f}M)")
+        
+    def measure_flops(self, imsize: int, supported_ops: dict = None) -> float:
+        """Measure FLOPs for single image pair"""
+        from classification.models.vmamba import selective_scan_flop_jit 
+        from fvcore.nn.flop_count import flop_count
+
+        # Single image for FLOPs calculation
+        H = W = imsize
+        pre_img = torch.randn(1, 3, H, W).cuda()
+        post_img = torch.randn(1, 3, H, W).cuda()
+        
+        if supported_ops is None:
+            supported_ops = {
+                "aten::silu": None,
+                "aten::neg": None,
+                "aten::exp": None,
+                "aten::flip": None,
+                "prim::PythonOp.SelectiveScanFn": selective_scan_flop_jit,
+            }
+        with torch.no_grad():
+            Gflops, unsupported = flop_count(
+                model=self.deep_model,
+                inputs=(pre_img, post_img),
+                supported_ops=supported_ops
+            )
+        total_gflops = sum(Gflops.values())
+        if unsupported:
+            logging.warning(f"Unsupported ops in FLOPs calculation ({len(unsupported)}): {list(unsupported.keys())}")
+        return total_gflops
+
+    def measure_throughput(self, imsize: int, batchsize: int, num_iterations: int = 100, warmup: int = 10) -> dict:
+        """Measure inference throughput"""
+        H = W = imsize
+        batch_size = batchsize
+
+        # Create dummy batch
+        pre_img = torch.randn(batch_size, 3, H, W).cuda()
+        post_img = torch.randn(batch_size, 3, H, W).cuda()
+        
+        # Warmup
+        with torch.no_grad():
+            for _ in range(warmup):
+                _ = self.deep_model(pre_img, post_img)
+        
+        torch.cuda.synchronize()
+        
+        # Measure
+        start_time = time.time()
+        with torch.no_grad():
+            for _ in range(num_iterations):
+                _ = self.deep_model(pre_img, post_img)
+        
+        torch.cuda.synchronize()
+        elapsed = time.time() - start_time
+        
+        total_images = num_iterations * batch_size
+        imgs_per_sec = total_images / elapsed
+        ms_per_batch = (elapsed / num_iterations) * 1000
+        ms_per_image = ms_per_batch / batch_size
+        
+        return {
+            'imgs_per_sec': imgs_per_sec,
+            'ms_per_batch': ms_per_batch,
+            'ms_per_image': ms_per_image,
+            'batch_size': batch_size,
+            'iterations': num_iterations
+        }
+
+
+    def measure_model_efficiency2(self):
+        from thop import profile as thop_profile, clever_format as thop_clever_format
+        from analyze.get_flops import supported_ops as fvcore_supported_ops
+
+        logging.info("=" * 80)
+        logging.info("MODEL EFFICIENCY MEASUREMENTS")
+        logging.info("=" * 80)
+
+        imsize = 512
+        batchsize = 1
+        H = W = imsize
+        pre_img = torch.randn(1, 3, H, W).cuda()
+        post_img = torch.randn(1, 3, H, W).cuda()
+        macs, params = thop_profile(model=self.deep_model, inputs=(pre_img, post_img), custom_ops=fvcore_supported_ops, verbose=True)
+        macs, params = thop_clever_format([macs, params], "%.2f")
+        logging.info(f"THOP FLOPs: {macs}  Parameters: {params} (input size: {W} x {H})")
+
+        try:
+            throughput_dict = self.measure_throughput(imsize=imsize, batchsize=batchsize)
+            logging.info(f"Throughput: {throughput_dict['imgs_per_sec']:.2f} images/sec")
+            logging.info(f"Latency: {throughput_dict['ms_per_image']:.2f} ms/image")
+            logging.info(f"  (batch_size={throughput_dict['batch_size']}, measured over {throughput_dict['iterations']} iterations)")
+        except Exception as e:
+            logging.warning(f"Throughput measurement failed: {e}")
+
+        logging.info("=" * 80)
 
     def infer(self):
         torch.cuda.empty_cache()
@@ -403,6 +550,7 @@ def main():
     parser.add_argument('--enable_attn_gate_building', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--save_attention_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_attention_images" to set to False
+    parser.add_argument('--measure_efficiency', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-measure_efficiency" to set to False
 
     args = parser.parse_args()
 

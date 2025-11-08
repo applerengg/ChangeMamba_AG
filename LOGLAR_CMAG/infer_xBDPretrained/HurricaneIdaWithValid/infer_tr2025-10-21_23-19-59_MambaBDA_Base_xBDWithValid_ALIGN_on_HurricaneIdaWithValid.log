@@ -1,0 +1,289 @@
+2025-11-02 21:40:20,643 | INFO | MAIN - START
+2025-11-02 21:40:20,644 | INFO |  > ALINGNMENT set to True
+2025-11-02 21:40:20,644 | INFO |  > ATTENTION GATE set to -> Building: False, Damage: False
+2025-11-02 21:40:20,644 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "HurricaneIdaWithValid",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida/hurricane-ida",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida/hurricane-ida/test_list_v2_0.2.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-02_21-40-17",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-21_23-19-59_MambaBDA_Base_xBDWithValid_ALIGN/model_step34375_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_xBDPretrained/HurricaneIdaWithValid/infer_tr2025-10-21_23-19-59_MambaBDA_Base_xBDWithValid_ALIGN_on_HurricaneIdaWithValid.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": true,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": false,
+    "measure_efficiency": true
+}
+2025-11-02 21:40:20,647 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+2025-11-02 21:40:20,647 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-11-02 21:40:20,647 | INFO | ChangeMambaBDA class
+2025-11-02 21:40:25,939 | INFO | measure_model_efficiency_1
+2025-11-02 21:40:25,939 | INFO | ================================================================================
+2025-11-02 21:40:25,939 | INFO | MODEL EFFICIENCY MEASUREMENTS
+2025-11-02 21:40:25,939 | INFO | ================================================================================
+2025-11-02 21:40:25,941 | INFO | Parameters: 95,345,545 (95.35M)
+2025-11-02 21:40:25,941 | INFO |  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+2025-11-02 21:40:25,941 | INFO | FLOPs: Method 1 (imp)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::gelu encountered 60 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::mul encountered 66 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator prim::PythonOp.CrossScan encountered 58 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator prim::PythonOp.SelectiveScanOflex encountered 58 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator prim::PythonOp.CrossMerge encountered 58 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::add encountered 124 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::div encountered 4 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::linspace encountered 2 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::meshgrid encountered 1 time(s)
+2025-11-02 21:40:29,801 | WARNING | Unsupported operator aten::add_ encountered 7 time(s)
+2025-11-02 21:40:29,801 | WARNING | The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+decoder_building.st_block_1_semantic.1.drop_path, decoder_building.st_block_2_semantic.1.drop_path, decoder_building.st_block_3_semantic.1.drop_path, decoder_building.st_block_4_semantic.2.drop_path, decoder_damage.st_block_11.2.drop_path, decoder_damage.st_block_12.2.drop_path, decoder_damage.st_block_13.2.drop_path, decoder_damage.st_block_21.2.drop_path, decoder_damage.st_block_22.2.drop_path, decoder_damage.st_block_23.2.drop_path, decoder_damage.st_block_31.2.drop_path, decoder_damage.st_block_32.2.drop_path, decoder_damage.st_block_33.2.drop_path, decoder_damage.st_block_41.2.drop_path, decoder_damage.st_block_42.2.drop_path, decoder_damage.st_block_43.2.drop_path, encoder.layers.0.blocks.0.drop_path, encoder.layers.0.blocks.1.drop_path, encoder.layers.1.blocks.0.drop_path, encoder.layers.1.blocks.1.drop_path, encoder.layers.2.blocks.0.drop_path, encoder.layers.2.blocks.1.drop_path, encoder.layers.2.blocks.10.drop_path, encoder.layers.2.blocks.11.drop_path, encoder.layers.2.blocks.12.drop_path, encoder.layers.2.blocks.13.drop_path, encoder.layers.2.blocks.14.drop_path, encoder.layers.2.blocks.2.drop_path, encoder.layers.2.blocks.3.drop_path, encoder.layers.2.blocks.4.drop_path, encoder.layers.2.blocks.5.drop_path, encoder.layers.2.blocks.6.drop_path, encoder.layers.2.blocks.7.drop_path, encoder.layers.2.blocks.8.drop_path, encoder.layers.2.blocks.9.drop_path, encoder.layers.3.blocks.0.drop_path, encoder.layers.3.blocks.1.drop_path
+2025-11-02 21:40:29,916 | WARNING | Unsupported ops in FLOPs calculation (10): ['aten::gelu', 'aten::mul', 'prim::PythonOp.CrossScan', 'prim::PythonOp.SelectiveScanOflex', 'prim::PythonOp.CrossMerge', 'aten::add', 'aten::div', 'aten::linspace', 'aten::meshgrid', 'aten::add_']
+2025-11-02 21:40:29,918 | INFO | FLOPs: 210.42 GFLOPs (input: 512 x 512)
+2025-11-02 21:40:29,918 | INFO |  *****  *****  ***** 
+2025-11-02 21:40:29,918 | INFO | FLOPs: Method 2 (analyze.get_flops)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::gelu encountered 60 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::mul encountered 66 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator prim::PythonOp.CrossScan encountered 58 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator prim::PythonOp.CrossMerge encountered 58 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::add encountered 124 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::div encountered 4 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::linspace encountered 2 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::meshgrid encountered 1 time(s)
+2025-11-02 21:40:32,614 | WARNING | Unsupported operator aten::add_ encountered 7 time(s)
+2025-11-02 21:40:32,615 | WARNING | The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+decoder_building.st_block_1_semantic.1.drop_path, decoder_building.st_block_2_semantic.1.drop_path, decoder_building.st_block_3_semantic.1.drop_path, decoder_building.st_block_4_semantic.2.drop_path, decoder_damage.st_block_11.2.drop_path, decoder_damage.st_block_12.2.drop_path, decoder_damage.st_block_13.2.drop_path, decoder_damage.st_block_21.2.drop_path, decoder_damage.st_block_22.2.drop_path, decoder_damage.st_block_23.2.drop_path, decoder_damage.st_block_31.2.drop_path, decoder_damage.st_block_32.2.drop_path, decoder_damage.st_block_33.2.drop_path, decoder_damage.st_block_41.2.drop_path, decoder_damage.st_block_42.2.drop_path, decoder_damage.st_block_43.2.drop_path, encoder.layers.0.blocks.0.drop_path, encoder.layers.0.blocks.1.drop_path, encoder.layers.1.blocks.0.drop_path, encoder.layers.1.blocks.1.drop_path, encoder.layers.2.blocks.0.drop_path, encoder.layers.2.blocks.1.drop_path, encoder.layers.2.blocks.10.drop_path, encoder.layers.2.blocks.11.drop_path, encoder.layers.2.blocks.12.drop_path, encoder.layers.2.blocks.13.drop_path, encoder.layers.2.blocks.14.drop_path, encoder.layers.2.blocks.2.drop_path, encoder.layers.2.blocks.3.drop_path, encoder.layers.2.blocks.4.drop_path, encoder.layers.2.blocks.5.drop_path, encoder.layers.2.blocks.6.drop_path, encoder.layers.2.blocks.7.drop_path, encoder.layers.2.blocks.8.drop_path, encoder.layers.2.blocks.9.drop_path, encoder.layers.3.blocks.0.drop_path, encoder.layers.3.blocks.1.drop_path
+2025-11-02 21:40:32,708 | WARNING | Unsupported ops in FLOPs calculation (9): ['aten::gelu', 'aten::mul', 'prim::PythonOp.CrossScan', 'prim::PythonOp.CrossMerge', 'aten::add', 'aten::div', 'aten::linspace', 'aten::meshgrid', 'aten::add_']
+2025-11-02 21:40:32,709 | INFO | FLOPs: 214.11 GFLOPs (input: 512 x 512)
+2025-11-02 21:40:32,709 | INFO |  ---  ---  ---  ---  ---  ---  ---  ---  ---  --- 
+2025-11-02 21:40:52,622 | INFO | Throughput: 5.54 images/sec
+2025-11-02 21:40:52,622 | INFO | Latency: 180.47 ms/image
+2025-11-02 21:40:52,622 | INFO |   (batch_size=1, measured over 100 iterations)
+2025-11-02 21:40:52,622 | INFO | ================================================================================
+2025-11-02 21:40:52,622 | INFO | measure_model_efficiency_2
+2025-11-02 21:40:52,627 | INFO | ================================================================================
+2025-11-02 21:40:52,627 | INFO | MODEL EFFICIENCY MEASUREMENTS
+2025-11-02 21:40:52,627 | INFO | ================================================================================
+2025-11-02 21:40:52,823 | INFO | THOP FLOPs: 196.075G  Parameters: 88.388M
+2025-11-02 21:40:52,997 | INFO | inference:    0/ 528 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-11-02 21:40:54,998 | INFO | inference:   10/ 528 | Current F1_overall: 26.690% (Clsf: 0.000%, Loc: 88.967%) [cumulative]
+2025-11-02 21:40:56,963 | INFO | inference:   20/ 528 | Current F1_overall: 33.941% (Clsf: 10.465%, Loc: 88.718%) [cumulative]
+2025-11-02 21:40:58,933 | INFO | inference:   30/ 528 | Current F1_overall: 33.851% (Clsf: 10.450%, Loc: 88.454%) [cumulative]
+2025-11-02 21:41:00,929 | INFO | inference:   40/ 528 | Current F1_overall: 32.248% (Clsf: 7.849%, Loc: 89.179%) [cumulative]
+2025-11-02 21:41:02,924 | INFO | inference:   50/ 528 | Current F1_overall: 32.176% (Clsf: 7.729%, Loc: 89.221%) [cumulative]
+2025-11-02 21:41:04,903 | INFO | inference:   60/ 528 | Current F1_overall: 32.011% (Clsf: 7.537%, Loc: 89.119%) [cumulative]
+2025-11-02 21:41:06,888 | INFO | inference:   70/ 528 | Current F1_overall: 32.684% (Clsf: 8.312%, Loc: 89.550%) [cumulative]
+2025-11-02 21:41:08,881 | INFO | inference:   80/ 528 | Current F1_overall: 32.392% (Clsf: 8.186%, Loc: 88.873%) [cumulative]
+2025-11-02 21:41:10,870 | INFO | inference:   90/ 528 | Current F1_overall: 34.621% (Clsf: 11.304%, Loc: 89.028%) [cumulative]
+2025-11-02 21:41:12,893 | INFO | inference:  100/ 528 | Current F1_overall: 34.595% (Clsf: 11.286%, Loc: 88.982%) [cumulative]
+2025-11-02 21:41:14,906 | INFO | inference:  110/ 528 | Current F1_overall: 34.611% (Clsf: 11.271%, Loc: 89.071%) [cumulative]
+2025-11-02 21:41:16,892 | INFO | inference:  120/ 528 | Current F1_overall: 34.555% (Clsf: 11.096%, Loc: 89.293%) [cumulative]
+2025-11-02 21:41:18,900 | INFO | inference:  130/ 528 | Current F1_overall: 36.548% (Clsf: 13.904%, Loc: 89.383%) [cumulative]
+2025-11-02 21:41:20,903 | INFO | inference:  140/ 528 | Current F1_overall: 36.130% (Clsf: 13.695%, Loc: 88.479%) [cumulative]
+2025-11-02 21:41:22,874 | INFO | inference:  150/ 528 | Current F1_overall: 39.292% (Clsf: 18.179%, Loc: 88.553%) [cumulative]
+2025-11-02 21:41:24,849 | INFO | inference:  160/ 528 | Current F1_overall: 41.386% (Clsf: 21.161%, Loc: 88.579%) [cumulative]
+2025-11-02 21:41:26,857 | INFO | inference:  170/ 528 | Current F1_overall: 43.100% (Clsf: 23.663%, Loc: 88.455%) [cumulative]
+2025-11-02 21:41:28,847 | INFO | inference:  180/ 528 | Current F1_overall: 42.801% (Clsf: 23.200%, Loc: 88.538%) [cumulative]
+2025-11-02 21:41:30,804 | INFO | inference:  190/ 528 | Current F1_overall: 43.596% (Clsf: 24.274%, Loc: 88.681%) [cumulative]
+2025-11-02 21:41:32,796 | INFO | inference:  200/ 528 | Current F1_overall: 43.537% (Clsf: 24.136%, Loc: 88.805%) [cumulative]
+2025-11-02 21:41:34,783 | INFO | inference:  210/ 528 | Current F1_overall: 43.542% (Clsf: 24.093%, Loc: 88.922%) [cumulative]
+2025-11-02 21:41:36,792 | INFO | inference:  220/ 528 | Current F1_overall: 43.082% (Clsf: 23.430%, Loc: 88.937%) [cumulative]
+2025-11-02 21:41:38,780 | INFO | inference:  230/ 528 | Current F1_overall: 43.016% (Clsf: 23.310%, Loc: 88.996%) [cumulative]
+2025-11-02 21:41:40,783 | INFO | inference:  240/ 528 | Current F1_overall: 42.855% (Clsf: 23.043%, Loc: 89.082%) [cumulative]
+2025-11-02 21:41:42,778 | INFO | inference:  250/ 528 | Current F1_overall: 41.765% (Clsf: 21.464%, Loc: 89.133%) [cumulative]
+2025-11-02 21:41:44,764 | INFO | inference:  260/ 528 | Current F1_overall: 42.005% (Clsf: 21.817%, Loc: 89.113%) [cumulative]
+2025-11-02 21:41:46,761 | INFO | inference:  270/ 528 | Current F1_overall: 41.914% (Clsf: 21.674%, Loc: 89.139%) [cumulative]
+2025-11-02 21:41:48,767 | INFO | inference:  280/ 528 | Current F1_overall: 41.976% (Clsf: 21.806%, Loc: 89.039%) [cumulative]
+2025-11-02 21:41:50,761 | INFO | inference:  290/ 528 | Current F1_overall: 42.023% (Clsf: 21.863%, Loc: 89.063%) [cumulative]
+2025-11-02 21:41:52,768 | INFO | inference:  300/ 528 | Current F1_overall: 41.885% (Clsf: 21.661%, Loc: 89.075%) [cumulative]
+2025-11-02 21:41:54,760 | INFO | inference:  310/ 528 | Current F1_overall: 41.828% (Clsf: 21.523%, Loc: 89.207%) [cumulative]
+2025-11-02 21:41:56,784 | INFO | inference:  320/ 528 | Current F1_overall: 41.547% (Clsf: 21.085%, Loc: 89.292%) [cumulative]
+2025-11-02 21:41:58,776 | INFO | inference:  330/ 528 | Current F1_overall: 41.491% (Clsf: 21.008%, Loc: 89.285%) [cumulative]
+2025-11-02 21:42:00,760 | INFO | inference:  340/ 528 | Current F1_overall: 41.612% (Clsf: 21.223%, Loc: 89.187%) [cumulative]
+2025-11-02 21:42:02,779 | INFO | inference:  350/ 528 | Current F1_overall: 41.404% (Clsf: 20.985%, Loc: 89.050%) [cumulative]
+2025-11-02 21:42:04,760 | INFO | inference:  360/ 528 | Current F1_overall: 42.685% (Clsf: 22.854%, Loc: 88.958%) [cumulative]
+2025-11-02 21:42:06,746 | INFO | inference:  370/ 528 | Current F1_overall: 42.350% (Clsf: 22.350%, Loc: 89.018%) [cumulative]
+2025-11-02 21:42:08,728 | INFO | inference:  380/ 528 | Current F1_overall: 42.221% (Clsf: 22.144%, Loc: 89.067%) [cumulative]
+2025-11-02 21:42:10,696 | INFO | inference:  390/ 528 | Current F1_overall: 42.542% (Clsf: 22.604%, Loc: 89.065%) [cumulative]
+2025-11-02 21:42:12,697 | INFO | inference:  400/ 528 | Current F1_overall: 44.166% (Clsf: 24.911%, Loc: 89.094%) [cumulative]
+2025-11-02 21:42:14,689 | INFO | inference:  410/ 528 | Current F1_overall: 44.242% (Clsf: 25.030%, Loc: 89.069%) [cumulative]
+2025-11-02 21:42:16,680 | INFO | inference:  420/ 528 | Current F1_overall: 44.297% (Clsf: 25.093%, Loc: 89.105%) [cumulative]
+2025-11-02 21:42:18,685 | INFO | inference:  430/ 528 | Current F1_overall: 44.859% (Clsf: 25.887%, Loc: 89.124%) [cumulative]
+2025-11-02 21:42:20,654 | INFO | inference:  440/ 528 | Current F1_overall: 45.381% (Clsf: 26.632%, Loc: 89.128%) [cumulative]
+2025-11-02 21:42:22,629 | INFO | inference:  450/ 528 | Current F1_overall: 45.076% (Clsf: 26.221%, Loc: 89.072%) [cumulative]
+2025-11-02 21:42:24,606 | INFO | inference:  460/ 528 | Current F1_overall: 45.211% (Clsf: 26.417%, Loc: 89.065%) [cumulative]
+2025-11-02 21:42:26,590 | INFO | inference:  470/ 528 | Current F1_overall: 44.679% (Clsf: 25.673%, Loc: 89.026%) [cumulative]
+2025-11-02 21:42:28,575 | INFO | inference:  480/ 528 | Current F1_overall: 44.869% (Clsf: 25.893%, Loc: 89.145%) [cumulative]
+2025-11-02 21:42:30,569 | INFO | inference:  490/ 528 | Current F1_overall: 44.742% (Clsf: 25.715%, Loc: 89.137%) [cumulative]
+2025-11-02 21:42:32,589 | INFO | inference:  500/ 528 | Current F1_overall: 44.697% (Clsf: 25.642%, Loc: 89.160%) [cumulative]
+2025-11-02 21:42:34,605 | INFO | inference:  510/ 528 | Current F1_overall: 44.248% (Clsf: 24.984%, Loc: 89.196%) [cumulative]
+2025-11-02 21:42:36,550 | INFO | inference:  520/ 528 | Current F1_overall: 44.298% (Clsf: 25.050%, Loc: 89.210%) [cumulative]
+2025-11-02 21:42:38,174 | INFO | Confusion Matrix of Localization:
+[[125853352    497819]
+ [  1954232  10106629]]
+2025-11-02 21:42:38,174 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99606004 0.00393996]
+ [0.16203089 0.83796911]]
+2025-11-02 21:42:38,174 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 9842825  438317  195364  217931]
+ [      0  617528  268264   46626   23329]
+ [      0  178134   35218  135540   30906]
+ [      0    8032    1621    3299   17927]]
+2025-11-02 21:42:38,174 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.92036869 0.04098551 0.01826782 0.02037798]
+ [0.         0.64612078 0.28068516 0.04878488 0.02440918]
+ [0.         0.46902301 0.09272824 0.35687392 0.08137484]
+ [0.         0.26011205 0.05249522 0.10683636 0.58055637]]
+2025-11-02 21:42:38,175 | INFO | lofF1 is 89.1815, clfF1 is 24.9857, oaF1 is 44.2444, sub class F1 score is [92.2435 31.5759 35.639  11.1704]
+2025-11-02 21:42:38,176 | INFO | MAIN - DONE.
+2025-11-02 21:42:38,176 | INFO | MAIN - EXIT.
+
+
+
+
+
+
+
+
+
+
+2025-11-02 22:08:10,053 | INFO | MAIN - START
+2025-11-02 22:08:10,053 | INFO |  > ALINGNMENT set to True
+2025-11-02 22:08:10,053 | INFO |  > ATTENTION GATE set to -> Building: False, Damage: False
+2025-11-02 22:08:10,053 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "HurricaneIdaWithValid",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida/hurricane-ida",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/hurricane_ida/hurricane-ida/test_list_v2_0.2.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-02_22-08-07_infer_tr2025-10-21_23-19-59_MambaBDA_Base_xBDWithValid_ALIGN_on_HurricaneIdaWithValid",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-10-21_23-19-59_MambaBDA_Base_xBDWithValid_ALIGN/model_step34375_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_xBDPretrained/HurricaneIdaWithValid/infer_tr2025-10-21_23-19-59_MambaBDA_Base_xBDWithValid_ALIGN_on_HurricaneIdaWithValid.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": true,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": false,
+    "measure_efficiency": true
+}
+2025-11-02 22:08:10,056 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+2025-11-02 22:08:10,056 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-11-02 22:08:10,056 | INFO | ChangeMambaBDA class
+2025-11-02 22:08:13,683 | INFO | measure_model_efficiency_2
+2025-11-02 22:08:13,694 | INFO | ================================================================================
+2025-11-02 22:08:13,694 | INFO | MODEL EFFICIENCY MEASUREMENTS
+2025-11-02 22:08:13,694 | INFO | ================================================================================
+2025-11-02 22:08:14,389 | INFO | THOP FLOPs: 196.08G  Parameters: 88.39M
+2025-11-02 22:08:34,023 | INFO | Throughput: 5.61 images/sec
+2025-11-02 22:08:34,023 | INFO | Latency: 178.13 ms/image
+2025-11-02 22:08:34,023 | INFO |   (batch_size=1, measured over 100 iterations)
+2025-11-02 22:08:34,023 | INFO | ================================================================================
+2025-11-02 22:08:34,168 | INFO | inference:    0/ 528 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-11-02 22:08:36,131 | INFO | inference:   10/ 528 | Current F1_overall: 26.690% (Clsf: 0.000%, Loc: 88.967%) [cumulative]
+2025-11-02 22:08:38,109 | INFO | inference:   20/ 528 | Current F1_overall: 33.941% (Clsf: 10.465%, Loc: 88.718%) [cumulative]
+2025-11-02 22:08:40,101 | INFO | inference:   30/ 528 | Current F1_overall: 33.851% (Clsf: 10.450%, Loc: 88.454%) [cumulative]
+2025-11-02 22:08:42,051 | INFO | inference:   40/ 528 | Current F1_overall: 32.248% (Clsf: 7.849%, Loc: 89.179%) [cumulative]
+2025-11-02 22:08:44,015 | INFO | inference:   50/ 528 | Current F1_overall: 32.176% (Clsf: 7.729%, Loc: 89.221%) [cumulative]
+2025-11-02 22:08:46,006 | INFO | inference:   60/ 528 | Current F1_overall: 32.011% (Clsf: 7.537%, Loc: 89.119%) [cumulative]
+2025-11-02 22:08:47,989 | INFO | inference:   70/ 528 | Current F1_overall: 32.684% (Clsf: 8.312%, Loc: 89.550%) [cumulative]
+2025-11-02 22:08:49,961 | INFO | inference:   80/ 528 | Current F1_overall: 32.392% (Clsf: 8.186%, Loc: 88.873%) [cumulative]
+2025-11-02 22:08:51,916 | INFO | inference:   90/ 528 | Current F1_overall: 34.621% (Clsf: 11.304%, Loc: 89.028%) [cumulative]
+2025-11-02 22:08:53,908 | INFO | inference:  100/ 528 | Current F1_overall: 34.595% (Clsf: 11.286%, Loc: 88.982%) [cumulative]
+2025-11-02 22:08:55,895 | INFO | inference:  110/ 528 | Current F1_overall: 34.611% (Clsf: 11.271%, Loc: 89.071%) [cumulative]
+2025-11-02 22:08:57,845 | INFO | inference:  120/ 528 | Current F1_overall: 34.555% (Clsf: 11.096%, Loc: 89.293%) [cumulative]
+2025-11-02 22:08:59,836 | INFO | inference:  130/ 528 | Current F1_overall: 36.548% (Clsf: 13.904%, Loc: 89.383%) [cumulative]
+2025-11-02 22:09:01,812 | INFO | inference:  140/ 528 | Current F1_overall: 36.130% (Clsf: 13.695%, Loc: 88.479%) [cumulative]
+2025-11-02 22:09:03,804 | INFO | inference:  150/ 528 | Current F1_overall: 39.292% (Clsf: 18.179%, Loc: 88.553%) [cumulative]
+2025-11-02 22:09:05,776 | INFO | inference:  160/ 528 | Current F1_overall: 41.386% (Clsf: 21.161%, Loc: 88.579%) [cumulative]
+2025-11-02 22:09:07,762 | INFO | inference:  170/ 528 | Current F1_overall: 43.100% (Clsf: 23.663%, Loc: 88.455%) [cumulative]
+2025-11-02 22:09:09,755 | INFO | inference:  180/ 528 | Current F1_overall: 42.801% (Clsf: 23.200%, Loc: 88.538%) [cumulative]
+2025-11-02 22:09:11,709 | INFO | inference:  190/ 528 | Current F1_overall: 43.596% (Clsf: 24.274%, Loc: 88.681%) [cumulative]
+2025-11-02 22:09:13,705 | INFO | inference:  200/ 528 | Current F1_overall: 43.537% (Clsf: 24.136%, Loc: 88.805%) [cumulative]
+2025-11-02 22:09:15,679 | INFO | inference:  210/ 528 | Current F1_overall: 43.542% (Clsf: 24.093%, Loc: 88.922%) [cumulative]
+2025-11-02 22:09:17,660 | INFO | inference:  220/ 528 | Current F1_overall: 43.082% (Clsf: 23.430%, Loc: 88.937%) [cumulative]
+2025-11-02 22:09:19,619 | INFO | inference:  230/ 528 | Current F1_overall: 43.016% (Clsf: 23.310%, Loc: 88.996%) [cumulative]
+2025-11-02 22:09:21,598 | INFO | inference:  240/ 528 | Current F1_overall: 42.855% (Clsf: 23.043%, Loc: 89.082%) [cumulative]
+2025-11-02 22:09:23,592 | INFO | inference:  250/ 528 | Current F1_overall: 41.765% (Clsf: 21.464%, Loc: 89.133%) [cumulative]
+2025-11-02 22:09:25,582 | INFO | inference:  260/ 528 | Current F1_overall: 42.005% (Clsf: 21.817%, Loc: 89.113%) [cumulative]
+2025-11-02 22:09:27,560 | INFO | inference:  270/ 528 | Current F1_overall: 41.914% (Clsf: 21.674%, Loc: 89.139%) [cumulative]
+2025-11-02 22:09:29,568 | INFO | inference:  280/ 528 | Current F1_overall: 41.976% (Clsf: 21.806%, Loc: 89.039%) [cumulative]
+2025-11-02 22:09:31,545 | INFO | inference:  290/ 528 | Current F1_overall: 42.023% (Clsf: 21.863%, Loc: 89.063%) [cumulative]
+2025-11-02 22:09:33,524 | INFO | inference:  300/ 528 | Current F1_overall: 41.885% (Clsf: 21.661%, Loc: 89.075%) [cumulative]
+2025-11-02 22:09:35,519 | INFO | inference:  310/ 528 | Current F1_overall: 41.828% (Clsf: 21.523%, Loc: 89.207%) [cumulative]
+2025-11-02 22:09:37,514 | INFO | inference:  320/ 528 | Current F1_overall: 41.547% (Clsf: 21.085%, Loc: 89.292%) [cumulative]
+2025-11-02 22:09:39,498 | INFO | inference:  330/ 528 | Current F1_overall: 41.491% (Clsf: 21.008%, Loc: 89.285%) [cumulative]
+2025-11-02 22:09:41,475 | INFO | inference:  340/ 528 | Current F1_overall: 41.612% (Clsf: 21.223%, Loc: 89.187%) [cumulative]
+2025-11-02 22:09:43,437 | INFO | inference:  350/ 528 | Current F1_overall: 41.404% (Clsf: 20.985%, Loc: 89.050%) [cumulative]
+2025-11-02 22:09:45,389 | INFO | inference:  360/ 528 | Current F1_overall: 42.685% (Clsf: 22.854%, Loc: 88.958%) [cumulative]
+2025-11-02 22:09:47,363 | INFO | inference:  370/ 528 | Current F1_overall: 42.350% (Clsf: 22.350%, Loc: 89.018%) [cumulative]
+2025-11-02 22:09:49,343 | INFO | inference:  380/ 528 | Current F1_overall: 42.221% (Clsf: 22.144%, Loc: 89.067%) [cumulative]
+2025-11-02 22:09:51,336 | INFO | inference:  390/ 528 | Current F1_overall: 42.542% (Clsf: 22.604%, Loc: 89.065%) [cumulative]
+2025-11-02 22:09:53,298 | INFO | inference:  400/ 528 | Current F1_overall: 44.166% (Clsf: 24.911%, Loc: 89.094%) [cumulative]
+2025-11-02 22:09:55,274 | INFO | inference:  410/ 528 | Current F1_overall: 44.242% (Clsf: 25.030%, Loc: 89.069%) [cumulative]
+2025-11-02 22:09:57,266 | INFO | inference:  420/ 528 | Current F1_overall: 44.297% (Clsf: 25.093%, Loc: 89.105%) [cumulative]
+2025-11-02 22:09:59,238 | INFO | inference:  430/ 528 | Current F1_overall: 44.859% (Clsf: 25.887%, Loc: 89.124%) [cumulative]
+2025-11-02 22:10:01,196 | INFO | inference:  440/ 528 | Current F1_overall: 45.381% (Clsf: 26.632%, Loc: 89.128%) [cumulative]
+2025-11-02 22:10:03,154 | INFO | inference:  450/ 528 | Current F1_overall: 45.076% (Clsf: 26.221%, Loc: 89.072%) [cumulative]
+2025-11-02 22:10:05,163 | INFO | inference:  460/ 528 | Current F1_overall: 45.211% (Clsf: 26.417%, Loc: 89.065%) [cumulative]
+2025-11-02 22:10:07,116 | INFO | inference:  470/ 528 | Current F1_overall: 44.679% (Clsf: 25.673%, Loc: 89.026%) [cumulative]
+2025-11-02 22:10:09,111 | INFO | inference:  480/ 528 | Current F1_overall: 44.869% (Clsf: 25.893%, Loc: 89.145%) [cumulative]
+2025-11-02 22:10:11,085 | INFO | inference:  490/ 528 | Current F1_overall: 44.742% (Clsf: 25.715%, Loc: 89.137%) [cumulative]
+2025-11-02 22:10:13,051 | INFO | inference:  500/ 528 | Current F1_overall: 44.697% (Clsf: 25.642%, Loc: 89.160%) [cumulative]
+2025-11-02 22:10:15,025 | INFO | inference:  510/ 528 | Current F1_overall: 44.248% (Clsf: 24.984%, Loc: 89.196%) [cumulative]
+2025-11-02 22:10:17,000 | INFO | inference:  520/ 528 | Current F1_overall: 44.298% (Clsf: 25.050%, Loc: 89.210%) [cumulative]
+2025-11-02 22:10:18,592 | INFO | Confusion Matrix of Localization:
+[[125853352    497819]
+ [  1954232  10106629]]
+2025-11-02 22:10:18,593 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.99606004 0.00393996]
+ [0.16203089 0.83796911]]
+2025-11-02 22:10:18,593 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 9842825  438317  195364  217931]
+ [      0  617528  268264   46626   23329]
+ [      0  178134   35218  135540   30906]
+ [      0    8032    1621    3299   17927]]
+2025-11-02 22:10:18,593 | INFO | Confusion Matrix of Classification - Normalized:
+[[       nan        nan        nan        nan        nan]
+ [0.         0.92036869 0.04098551 0.01826782 0.02037798]
+ [0.         0.64612078 0.28068516 0.04878488 0.02440918]
+ [0.         0.46902301 0.09272824 0.35687392 0.08137484]
+ [0.         0.26011205 0.05249522 0.10683636 0.58055637]]
+2025-11-02 22:10:18,593 | INFO | lofF1 is 89.1815, clfF1 is 24.9857, oaF1 is 44.2444, sub class F1 score is [92.2435 31.5759 35.639  11.1704]
+2025-11-02 22:10:18,594 | INFO | MAIN - DONE.
+2025-11-02 22:10:18,594 | INFO | MAIN - EXIT.
