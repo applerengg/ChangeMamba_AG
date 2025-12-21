@@ -1,0 +1,83 @@
+2025-11-08 18:06:24,868 | INFO | MAIN - START
+2025-11-08 18:06:24,869 | INFO |  > ALINGNMENT set to False
+2025-11-08 18:06:24,869 | INFO |  > ATTENTION GATE set to -> Building: True, Damage: False
+2025-11-08 18:06:24,869 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "EarthquakeTurkey",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/test_list.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-11-08_18-06-23",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-11-08_17-08-30_MambaBDA_Base_EarthquakeTurkeyWithValid_AGB/model_step4000_best.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_EarthquakeTurkeyWithValidPretrained/EarthquakeTurkey/infer_tr2025-11-08_17-08-30_MambaBDA_Base_EarthquakeTurkeyWithValid_AGB_on_EarthquakeTurkey.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": false,
+    "enable_attn_gate_building": true,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": false,
+    "measure_efficiency": false
+}
+2025-11-08 18:06:24,871 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
+2025-11-08 18:06:24,871 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=True, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-11-08 18:06:24,871 | INFO | ChangeMambaBDA class
+2025-11-08 18:06:26,458 | INFO | inference:    0/ 189 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-11-08 18:06:27,854 | INFO | inference:   10/ 189 | Current F1_overall: 27.444% (Clsf: 0.000%, Loc: 91.479%) [cumulative]
+2025-11-08 18:06:29,015 | INFO | inference:   20/ 189 | Current F1_overall: 27.529% (Clsf: 0.000%, Loc: 91.763%) [cumulative]
+2025-11-08 18:06:30,149 | INFO | inference:   30/ 189 | Current F1_overall: 27.522% (Clsf: 0.000%, Loc: 91.739%) [cumulative]
+2025-11-08 18:06:31,301 | INFO | inference:   40/ 189 | Current F1_overall: 27.509% (Clsf: 0.000%, Loc: 91.695%) [cumulative]
+2025-11-08 18:06:32,430 | INFO | inference:   50/ 189 | Current F1_overall: 44.233% (Clsf: 23.944%, Loc: 91.576%) [cumulative]
+2025-11-08 18:06:33,579 | INFO | inference:   60/ 189 | Current F1_overall: 41.523% (Clsf: 20.002%, Loc: 91.740%) [cumulative]
+2025-11-08 18:06:34,740 | INFO | inference:   70/ 189 | Current F1_overall: 43.886% (Clsf: 23.404%, Loc: 91.676%) [cumulative]
+2025-11-08 18:06:35,873 | INFO | inference:   80/ 189 | Current F1_overall: 49.143% (Clsf: 30.839%, Loc: 91.850%) [cumulative]
+2025-11-08 18:06:37,008 | INFO | inference:   90/ 189 | Current F1_overall: 47.750% (Clsf: 28.885%, Loc: 91.767%) [cumulative]
+2025-11-08 18:06:38,176 | INFO | inference:  100/ 189 | Current F1_overall: 47.503% (Clsf: 28.614%, Loc: 91.575%) [cumulative]
+2025-11-08 18:06:39,308 | INFO | inference:  110/ 189 | Current F1_overall: 47.427% (Clsf: 28.611%, Loc: 91.330%) [cumulative]
+2025-11-08 18:06:40,471 | INFO | inference:  120/ 189 | Current F1_overall: 47.431% (Clsf: 28.606%, Loc: 91.356%) [cumulative]
+2025-11-08 18:06:41,606 | INFO | inference:  130/ 189 | Current F1_overall: 49.223% (Clsf: 31.291%, Loc: 91.063%) [cumulative]
+2025-11-08 18:06:42,745 | INFO | inference:  140/ 189 | Current F1_overall: 48.682% (Clsf: 30.513%, Loc: 91.077%) [cumulative]
+2025-11-08 18:06:43,915 | INFO | inference:  150/ 189 | Current F1_overall: 50.471% (Clsf: 33.048%, Loc: 91.125%) [cumulative]
+2025-11-08 18:06:45,058 | INFO | inference:  160/ 189 | Current F1_overall: 54.039% (Clsf: 38.099%, Loc: 91.235%) [cumulative]
+2025-11-08 18:06:46,224 | INFO | inference:  170/ 189 | Current F1_overall: 53.701% (Clsf: 37.609%, Loc: 91.249%) [cumulative]
+2025-11-08 18:06:47,353 | INFO | inference:  180/ 189 | Current F1_overall: 53.179% (Clsf: 36.863%, Loc: 91.248%) [cumulative]
+2025-11-08 18:06:48,375 | INFO | Confusion Matrix of Localization:
+[[43810152   574694]
+ [  342132  4818238]]
+2025-11-08 18:06:48,376 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98705202 0.01294798]
+ [0.0662999  0.9337001 ]]
+2025-11-08 18:06:48,376 | INFO | Confusion Matrix of Classification:
+[[      0       0       0       0       0]
+ [      0 4973273    4027   25532    5029]
+ [      0   28670    8839   12275     849]
+ [      0   32798      50   11158    1906]
+ [      0   10943    1586   10033   33402]]
+2025-11-08 18:06:48,376 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.93093259e-01 8.04135738e-04 5.09838432e-03
+  1.00422116e-03]
+ [0.00000000e+00 5.66231509e-01 1.74569945e-01 2.42430826e-01
+  1.67677207e-02]
+ [0.00000000e+00 7.14366614e-01 1.08903990e-03 2.43030145e-01
+  4.15142011e-02]
+ [0.00000000e+00 1.95536416e-01 2.83396469e-02 1.79275963e-01
+  5.96847974e-01]]
+2025-11-08 18:06:48,376 | INFO | lofF1 is 91.3124, clfF1 is 36.8642, oaF1 is 53.1986, sub class F1 score is [98.9357 27.1406 21.2716 68.7638]
+2025-11-08 18:06:48,377 | INFO | MAIN - DONE.
+2025-11-08 18:06:48,377 | INFO | MAIN - EXIT.

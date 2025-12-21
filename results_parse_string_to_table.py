@@ -10,7 +10,10 @@ def multiple(s: str):
     
     print()
     print("=" * 80)
-    names = ["Baseline", "AGBD", "AGB", "ALIGN", "FOCAL", "FOCAL + ALIGN", "FOCAL + AGB", "ALIGN + AGB", "FOCAL + ALIGN + AGBD", "FOCAL + ALIGN + AGB"]
+    names = ["Baseline", 
+             "AGBD", "AGB", "ALIGN", "FOCAL", 
+             "FOCAL + ALIGN", "FOCAL + AGB", "ALIGN + AGB", 
+             "FOCAL + ALIGN + AGBD", "FOCAL + ALIGN + AGB"]
     for name, res in zip(names, results):
         print(f"{name:<21} & {res}")
         if name in ("Baseline", "FOCAL"):
@@ -52,16 +55,16 @@ def single(s: str):
 
 def main():
     s = """
-"lofF1 is 64.9321, clfF1 is 0.0000, oaF1 is 19.4796, sub class F1 score is [96.9521  0.5687  0.      4.4666]"						
-"lofF1 is 55.8843, clfF1 is 0.0000, oaF1 is 16.7653, sub class F1 score is [96.9946  0.11    0.      2.2794]"						
-"lofF1 is 54.7425, clfF1 is 0.2372, oaF1 is 16.5888, sub class F1 score is [9.21178e+01 1.43250e+00 6.24000e-02 7.75480e+00]"						
-"lofF1 is 52.8744, clfF1 is 0.0000, oaF1 is 15.8623, sub class F1 score is [97.2553  0.7711  0.      1.955 ]"						
-"lofF1 is 62.2707, clfF1 is 1.1755, oaF1 is 19.5041, sub class F1 score is [94.8592  1.6874  0.3774  6.6679]"						
-"lofF1 is 64.1689, clfF1 is 0.4554, oaF1 is 19.5695, sub class F1 score is [92.2075  0.2036  0.284   2.9412]"						
-"lofF1 is 64.5192, clfF1 is 0.0000, oaF1 is 19.3558, sub class F1 score is [96.9371  0.6195  0.      0.7896]"						
-"lofF1 is 61.0427, clfF1 is 1.1683, oaF1 is 19.1306, sub class F1 score is [96.4557  0.6641  0.7976  1.5293]"						
-"lofF1 is 64.1302, clfF1 is 1.8919, oaF1 is 20.5634, sub class F1 score is [94.7007  1.9642  0.7356  4.2513]"						
-"lofF1 is 63.6664, clfF1 is 1.6225, oaF1 is 20.2357, sub class F1 score is [93.7038  1.6699  0.5976  5.4801]"						
+lofF1 is 90.6886, clfF1 is 29.9680, oaF1 is 48.1842, sub class F1 score is [98.4292 20.1287 17.057  66.6268]
+lofF1 is 90.7547, clfF1 is 34.9965, oaF1 is 51.7239, sub class F1 score is [98.9553 22.4364 22.0943 69.6343]
+lofF1 is 91.3124, clfF1 is 36.8642, oaF1 is 53.1986, sub class F1 score is [98.9357 27.1406 21.2716 68.7638]
+lofF1 is 91.2827, clfF1 is 29.0642, oaF1 is 47.7298, sub class F1 score is [98.9792 15.7504 20.0522 70.6072]
+lofF1 is 91.1897, clfF1 is 30.3317, oaF1 is 48.5891, sub class F1 score is [98.9229 20.2922 17.1651 70.282 ]
+lofF1 is 91.2172, clfF1 is 29.5085, oaF1 is 48.0211, sub class F1 score is [98.9156 15.1433 22.2878 68.7689]
+lofF1 is 90.6949, clfF1 is 35.1392, oaF1 is 51.8059, sub class F1 score is [98.7216 33.0546 16.762  72.5078]
+lofF1 is 91.2355, clfF1 is 27.5336, oaF1 is 46.6442, sub class F1 score is [98.9237 20.1507 13.714  79.2146]
+lofF1 is 90.8690, clfF1 is 36.1999, oaF1 is 52.6006, sub class F1 score is [98.4562 30.5143 20.1857 55.4657]
+lofF1 is 91.1571, clfF1 is 28.8498, oaF1 is 47.5420, sub class F1 score is [97.785  17.8403 17.6037 64.2534]
 """
     multiple(s)
 
