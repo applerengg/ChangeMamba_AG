@@ -1,0 +1,86 @@
+2025-12-22 21:48:50,851 | INFO | MAIN - START
+2025-12-22 21:48:50,851 | INFO |  > ALINGNMENT set to True
+2025-12-22 21:48:50,851 | INFO |  > ATTENTION GATE set to -> Building: False, Damage: False
+2025-12-22 21:48:50,851 | INFO | Command Line Args:
+{
+    "cfg": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/configs/vssm1/vssm_base_224.yaml",
+    "opts": null,
+    "pretrained_weight_path": null,
+    "dataset": "EarthquakeTurkey",
+    "type": "test",
+    "test_dataset_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey",
+    "test_data_list_path": "/mnt/storage1/alpgenc/change_detection/datasets/earthquake_turkey/earthquake-turkey/selected_images.txt",
+    "shuffle": true,
+    "batch_size": 16,
+    "crop_size": 256,
+    "train_data_name_list": null,
+    "test_data_name_list": null,
+    "start_iter": 0,
+    "cuda": true,
+    "max_iters": 240000,
+    "model_type": "MambaBDA_Base",
+    "result_saved_path": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/infer_results/in2025-12-22_21-48-49",
+    "resume": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/changedetection/deneme_saved_models/tr2025-11-08_14-34-04_MambaBDA_Base_EarthquakeTurkeyWithValid_ALIGN/model_step5000_last.pth",
+    "learning_rate": 0.0001,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "logfile": "/mnt/storage1/alpgenc/change_detection/ChangeMamba_AG/LOGLAR_CMAG/infer_EarthquakeTurkeyWithValidPretrained/EarthquakeTurkey/infer_2025-12-22_21-48-49.log",
+    "save_output_images": false,
+    "extension": "png",
+    "enable_alignment": true,
+    "enable_attn_gate_building": false,
+    "enable_attn_gate_damage": false,
+    "save_attention_images": false,
+    "save_alignment_images": true,
+    "measure_efficiency": false
+}
+2025-12-22 21:48:50,853 | INFO |  > ALIGNMENT params: alignment_args = AlignmentArgs(enabled=True, stages=(1, 2), mid_ch=64)
+2025-12-22 21:48:50,854 | INFO |  > ATTENTION GATE params: attn_gate_args = AttentionGateArgs(enable_building_ag=False, enable_damage_ag=False, enable_temporal_damage_ag=False)
+2025-12-22 21:48:50,854 | INFO | ChangeMambaBDA class
+2025-12-22 21:48:54,869 | INFO | [Hook registered on] align_heads.s1 (id(m)=127613883304592)
+2025-12-22 21:48:54,869 | INFO | [Hook registered on] align_heads.s2 (id(m)=127613883304928)
+2025-12-22 21:48:54,964 | INFO | inference:    0/   3 | Current F1_overall: nan% (Clsf: 0.000%, Loc: nan%) [cumulative]
+2025-12-22 21:48:55,508 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017216_align_heads.s1_(1)
+2025-12-22 21:48:55,530 | INFO |    average_gain = np.float32(0.02582571)
+2025-12-22 21:48:55,538 | INFO |    Error reduced from mse_without_alignment=tensor(1.3586) to mse_with_alignment=tensor(1.1636) (error diff: 0.19500243663787842)
+2025-12-22 21:48:57,550 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017216_align_heads.s2_(2)
+2025-12-22 21:48:57,558 | INFO |    average_gain = np.float32(0.015218735)
+2025-12-22 21:48:57,558 | INFO |    Error reduced from mse_without_alignment=tensor(0.8410) to mse_with_alignment=tensor(0.7806) (error diff: 0.06047189235687256)
+2025-12-22 21:48:59,532 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017302_align_heads.s1_(1)
+2025-12-22 21:48:59,547 | INFO |    average_gain = np.float32(0.014666021)
+2025-12-22 21:48:59,548 | INFO |    Error reduced from mse_without_alignment=tensor(1.1636) to mse_with_alignment=tensor(0.9952) (error diff: 0.1684088110923767)
+2025-12-22 21:49:01,281 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017302_align_heads.s2_(2)
+2025-12-22 21:49:01,286 | INFO |    average_gain = np.float32(0.007400036)
+2025-12-22 21:49:01,287 | INFO |    Error reduced from mse_without_alignment=tensor(0.6347) to mse_with_alignment=tensor(0.5848) (error diff: 0.04986447095870972)
+2025-12-22 21:49:03,295 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017982_align_heads.s1_(1)
+2025-12-22 21:49:03,304 | INFO |    average_gain = np.float32(0.03813225)
+2025-12-22 21:49:03,305 | INFO |    Error reduced from mse_without_alignment=tensor(1.3810) to mse_with_alignment=tensor(1.1517) (error diff: 0.22930097579956055)
+2025-12-22 21:49:05,083 | INFO |  > Alignment visualization: EARTHQUAKE-TURKEY_017982_align_heads.s2_(2)
+2025-12-22 21:49:05,091 | INFO |    average_gain = np.float32(0.0128753185)
+2025-12-22 21:49:05,091 | INFO |    Error reduced from mse_without_alignment=tensor(0.7373) to mse_with_alignment=tensor(0.6844) (error diff: 0.052893102169036865)
+2025-12-22 21:49:07,005 | INFO | Confusion Matrix of Localization:
+[[617271  10847]
+ [ 11668 146646]]
+2025-12-22 21:49:07,005 | INFO | Confusion Matrix of Localization - Normalized:
+[[0.98273095 0.01726905]
+ [0.07370163 0.92629837]]
+2025-12-22 21:49:07,006 | INFO | Confusion Matrix of Classification:
+[[     0      0      0      0      0]
+ [     0 154041     14      0      0]
+ [     0   1730   2529      0      0]
+ [     0      0      0      0      0]
+ [     0      0      0      0      0]]
+2025-12-22 21:49:07,006 | INFO | Confusion Matrix of Classification - Normalized:
+[[           nan            nan            nan            nan
+             nan]
+ [0.00000000e+00 9.99909123e-01 9.08766350e-05 0.00000000e+00
+  0.00000000e+00]
+ [0.00000000e+00 4.06198638e-01 5.93801362e-01 0.00000000e+00
+  0.00000000e+00]
+ [           nan            nan            nan            nan
+             nan]
+ [           nan            nan            nan            nan
+             nan]]
+2025-12-22 21:49:07,006 | INFO | lofF1 is 92.8706, clfF1 is 0.0000, oaF1 is 27.8612, sub class F1 score is [99.4371 74.3605  0.      0.    ]
+2025-12-22 21:49:07,006 | INFO | MAIN - DONE.
+2025-12-22 21:49:07,006 | INFO | MAIN - EXIT.

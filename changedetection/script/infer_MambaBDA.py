@@ -29,8 +29,10 @@ import logging
 import json
 import copy
 import matplotlib.pyplot as plt
+import matplotlib.image
+from dataclasses import dataclass
 
-from changedetection.models.alignment_module import AlignmentArgs
+from changedetection.models.alignment_module import AlignmentHead, AlignmentArgs, warp_image
 from changedetection.models.attn_gate import AttentionGateArgs, AttentionGate2d
 
 
@@ -84,6 +86,46 @@ def register_attn_hooks(model):
             handles.append(h)
             logging.info(f"[Hook registered on] {name} ({id(m)=})")
     return attn_maps, handles
+
+@dataclass
+class AlignmentCapture:
+    """Stores tensors for ONE forward pass (per module)."""
+    flow: torch.Tensor          # [1, 2, H_f, W_f] on CPU
+    f_pre: torch.Tensor         # [1, C, H_f, W_f] on CPU
+    f_post: torch.Tensor        # [1, C, H_f, W_f] on CPU
+    f_pre_warp: torch.Tensor    # [1, C, H_f, W_f] on CPU
+
+def register_alignment_hooks(model: torch.nn.Module) -> tuple[dict[str, AlignmentCapture], list[torch.utils.hooks.RemovableHandle]] :
+    captures: dict[str, AlignmentCapture] = {}
+    handles: list[torch.utils.hooks.RemovableHandle] = []
+
+    def make_hook(module_name: str):
+        def hook(module: torch.nn.Module, input: tuple[torch.Tensor, torch.Tensor], output: tuple[torch.Tensor, torch.Tensor] ):
+            """
+            module: instance of `AlignmentHead` <br/>
+            input: AlignmentHead inputs, `f_pre` and `f_post` <br/>
+            output: AlignmentHead outputs, `f_pre_warp` and `flow`
+            """
+            f_pre, f_post = input  # both are [B, C, Hf, Wf]
+            f_pre_warp, flow = output  # flow is [B, 2, Hf, Wf]
+
+            # save the first element in the batch
+            captures[module_name] = AlignmentCapture(
+                flow = flow[:1].detach().float().cpu(),
+                f_pre = f_pre[:1].detach().float().cpu(),
+                f_post = f_post[:1].detach().float().cpu(),
+                f_pre_warp = f_pre_warp[:1].detach().float().cpu(),
+            )
+
+        return hook
+
+    for name, m in model.named_modules():
+        if isinstance(m, AlignmentHead):
+            h = m.register_forward_hook(make_hook(name))
+            handles.append(h)
+            logging.info(f"[Hook registered on] {name} ({id(m)=})")
+
+    return captures, handles
 
 
 def denormalize_img(t: torch.Tensor, mean: list[float], std: list[float]) -> np.ndarray:
@@ -164,6 +206,110 @@ def save_all_attn_maps(pre_img: np.ndarray, post_img: np.ndarray, pre_mask, post
     logging.info(f"Saved attention visualization: {out_path}")
 
 
+def save_alignment_visualizations(pre_img: np.ndarray, post_img: np.ndarray, capture: AlignmentCapture, out_path: str, arrows_stride: int = 1):
+    dx = capture.flow[0, 0].detach().float().cpu().numpy()
+    dy = capture.flow[0, 1].detach().float().cpu().numpy()
+    flow_magnitudes = np.sqrt(dx ** 2 + dy ** 2)
+
+    Hf, Wf = flow_magnitudes.shape
+    yy, xx = np.mgrid[0:Hf:arrows_stride, 0:Wf:arrows_stride]
+
+    similarity_without_alignment = F.cosine_similarity(capture.f_pre, capture.f_post, dim=1)[0].cpu().numpy()
+    similarity_with_alignment = F.cosine_similarity(capture.f_pre_warp, capture.f_post, dim=1)[0].cpu().numpy()
+
+    ## metric 1
+    average_gain = similarity_with_alignment.mean() - similarity_without_alignment.mean()
+    logging.info(f"   {average_gain = }")
+
+    ## metric 2
+    mse_without_alignment = F.mse_loss(capture.f_pre, capture.f_post)
+    mse_with_alignment = F.mse_loss(capture.f_pre_warp, capture.f_post)
+    logging.info(f"   Error reduced from {mse_without_alignment=} to {mse_with_alignment=} (error diff: {mse_without_alignment - mse_with_alignment})")
+    
+    ## metric 3
+    # f_pre_reduced        = torch.sqrt((capture.f_pre * capture.f_pre).sum(dim=1))[0]
+    # f_pre_warped_reduced = torch.sqrt((capture.f_pre_warp * capture.f_pre_warp).sum(dim=1))[0]
+    # f_post_reduced       = torch.sqrt((capture.f_post * capture.f_post).sum(dim=1))[0]
+    
+    # diff_before   = (f_pre_reduced - f_post_reduced).abs().detach().float().cpu().numpy()
+    # diff_after    = (f_pre_warped_reduced - f_post_reduced).abs().detach().float().cpu().numpy()
+    # delta_improve = diff_before - diff_after
+
+    diff_before_t = (capture.f_pre - capture.f_post).abs().mean(dim=1)      # [1, Hf, Wf]
+    diff_after_t  = (capture.f_pre_warp - capture.f_post).abs().mean(dim=1) # [1, Hf, Wf]
+
+    diff_before   = diff_before_t[0].detach().float().cpu().numpy()
+    diff_after    = diff_after_t[0].detach().float().cpu().numpy()
+    delta_improve = diff_before - diff_after
+
+
+    def robust_vmax(a: np.ndarray, b: np.ndarray, p: float = 99.0) -> float:
+        """Shared vmax for two positive maps, to make before/after comparable."""
+        x = np.concatenate([a.reshape(-1), b.reshape(-1)])
+        vmax = float(np.percentile(x, p))
+        return max(vmax, 1e-6)
+    def robust_sym_v(delta: np.ndarray, p: float = 99.0) -> float:
+        """Symmetric range for signed delta maps."""
+        lo, hi = np.percentile(delta.reshape(-1), [100 - p, p])
+        v = float(max(abs(lo), abs(hi)))
+        return max(v, 1e-6)
+
+    vmax_diff = robust_vmax(diff_before, diff_after, p=99.0)
+    v_delta = robust_sym_v(delta_improve, p=99.0)
+
+    # --- Plotting
+    fig, axs = plt.subplots(3, 3, figsize=(14, 13))
+    axs = axs.flatten()
+
+    axs[0].imshow(pre_img)
+    axs[0].set_title("Pre-disaster image")
+    axs[0].axis("off")
+
+    axs[1].imshow(post_img)
+    axs[1].set_title("Post-disaster image")
+    axs[1].axis("off")
+
+    im2 = axs[2].imshow(flow_magnitudes)
+    axs[2].set_title("Flow magnitude (feature scale)")
+    axs[2].axis("off")
+    fig.colorbar(im2, ax=axs[2], fraction=0.046, pad=0.04)
+
+    # Flow arrows on magnitude
+    axs[3].imshow(flow_magnitudes)
+    axs[3].quiver(xx, yy, dx[yy, xx], dy[yy, xx], angles="xy", scale_units="xy", scale=1.0)
+    axs[3].set_title("Flow field (dx, dy)")
+    axs[3].axis("off")
+
+    im4 = axs[4].imshow(similarity_without_alignment, vmin=-1, vmax=1)
+    axs[4].set_title("Cosine similarity without alignment")
+    axs[4].axis("off")
+    fig.colorbar(im4, ax=axs[4], fraction=0.046, pad=0.04)
+
+    im5 = axs[5].imshow(similarity_with_alignment, vmin=-1, vmax=1)
+    axs[5].set_title("Cosine similarity with alignment")
+    axs[5].axis("off")
+    fig.colorbar(im5, ax=axs[5], fraction=0.046, pad=0.04)
+
+    im6 = axs[6].imshow(diff_before, vmin=0, vmax=vmax_diff, cmap="magma")
+    axs[6].set_title("$F^{pre} - F^{post}$")
+    axs[6].axis("off")
+    fig.colorbar(im6, ax=axs[6], fraction=0.046, pad=0.04)
+
+    im7 = axs[7].imshow(diff_after, vmin=0, vmax=vmax_diff, cmap="magma")
+    axs[7].set_title("$F_{warped}^{pre} - F^{post}$")
+    axs[7].axis("off")
+    fig.colorbar(im7, ax=axs[7], fraction=0.046, pad=0.04)
+
+    im8 = axs[8].imshow(delta_improve, vmin=-v_delta, vmax=v_delta, cmap="coolwarm")
+    axs[8].set_title("ΔDiff = Before - After")
+    axs[8].axis("off")
+    fig.colorbar(im8, ax=axs[8], fraction=0.046, pad=0.04)
+
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=300)
+    plt.close(fig)
+
+
 
 class Trainer(object):
     def __init__(self, args):
@@ -176,7 +322,7 @@ class Trainer(object):
         self.total_evaluator_clf = Evaluator(num_class=5)
 
         if args.enable_alignment:
-            alignment_args = AlignmentArgs(enabled=True, stages=(2,), mid_ch=64)
+            alignment_args = AlignmentArgs(enabled=True, stages=(1,2,), mid_ch=64)
         else:
             alignment_args = AlignmentArgs(enabled=False, stages=None, mid_ch=None)
         logging.info(f" > ALIGNMENT params: {alignment_args = }")
@@ -225,6 +371,7 @@ class Trainer(object):
         self.building_map_T1_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'building_localization_map')
         self.change_map_T2_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'damage_classification_map')
         self.attention_map_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'attention_map')
+        self.alignment_visualization_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'alignment')
 
         if self.args.save_output_images:
             if not os.path.exists(self.building_map_T1_saved_path):
@@ -235,6 +382,9 @@ class Trainer(object):
         if self.args.save_attention_images:
             if not os.path.exists(self.attention_map_saved_path):
                 os.makedirs(self.attention_map_saved_path)
+        if self.args.save_alignment_images:
+            if not os.path.exists(self.alignment_visualization_saved_path):
+                os.makedirs(self.alignment_visualization_saved_path)
 
 
         if args.resume is not None:
@@ -413,7 +563,10 @@ class Trainer(object):
         # vbar = tqdm(val_data_loader, ncols=50)
 
         if self.args.save_attention_images:
-            attn_maps, handles = register_attn_hooks(self.deep_model)
+            attn_maps, attn_hook_handles = register_attn_hooks(self.deep_model)
+
+        if self.args.save_alignment_images:
+            alignment_captures, alignment_hook_handles = register_alignment_hooks(self.deep_model)
 
         with torch.no_grad():
             for itera, data in enumerate(tqdm(val_data_loader)):
@@ -435,6 +588,8 @@ class Trainer(object):
                 labels_clf = labels_clf.cuda().long()
 
                 output_loc, output_clf = self.deep_model(pre_change_imgs, post_change_imgs)
+
+
 
                 # --- visualize AG map for this sample ---
                 if itera % 10 == 0 and self.args.save_attention_images and (self.args.enable_attn_gate_building or self.args.enable_attn_gate_damage):
@@ -458,6 +613,39 @@ class Trainer(object):
                         save_all_attn_maps(pre_img, post_img, pre_mask, post_mask, attn_maps, os.path.join(self.attention_map_saved_path, f"{names[0]}_attentions.png"))
                         # if itera > 10:
                         #     break  # DEBUG (quick results, only visualize first n samples)
+
+
+                # --- visualize Alignment for this sample ---
+                if self.args.save_alignment_images and self.args.enable_alignment: # and itera % 10 == 0:
+                    building_available = labels_loc.max().item() != 0
+                    if not building_available:
+                        logging.info(f" > No building in {names[0]}, skipping ALIGNMENT visualization.")
+                        pass
+
+                    elif len(alignment_captures) > 0:
+                        for i, module_name in enumerate(alignment_captures.keys(), start=1):
+                            alignment_visualization_output_img_name = f"{names[0]}_{module_name}_({i})"
+                            logging.info(f" > Alignment visualization: {alignment_visualization_output_img_name}")
+                            cap: AlignmentCapture = alignment_captures[module_name]
+                            pre_img = denormalize_img(pre_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                            post_img = denormalize_img(post_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                            save_alignment_visualizations(
+                                pre_img, post_img, cap, 
+                                os.path.join(self.alignment_visualization_saved_path, f"{alignment_visualization_output_img_name}.png"),
+                                arrows_stride = int(2/i)
+                            )
+
+                            # warped_pre_image = warp_image(pre_change_imgs, cap.flow)
+                            # warped_pre_image_denorm = denormalize_img(warped_pre_image[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                            # matplotlib.image.imsave(
+                            #     os.path.join(self.alignment_visualization_saved_path, f"{names[0]}_original_{module_name}_({i}).png"), 
+                            #     pre_img
+                            # )
+                            # matplotlib.image.imsave(
+                            #     os.path.join(self.alignment_visualization_saved_path, f"{names[0]}_warped_{module_name}_({i}).png"), 
+                            #     warped_pre_image_denorm
+                            # )
+
 
                 output_loc = output_loc.data.cpu().numpy()
                 output_loc = np.argmax(output_loc, axis=1)
@@ -486,7 +674,10 @@ class Trainer(object):
                     imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
 
         if self.args.save_attention_images:
-            for h in handles:
+            for h in attn_hook_handles:
+                h.remove()
+        if self.args.save_alignment_images:
+            for h in alignment_hook_handles:
                 h.remove()
 
         loc_f1_score = self.total_evaluator_loc.Pixel_F1_score()
@@ -550,6 +741,7 @@ def main():
     parser.add_argument('--enable_attn_gate_building', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--enable_attn_gate_damage', type=bool, action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--save_attention_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_attention_images" to set to False
+    parser.add_argument('--save_alignment_images', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-save_alignment_images" to set to False
     parser.add_argument('--measure_efficiency', type=bool, action=argparse.BooleanOptionalAction, default=True) # type "--no-measure_efficiency" to set to False
 
     args = parser.parse_args()

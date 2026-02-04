@@ -52,3 +52,46 @@ class AlignmentHead(nn.Module):
             f_pre, grid, mode="bilinear", padding_mode="border", align_corners=True
         )
         return f_pre_warp, flow
+
+
+@torch.inference_mode()
+def warp_image(img: torch.Tensor, flow: torch.Tensor, align_corners: bool = True):
+    """
+    :param pre_img: the image to be warped. In ChangeMamba_AG, pre-event features is warped to match post-event features. <br/>
+    shape: [1, 3, H, W] (RGB channels, batch of single object) 
+    :type pre_img: torch.Tensor
+
+    :param flow_field: the flow field / offset map obtained from Alignment Module. shape: [1, 2, Hf, Wf] (2-channel, batch of single object)
+    :type flow_field: torch.Tensor
+
+    :param align_corners: align_corners
+    :type align_corners: bool
+    """
+    device = img.device
+    dtype = img.dtype
+    _, _, H, W = img.shape
+    _, _, Hf, Wf = flow.shape
+
+    flow = flow.to(device=device, dtype=dtype)
+
+    flow_upsampled = F.interpolate(flow, size=(H, W), mode="bilinear", align_corners=align_corners)
+
+    # Scale displacement from feature pixels to image pixels
+    scale_x = W / float(Wf)
+    scale_y = H / float(Hf)
+    flow_upsampled[:, 0] = flow_upsampled[:, 0] * scale_x
+    flow_upsampled[:, 1] = flow_upsampled[:, 1] * scale_y
+
+    nx = flow_upsampled[:, 0] / (W / 2.0) # [1, H, W]
+    ny = flow_upsampled[:, 1] / (H / 2.0) # [1, H, W]
+
+    base = AlignmentHead._make_base_grid(H, W, device, dtype).unsqueeze(0)  # [1, H, W, 2]
+    grid = torch.stack((base[..., 0] + nx, base[..., 1] + ny), dim=-1)  # [1, H, W, 2]
+
+    warped = F.grid_sample(img, grid, mode="bilinear", padding_mode="border", align_corners=align_corners) # [1, 3, H, W] 
+    return warped
+
+
+
+
+
