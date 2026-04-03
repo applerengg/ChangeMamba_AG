@@ -370,6 +370,7 @@ class Trainer(object):
 
         self.building_map_T1_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'building_localization_map')
         self.change_map_T2_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'damage_classification_map')
+        self.output_collage_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'output_collage')
         self.attention_map_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'attention_map')
         self.alignment_visualization_saved_path = os.path.join(args.result_saved_path, args.dataset, args.model_type, 'alignment')
 
@@ -378,6 +379,8 @@ class Trainer(object):
                 os.makedirs(self.building_map_T1_saved_path)
             if not os.path.exists(self.change_map_T2_saved_path):
                 os.makedirs(self.change_map_T2_saved_path)
+            if not os.path.exists(self.output_collage_saved_path):
+                os.makedirs(self.output_collage_saved_path)
 
         if self.args.save_attention_images:
             if not os.path.exists(self.attention_map_saved_path):
@@ -661,7 +664,7 @@ class Trainer(object):
                 labels_clf_eval = labels_clf[labels_loc > 0]
                 self.total_evaluator_clf.add_batch(labels_clf_eval, output_clf_eval)
 
-                if itera % 10 == 0 and self.args.save_output_images:
+                if itera % 3 == 0 and self.args.save_output_images:
                     image_name = names[0] + '.png'
 
                     output_loc = np.squeeze(output_loc)
@@ -670,8 +673,31 @@ class Trainer(object):
                     output_clf = map_labels_to_colors(np.squeeze(output_clf), ori_label_value_dict=ori_label_value_dict, target_label_value_dict=target_label_value_dict)
                     output_clf[output_loc == 0] = 0
 
-                    imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
-                    imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
+                    # imageio.imwrite (single image saves) are commented out to save as collage with plt (2026.03.27)
+                    # imageio.imwrite(os.path.join(self.building_map_T1_saved_path, image_name), output_loc.astype(np.uint8))
+                    # imageio.imwrite(os.path.join(self.change_map_T2_saved_path, image_name), output_clf.astype(np.uint8))
+
+                    # save as collage (2026.03.27)
+                    num_cols, num_rows = 3, 2
+                    plt.figure(figsize=(4 * num_cols, 4 * num_rows), dpi=300)
+                    
+                    pre_img = denormalize_img(pre_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                    post_img = denormalize_img(post_change_imgs[0], mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                    label_loc = labels_loc[0]
+                    label_clf = map_labels_to_colors(labels_clf[0], ori_label_value_dict=ori_label_value_dict, target_label_value_dict=target_label_value_dict)
+                    
+                    plt.subplot(num_rows, num_cols, 1); plt.title("Pre-disaster Image"  ); plt.imshow(pre_img)                  ; plt.axis('off')
+                    plt.subplot(num_rows, num_cols, 2); plt.title("Ground Truth"        ); plt.imshow(label_loc, cmap="gray")   ; plt.axis('off')
+                    plt.subplot(num_rows, num_cols, 3); plt.title("Output"              ); plt.imshow(output_loc, cmap="gray")  ; plt.axis('off')
+
+                    plt.subplot(num_rows, num_cols, 4); plt.title("Post-disaster Image" ); plt.imshow(post_img)                 ; plt.axis('off')
+                    plt.subplot(num_rows, num_cols, 5); plt.title("Ground Truth"        ); plt.imshow(label_clf)                ; plt.axis('off')
+                    plt.subplot(num_rows, num_cols, 6); plt.title("Output"              ); plt.imshow(output_clf)               ; plt.axis('off')
+
+                    plt.savefig(os.path.join(self.output_collage_saved_path, image_name), dpi=300)
+
+
+
 
         if self.args.save_attention_images:
             for h in attn_hook_handles:
